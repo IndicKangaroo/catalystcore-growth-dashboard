@@ -1,0 +1,68 @@
+@import 'tailwindcss';
+
+/*
+ * Design tokens. Components use these (bg-surface, text-fg, border-line, ...) and never raw colors,
+ * so light and dark stay consistent (D-012). The theme toggle arrives in phase P2; until then the
+ * system preference decides, and [data-theme] overrides it once the toggle exists.
+ */
+:root {
+  --surface: #ffffff;
+  --surface-muted: #f5f6f8;
+  --text: #14171f;
+  --text-muted: #5b6475;
+  --border: #e2e5ec;
+  --accent: #4f46e5;
+  --accent-contrast: #ffffff;
+  --ok: #15803d;
+  --danger: #b91c1c;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --surface: #0f1218;
+    --surface-muted: #171b24;
+    --text: #e8eaf0;
+    --text-muted: #9aa3b5;
+    --border: #2a3040;
+    --accent: #818cf8;
+    --accent-contrast: #0f1218;
+    --ok: #4ade80;
+    --danger: #f87171;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --surface: #0f1218;
+  --surface-muted: #171b24;
+  --text: #e8eaf0;
+  --text-muted: #9aa3b5;
+  --border: #2a3040;
+  --accent: #818cf8;
+  --accent-contrast: #0f1218;
+  --ok: #4ade80;
+  --danger: #f87171;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-muted: var(--surface-muted);
+  --color-fg: var(--text);
+  --color-fg-muted: var(--text-muted);
+  --color-line: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-contrast);
+  --color-ok: var(--ok);
+  --color-danger: var(--danger);
+}
+
+body {
+  margin: 0;
+  background: var(--surface);
+  color: var(--text);
+  font-family:
+    ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+}

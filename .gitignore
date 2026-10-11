@@ -1,0 +1,19 @@
+node_modules/
+dist/
+coverage/
+.firebase/
+*.log
+
+# Environment and secrets (only .env.example is committed)
+.env
+.env.*
+!.env.example
+service-account*.json
+*-service-account.json
+*-key.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.local
