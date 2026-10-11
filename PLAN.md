@@ -146,7 +146,7 @@ Global: filter bar (date range, app, platform, campaign, content type) synced to
 
 Each phase ends with something runnable and a `DECISIONS.md` update if a choice was made.
 
-- [~] **P0. Foundations**: monorepo, TS configs, lint/format, shared package, env handling, CI (typecheck, lint, test). Code written on branch `p0-scaffold` but not yet run: the build sandbox could not reach the npm registry. Mark done after the first green CI run (and a lockfile is committed).
+- [~] **P0. Foundations**: monorepo, TS configs, lint/format, shared package, env handling, CI (typecheck, lint, test). Code is on branch `p0-scaffold` (PR #1). CI is green (install, typecheck, ESLint, Prettier, tests, build). The build sandbox could not reach the npm registry, so nothing was run locally. Remaining before marking done: merge the PR and commit a `package-lock.json` generated with `npm install` on a machine with registry access (then re-enable `cache: npm` in the CI workflow).
 - [ ] **P1. Auth and roles**: Firebase Auth login, custom claims, API auth + role middleware, user admin, Firestore rules.
 - [ ] **P2. Apps and shell**: app CRUD, layout, theme toggle, filter bar with URL sync, provider interface + seed provider.
 - [ ] **P3. Overview and App detail on seed data**: KPIs, charts, retention, cohort heatmap, provenance components.
