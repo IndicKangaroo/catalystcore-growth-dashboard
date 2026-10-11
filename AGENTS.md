@@ -22,7 +22,7 @@ This repo is the CatalystCore Growth Analytics dashboard. Read this file first, 
 - **Missing data is a state, not zero.** Use "Not connected", "No measured attribution available", "In progress" or "Not enough data".
 - **Secrets:** the service account key and any credentials live only in backend env. Never log them, commit them, return them from the API, or put them in web code. `.env` is git-ignored; only `.env.example` is committed, with names and no values.
 - **Server-side authorization:** every API route checks auth and role. Do not rely on hidden buttons.
-- **Workspace scoping (D-016):** every Firestore document has a `workspaceId`, and every query is scoped to the caller's workspace through the shared helper. Never hard-code studio or app names, logos or colors; read them from data.
+- **Template-ready (D-019):** this codebase will be deployed by other studios. Never hard-code a studio name, app name, logo, color, timezone or currency; read them from `settings/studio` and the `apps` collection. Do not add tenant or workspace fields: one deployment is one studio. Schema changes need a `schemaVersion` bump and a migration.
 
 ## Tech and structure
 

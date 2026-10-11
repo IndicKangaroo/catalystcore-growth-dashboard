@@ -21,7 +21,7 @@ It is not a Firebase viewer. It joins Firebase/GA4 app analytics with manually e
 3. **Timeline is for investigation.** It never claims an event caused a spike.
 4. **Data-provider interface.** The UI and API never call Google directly; they call a provider (`seed` or `ga4`). Play Console, AdMob and social APIs plug in later without UI changes.
 5. **Roles enforced on the server**, not only hidden in the UI.
-6. **Workspace-ready, studio-neutral.** Every document carries a `workspaceId`, and no studio name, app name or branding is hard-coded (D-016). V1 runs one workspace (CatalystCore).
+6. **Template-ready, studio-neutral.** One deployment serves one studio. No studio name, app name, logo or color is hard-coded; they come from the `settings/studio` document and the `apps` collection (D-019). CatalystCore is simply the first studio configured.
 
 ## 3. Stack
 
@@ -67,7 +67,7 @@ catalystcore-growth/
 
 ## 5. Data model (Firestore)
 
-All documents carry `workspaceId`, `createdAt`, `updatedAt`, `createdBy`. A `workspaces` collection holds name, branding and timezone (V1 has one document).
+All documents carry `createdAt`, `updatedAt`, `createdBy`. A single `settings/studio` document holds studio name, logo URL, accent color, timezone, currency, default date range and `schemaVersion` (used for upgrades).
 
 | Collection | Key fields |
 | --- | --- |
@@ -156,6 +156,7 @@ Each phase ends with something runnable and a `DECISIONS.md` update if a choice 
 - [ ] **P7. Timeline, comparison and notes**: event overlay, 2-5 app comparison.
 - [ ] **P8. Reports**: weekly report, PDF and CSV export.
 - [ ] **P9. Hardening**: role tests, error states, accessibility pass, performance (caching, pagination), deployment docs.
+- [ ] **P10. Template packaging** (after V1 works for CatalystCore): `docs/SETUP.md` (create Firebase project, enable Auth and Firestore, GA4 service account and Viewer access, deploy), a one-command `npm run setup` (checks env, deploys Firestore rules and indexes, creates the first admin), a "Demo mode" that runs on the seed provider so a studio can try it before connecting GA4, a studio settings screen (name, logo, accent, timezone, currency), a generic README with no CatalystCore references, a Firestore `schemaVersion` plus migration script for upgrades, a license and a versioned changelog (Q8).
 
 V1 Definition of Done is PRD section 25; P0-P9 together must satisfy every item there.
 
@@ -176,4 +177,5 @@ V1 Definition of Done is PRD section 25; P0-P9 together must satisfy every item 
 | Q4 | Hosting for the API? | **Proposed:** Firebase Hosting (web) + Cloud Run (API). See D-017. Render stays as the fallback. |
 | Q5 | Currency (INR) and timezone (Asia/Kolkata)? | **Open.** Not answered; defaults stand (D-014). |
 | Q6 | Users and first admins? | **Answered:** about 5 users checking daily; the requester is the first admin (email set via `ADMIN_EMAIL` env for `seed:admin`). |
-| Q7 | The "pitch to other studios" direction: paid hosted product, or a template each studio deploys itself? | **Open.** See D-016. Decides how much multi-tenancy we build. |
+| Q7 | The "pitch to other studios" direction: hosted product, or a template each studio deploys itself? | **Answered 2026-10-11:** a template each studio deploys itself. No multi-tenancy. See D-019. |
+| Q8 | How will the template be distributed and licensed (private repo per customer, paid license, open source)? | **Open.** Decide before P10. |

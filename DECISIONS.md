@@ -90,7 +90,7 @@ Format: ID, date, status (`accepted` / `proposed` / `superseded`), context, deci
 - **Consequences:** Reports are reproducible: reopening one shows the numbers as they were, even if GA4 later revises them.
 
 ## D-016: Build single-workspace for V1, but keep it workspace-ready for other studios
-- **Date:** 2026-10-11 · **Status:** proposed (pending Q7)
+- **Date:** 2026-10-11 · **Status:** superseded by D-019
 - **Context:** The user may pitch this to other small app studios. The PRD is written for one studio (CatalystCore) and one user group.
 - **Decision:** V1 serves one workspace. To avoid a rewrite later: every Firestore document carries `workspaceId`; every API query is scoped by the caller's workspace (from a custom claim, alongside role); Firestore rules check it; no studio or app names, logos or colors are hard-coded (read from a `workspaces` document and `apps`); the product name is configurable. Multi-workspace UI (signup, invites, billing, per-tenant limits) is out of V1.
 - **Consequences:** Small cost now (one extra field and one scoping helper). If Q7 is "hosted product", the next step is per-tenant GA4 access (D-018) and workspace onboarding. If Q7 is "template each studio deploys", `workspaceId` stays but is mostly constant, and the work shifts to one-command setup and docs.
@@ -102,7 +102,13 @@ Format: ID, date, status (`accepted` / `proposed` / `superseded`), context, deci
 - **Consequences:** One cloud account and one bill for hosting, auth, database and API. Requires enabling billing on the GCP project (usage is expected to be small). The GA4 provider must support both key-file credentials (local development) and ADC (production). Service account email still needs Viewer access on each GA4 property.
 
 ## D-018: How other studios would connect their GA4 (if D-016 goes ahead)
-- **Date:** 2026-10-11 · **Status:** proposed (deferred until Q7 is answered)
+- **Date:** 2026-10-11 · **Status:** superseded by D-019
 - **Context:** A hosted product cannot ask each studio to trust one shared key file silently.
 - **Decision:** Two possible models. (a) Service-account model: each studio adds our service account email as Viewer on their GA4 properties. Simple, no Google app review, good for early pilots. (b) OAuth model: each studio signs in with Google and grants read-only Analytics access. Smoother onboarding, but Google may require app verification for the scope. Start with (a); revisit (b) only if there is real demand.
 - **Consequences:** Nothing to build in V1 beyond keeping GA4 credentials behind the provider interface and the per-app `ga4PropertyId` (already planned). Studio data stays isolated by `workspaceId` (D-016).
+
+## D-019: Distribution model: a template each studio deploys itself; no multi-tenancy
+- **Date:** 2026-10-11 · **Status:** accepted (answers Q7; supersedes D-016 and D-018)
+- **Context:** The user plans to pitch this to other small app studios and chose "a template each studio deploys itself" over a hosted product.
+- **Decision:** One deployment serves exactly one studio, with its own Firebase project, Firestore, Auth users, GA4 service account and hosting. We do not build workspaces, tenant scoping, signup, invites or billing, and we do not add `workspaceId` to documents. Studio identity and look come from a `settings/studio` document (name, logo URL, accent color, timezone, currency, default date range, `schemaVersion`), and the app list comes from the `apps` collection. Nothing is hard-coded to CatalystCore or its apps. GA4 access is always the service-account model: the studio creates its own service account (or uses Cloud Run's) and adds it as Viewer on its GA4 properties. Distribution and license are open (Q8).
+- **Consequences:** Data isolation between studios comes for free from separate Firebase projects, and one studio's mistake cannot expose another's data. The security model stays simple (roles only). Added work lands in a late packaging phase (P10): setup docs and script, demo mode on seed data, studio settings screen, generic README, schema versioning and migrations, license. Hosting (D-017) stays, with the note that each studio needs billing enabled on its own Google Cloud project; the setup guide must say so up front and list a non-GCP fallback. Because upgrades are manual pulls, schema changes must ship with migrations from V1 onward.
