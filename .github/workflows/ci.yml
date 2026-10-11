@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-          cache: npm
+          # Add `cache: npm` once package-lock.json is committed (setup-node requires a lockfile).
 
       # Uses the lockfile when one is committed; falls back to a plain install before that.
       - name: Install
