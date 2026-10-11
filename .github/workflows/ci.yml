@@ -37,6 +37,10 @@ jobs:
         if: always()
         run: bash .github/ci-annotate.sh prettier npx prettier --check .
 
+      - name: Prettier diff (temporary)
+        if: always()
+        run: bash .github/ci-annotate.sh prettier-diff bash -c 'npx prettier --write apps/web/src/App.tsx apps/web/src/index.css > /dev/null; git diff; false'
+
       - name: Test
         if: always()
         run: bash .github/ci-annotate.sh test npm run test
