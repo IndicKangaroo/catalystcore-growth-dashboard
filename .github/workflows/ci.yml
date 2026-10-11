@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          # Add `cache: npm` once package-lock.json is committed (setup-node requires a lockfile).
+
+      # Uses the lockfile when one is committed; falls back to a plain install before that.
+      - name: Install
+        run: |
+          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+      # The checks below run independently (if: always()) so one failure doesn't hide the others.
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: ESLint
+        if: always()
+        run: npx eslint .
+
+      - name: Prettier
+        if: always()
+        run: npx prettier --check .
+
+      - name: Test
+        if: always()
+        run: npm run test
+
+      - name: Build
+        if: always()
+        run: npm run build

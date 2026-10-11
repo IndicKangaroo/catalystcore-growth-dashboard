@@ -33,6 +33,8 @@ This repo is the CatalystCore Growth Analytics dashboard. Read this file first, 
 
 ## Commands (update here if they change)
 
+Commands marked (P1), (P4) or (P9) do not exist until that phase. If your sandbox cannot reach the npm registry, do not work around the network policy: finish the code, push a branch and rely on CI for the install-dependent checks (typecheck, lint, test, build), and say plainly that they have not been run locally.
+
 ```
 npm install                 # install all workspaces
 npm run dev                 # web + api in watch mode
@@ -40,10 +42,10 @@ npm run dev:web | dev:api   # one side only
 npm run typecheck           # tsc across workspaces
 npm run lint                # eslint + prettier check
 npm run test                # vitest
-npm run test:e2e            # playwright (needs emulators)
-npm run emulators           # firebase auth + firestore emulators
-npm run seed:admin          # create the first admin user
-npm run ga4:check -- <propertyId>   # verify service account access to a GA4 property
+npm run test:e2e            # (P9) playwright (needs emulators)
+npm run emulators           # (P1) firebase auth + firestore emulators
+npm run seed:admin          # (P1) create the first admin user (reads ADMIN_EMAIL)
+npm run ga4:check -- <propertyId>   # (P4) verify service account access to a GA4 property
 npm run build               # build all
 ```
 
