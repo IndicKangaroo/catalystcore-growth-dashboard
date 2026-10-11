@@ -27,13 +27,20 @@ jobs:
           if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
       - name: Typecheck
-        run: npm run typecheck
+        run: bash .github/ci-annotate.sh typecheck npm run typecheck
 
-      - name: Lint
-        run: npm run lint
+      - name: ESLint
+        if: always()
+        run: bash .github/ci-annotate.sh eslint npx eslint .
+
+      - name: Prettier
+        if: always()
+        run: bash .github/ci-annotate.sh prettier npx prettier --check .
 
       - name: Test
-        run: npm run test
+        if: always()
+        run: bash .github/ci-annotate.sh test npm run test
 
       - name: Build
-        run: npm run build
+        if: always()
+        run: bash .github/ci-annotate.sh build npm run build
