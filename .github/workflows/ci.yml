@@ -26,25 +26,22 @@ jobs:
         run: |
           if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
+      # The checks below run independently (if: always()) so one failure doesn't hide the others.
       - name: Typecheck
-        run: bash .github/ci-annotate.sh typecheck npm run typecheck
+        run: npm run typecheck
 
       - name: ESLint
         if: always()
-        run: bash .github/ci-annotate.sh eslint npx eslint .
+        run: npx eslint .
 
       - name: Prettier
         if: always()
-        run: bash .github/ci-annotate.sh prettier npx prettier --check .
-
-      - name: Prettier diff (temporary)
-        if: always()
-        run: bash .github/ci-annotate.sh prettier-diff bash -c 'npx prettier --write apps/web/src/App.tsx apps/web/src/index.css > /dev/null; git diff; false'
+        run: npx prettier --check .
 
       - name: Test
         if: always()
-        run: bash .github/ci-annotate.sh test npm run test
+        run: npm run test
 
       - name: Build
         if: always()
-        run: bash .github/ci-annotate.sh build npm run build
+        run: npm run build

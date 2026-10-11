@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 
 type Health =
-  | { state: 'loading' }
-  | { state: 'ok'; provider: string }
-  | { state: 'error'; message: string };
+  { state: 'loading' } | { state: 'ok'; provider: string } | { state: 'error'; message: string };
 
 /**
  * Phase P0 placeholder: proves the web app can reach the API.
