@@ -19,12 +19,20 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-          # Add `cache: npm` once package-lock.json is committed (setup-node requires a lockfile).
+          cache: npm
 
-      # Uses the lockfile when one is committed; falls back to a plain install before that.
+      # Strict install from the lockfile. If package.json changed without a matching lockfile
+      # (for example when the author could not reach the npm registry), fall back to a plain
+      # install so the checks below still run, and fail the "Lockfile in sync" step at the end.
       - name: Install
+        id: install
         run: |
-          if [ -f package-lock.json ]; then npm ci; else npm install; fi
+          if npm ci; then
+            echo "in_sync=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "in_sync=false" >> "$GITHUB_OUTPUT"
+            npm install
+          fi
 
       # The checks below run independently (if: always()) so one failure doesn't hide the others.
       - name: Typecheck
@@ -45,3 +53,9 @@ jobs:
       - name: Build
         if: always()
         run: npm run build
+
+      - name: Lockfile in sync
+        if: always() && steps.install.outputs.in_sync == 'false'
+        run: |
+          echo "::error title=Lockfile out of date::package-lock.json does not match package.json. Run npm install and commit the updated package-lock.json."
+          exit 1
