@@ -20,8 +20,8 @@ This repo is the CatalystCore Growth Analytics dashboard. Read this file first, 
 - **No fake numbers in production paths.** Seed data exists only in the `seed` provider and must be visibly labeled "Demo data". Do not hard-code sample figures in components.
 - **No causal claims.** Timeline and correlation features use wording like "observed", "possible" or "correlated", never "caused", "verified" or "100%".
 - **Missing data is a state, not zero.** Use "Not connected", "No measured attribution available", "In progress" or "Not enough data".
-- **Secrets:** the service account key and any credentials live only in backend env. Never log them, commit them, return them from the API, or put them in web code. `.env` is git-ignored; only `.env.example` is committed, with names and no values.
-- **Server-side authorization:** every API route checks auth and role. Do not rely on hidden buttons.
+- **Secrets:** the service account key and any credentials live only in backend env. Never log them, commit them, return them from the API, or put them in web code. `.env` is git-ignored; only `.env.example` is committed, with names and no values. The `VITE_FIREBASE_*` settings are the exception: they are public identifiers of the Firebase project, not credentials, and are meant for the browser.
+- **Server-side authorization:** every API route checks auth and a permission (`requirePermission`), never a role name (D-025). Do not rely on hidden buttons.
 - **Template-ready (D-019):** this codebase will be deployed by other studios. Never hard-code a studio name, app name, logo, color, timezone or currency; read them from `settings/studio` and the `apps` collection. Do not add tenant or workspace fields: one deployment is one studio. Schema changes need a `schemaVersion` bump and a migration.
 
 ## Tech and structure
@@ -33,7 +33,7 @@ This repo is the CatalystCore Growth Analytics dashboard. Read this file first, 
 
 ## Commands (update here if they change)
 
-Commands marked (P1), (P4) or (P9) do not exist until that phase. If your sandbox cannot reach the npm registry, do not work around the network policy: finish the code, push a branch and rely on CI for the install-dependent checks (typecheck, lint, test, build), and say plainly that they have not been run locally.
+Commands marked (P4) or (P9) do not exist until that phase. If your sandbox cannot reach the npm registry, do not work around the network policy: finish the code, push a branch and rely on CI for the install-dependent checks (typecheck, lint, test, build), and say plainly that they have not been run locally. If you add or change a dependency without being able to run `npm install`, say so: the lockfile must be regenerated and committed on the branch by someone with registry access (CI's "Lockfile in sync" step stays red until then).
 
 ```
 npm install                 # install all workspaces
@@ -43,8 +43,7 @@ npm run typecheck           # tsc across workspaces
 npm run lint                # eslint + prettier check
 npm run test                # vitest
 npm run test:e2e            # (P9) playwright (needs emulators)
-npm run emulators           # (P1) firebase auth + firestore emulators
-npm run seed:admin          # (P1) create the first admin user (reads ADMIN_EMAIL)
+npm run emulators           # firebase auth + firestore emulators (needs Java; see README)
 npm run ga4:check -- <propertyId>   # (P4) verify service account access to a GA4 property
 npm run build               # build all
 ```

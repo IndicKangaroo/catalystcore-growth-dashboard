@@ -30,7 +30,7 @@ It is not a Firebase viewer. It joins Firebase/GA4 app analytics with manually e
 | Frontend | React + TypeScript, Vite, Tailwind CSS, Recharts, TanStack Query, React Router |
 | Backend | Node.js + Express + TypeScript |
 | Database | Firestore (via Firebase Admin SDK) |
-| Auth | Firebase Authentication, roles as custom claims |
+| Auth | Firebase Authentication (Google sign-in); roles and the active flag live in the Firestore `users` collection (D-021) |
 | Analytics | GA4 Data API (`@google-analytics/data`) via service account |
 | Validation | Zod, shared between web and api |
 | Repo layout | npm workspaces monorepo |
@@ -52,11 +52,11 @@ catalystcore-growth/
         lib/ (api client, format, theme)
     api/
       src/
-        routes/ (apps, metrics, acquisition, campaigns, links, posts,
-                 events, reports, users, r)       # r = click redirect
+        routes/ (me, users, apps, metrics, acquisition, campaigns, links,
+                 posts, events, reports, r)       # r = click redirect
         providers/ (types.ts, seed/, ga4/)
         services/ (attribution, retention, reports, csv, pdf)
-        middleware/ (auth, role, validate, errors)
+        middleware/ (auth + requirePermission, validate, errors)
         lib/ (firebase, config, logger)
   packages/
     shared/                        # Zod schemas, types, enums, formatters
@@ -71,7 +71,7 @@ All documents carry `createdAt`, `updatedAt`, `createdBy`. A single `settings/st
 
 | Collection | Key fields |
 | --- | --- |
-| `users` | uid, email, name, role (`admin` / `growth` / `developer`), active |
+| `users` | email (the document id, lowercase), name, role (`admin` / `growth` / `developer`), active, uid (null until first sign-in), lastLoginAt |
 | `apps` | name, packageName, iconUrl, ga4PropertyId, firebaseProjectId, playStoreUrl, launchDate, category, currentVersion, status (`development` / `testing` / `production`) |
 | `campaigns` | name, appId, utmCampaign (unique slug), objective, startDate, endDate, status, notes |
 | `trackingLinks` | campaignId, appId, platform, utmSource, utmMedium, utmCampaign, utmContent, destination (Play URL), builtUrl, shortCode (optional), createdBy |
@@ -111,7 +111,8 @@ interface AnalyticsProvider {
 | Comparison | `GET /compare/apps?ids=`, `GET /compare/campaigns` | all |
 | Timeline | CRUD `/events`, `GET /timeline` | read: all; write: admin, growth |
 | Reports | `POST /reports/generate`, `GET /reports`, `GET /reports/:id/(pdf\|csv)` | admin, growth |
-| Users | `GET/PATCH /users` | admin |
+| Session | `GET /me` (who the caller is and their permissions) | any signed-in user |
+| Users | `GET /users`, `POST /users` (invite), `PATCH /users/:email` (role, active) | admin |
 | Redirect | `GET /r/:code` (public, no auth) | public |
 
 Global query params on every read: `from`, `to`, `appIds`, `platform`, `campaignId`, `contentType`.
@@ -147,7 +148,7 @@ Global: filter bar (date range, app, platform, campaign, content type) synced to
 Each phase ends with something runnable and a `DECISIONS.md` update if a choice was made.
 
 - [x] **P0. Foundations**: monorepo, TS configs, lint/format, shared package, env handling, CI (typecheck, lint, test). Merged to `main` with `package-lock.json`; CI green; the requester confirmed the app runs locally and the web page reaches the API.
-- [~] **P1. Auth and roles**: Google sign-in through Firebase Auth, invite-only users stored in Firestore (role and active flag checked on every request, D-021), permission matrix shared by API and web (D-025), API auth and permission middleware, user admin screen, deny-all Firestore rules (D-022), emulator setup for local development (D-023). Branch `p1-auth`.
+- [~] **P1. Auth and roles**: Google sign-in through Firebase Auth, invite-only users stored in Firestore (role and active flag checked on every request, D-021), permission matrix shared by API and web (D-025), API auth and permission middleware, user admin screen, deny-all Firestore rules (D-022), emulator setup for local development (D-023). Branch `p1-auth`. Still open before it can be marked done: the lockfile regenerated and committed (D-024), CI green, and the requester signing in locally against the emulators.
 - [ ] **P2. Apps and shell**: app CRUD, layout, theme toggle, filter bar with URL sync, provider interface + seed provider.
 - [ ] **P3. Overview and App detail on seed data**: KPIs, charts, retention, cohort heatmap, provenance components.
 - [ ] **P4. GA4 provider**: service-account auth, users/sessions/engagement, retention, acquisition by source, caching in `metricSnapshots`, connection test. Verified by the user against real properties.

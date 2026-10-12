@@ -59,7 +59,7 @@ Format: ID, date, status (`accepted` / `proposed` / `superseded`), context, deci
 - **Consequences:** Needs a public unauthenticated endpoint, basic bot filtering and rate limiting. Click counts from redirects are `measured`; typed-in clicks are `manual`.
 
 ## D-010: Roles and enforcement
-- **Date:** 2026-10-11 · **Status:** accepted
+- **Date:** 2026-10-11 · **Status:** accepted; the custom-claims part is superseded by D-021
 - **Decision:** Roles `admin`, `growth`, `developer` stored as Firebase custom claims and mirrored in `users`. The API checks the claim on every route; Firestore rules deny direct client writes to everything except what is explicitly allowed. The web UI hides actions by role but is not the security boundary.
 - **Consequences:** The first admin is created with a one-off script. Role changes require the user to refresh their token.
 
@@ -117,3 +117,29 @@ Format: ID, date, status (`accepted` / `proposed` / `superseded`), context, deci
 - **Date:** 2026-10-11 · **Status:** accepted
 - **Decision:** Node 22 (`.nvmrc`, `engines`), npm workspaces, ESM everywhere, TypeScript strict with `noUncheckedIndexedAccess` and `moduleResolution: Bundler`. Package scope `@growth/*` (studio-neutral, per D-019). `@growth/shared` is consumed as TypeScript source (its `exports` points at `src/index.ts`); the web app builds with Vite and the API bundles it in with tsup (`noExternal`), so there is no separate build step for the shared package. API: Express 5, Zod-validated env, helmet and cors, tsx for development. Web: React 19, Vite, Tailwind CSS 4 with CSS-variable design tokens (`bg-surface`, `text-fg`, `border-line`, ...) defined for light and dark. Tests: Vitest everywhere, supertest for the API, Testing Library for the web. Lint: ESLint flat config plus Prettier (`*.md` is not auto-formatted). API default port 8787; the Vite dev server proxies `/api` to it. CI: GitHub Actions running typecheck, lint, test and build on pushes to `main` and on pull requests.
 - **Consequences:** One install, one set of scripts. Dependencies are added only when a phase needs them (router, query and charts arrive in P2/P3). Version ranges were written by hand in P0 because the sandbox could not reach npm; the first lockfile should be generated on a machine with registry access and committed, after which CI uses `npm ci`.
+
+## D-021: Sign-in with Google, invite-only, role read from Firestore on every request
+- **Date:** 2026-10-12 · **Status:** accepted (supersedes the custom-claims part of D-010; answers Q6; Q9 still to be confirmed)
+- **Context:** About five people use the dashboard and one is the admin. Other studios will deploy their own copy (D-019). Custom claims need a script to set them and a token refresh to change them, and a deactivated person would keep working until their token expired.
+- **Decision:** People sign in with Google through Firebase Auth. The web app sends the Firebase ID token as a Bearer token. The API verifies it with the Admin SDK, requires a verified email, then loads the `users/{lowercase email}` document on every request. No document means 403 `not_invited`; `active: false` means 403 `account_disabled`. That document is the single source of truth for role and active flag, so a change applies on the next request. There are no custom claims and no cache. Admins invite people by email and role; an invitation is a document with `uid: null`, and `uid` and `name` are filled in at first sign-in. The email in `ADMIN_EMAIL` becomes the first admin automatically at first sign-in when it has no document (this replaces the planned `seed:admin` script). The API refuses to demote or deactivate the last active admin. The Users screen also disables an admin's own row. There is no hard delete: people are deactivated, so history keeps its author.
+- **Consequences:** One Firestore read per API call, which is fine at this scale; add a short cache only if cost or latency requires it, and then state the delay before a deactivation takes effect. Email is the document id, so a person who changes their Google email needs a new invitation. Google is the only sign-in method in V1.
+
+## D-022: Firestore is reached only through the API; the rules deny everything
+- **Date:** 2026-10-12 · **Status:** accepted
+- **Decision:** `firestore.rules` denies every client read and write. All data access goes through the API, which uses the Admin SDK (it bypasses rules). A test (`firestoreRules.test.ts`) fails if the rules file contains any `allow` other than the deny-all.
+- **Consequences:** The browser never talks to Firestore, so every access path passes the route-level auth and permission checks. There are no realtime listeners in the UI; screens refetch through TanStack Query. The rules file must be deployed with the rest of the setup (part of the P10 guide).
+
+## D-023: Local development uses the Firebase emulators under a demo project
+- **Date:** 2026-10-12 · **Status:** accepted
+- **Decision:** `npm run emulators` starts the Auth and Firestore emulators for the project id `demo-growth` (Firebase treats `demo-` projects as offline-only, so nothing can touch a real project). Ports and `singleProjectMode` are in `firebase.json`. `firebase-tools` runs through `npx` and is not a repo dependency. The Admin SDK finds the emulators through `FIRESTORE_EMULATOR_HOST` and `FIREBASE_AUTH_EMULATOR_HOST`, and the web app connects to the Auth emulator when `VITE_FIREBASE_AUTH_EMULATOR_URL` is set. Without Firebase settings the API still starts: `/api/health` stays public, and protected routes answer 503 `auth_not_configured`. The web app then shows setup help instead of a login button.
+- **Consequences:** Anyone can run the whole sign-in flow without a Firebase project or keys. The Firestore emulator needs Java installed. Real-project testing still works by setting real values.
+
+## D-024: P1 dependencies, and regenerating the lockfile
+- **Date:** 2026-10-12 · **Status:** accepted
+- **Decision:** P1 adds `firebase-admin` (API) and `firebase`, `react-router-dom` and `@tanstack/react-query` (web). Each is needed by this phase: server-side token checks and Firestore, browser sign-in, routing and guards, and server state for the Users screen. The ranges were written by hand because the sandbox cannot reach npm. Whoever has registry access runs `npm install` on the branch and commits the updated `package-lock.json` before merging. CI's "Lockfile in sync" step stays red until then, on purpose.
+- **Consequences:** A phase that adds dependencies cannot merge until the lockfile is committed. The same steps apply to later phases.
+
+## D-025: Permissions, not role names, gate every route and screen
+- **Date:** 2026-10-12 · **Status:** accepted
+- **Decision:** `packages/shared` defines the permission list and the role-to-permission matrix, following PRD section 19. Admin has everything. Growth can read apps, metrics, acquisition, campaigns, content, timeline and reports, write campaigns, content and timeline, and generate reports. Developer can read apps, metrics, acquisition and timeline. API routes use `requirePermission(...)`; the web app uses `can(...)` from the session. `GET /api/me` returns the caller's permissions, so the UI never re-implements the matrix.
+- **Consequences:** Adding a role or changing the matrix is a one-file change with a test. Code never compares role names (it only shows the role's label). Hidden buttons are a convenience; the API is the security boundary.
