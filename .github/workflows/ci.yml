@@ -43,14 +43,19 @@ jobs:
         run: npx eslint .
 
       # Marks each badly formatted file in the check annotations, so no one has to open the log.
+      # CI makes Prettier print colour codes, which are removed before the file names are read.
       - name: Prettier
         if: always()
+        env:
+          NO_COLOR: '1'
+          FORCE_COLOR: '0'
         run: |
           set -o pipefail
           if ! npx prettier --check . 2>&1 | tee prettier.log; then
-            grep '^\[warn\] ' prettier.log | grep -v 'Code style issues' | sed 's/^\[warn\] //' | while read -r file; do
+            sed 's/\x1b\[[0-9;]*m//g' prettier.log | grep '^\[warn\] ' | grep -v 'Code style issues' | sed 's/^\[warn\] //' | while read -r file; do
               echo "::error file=${file},title=Prettier::${file} is not formatted. Run: npx prettier --write ${file}"
             done
+            echo "::error title=Prettier output::$(tail -n 30 prettier.log | sed 's/\x1b\[[0-9;]*m//g' | head -c 3000 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\r//g;s/\n/%0A/g')"
             exit 1
           fi
 
