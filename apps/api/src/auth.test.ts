@@ -45,18 +45,21 @@ describe('authentication', () => {
     expect(res.body.error.code).toBe('invalid_token');
   });
 
-  it('rejects an account that has not been invited', async () => {
+  it('rejects an account that has not been invited, naming the account', async () => {
     const { app } = setup();
     const res = await request(app).get('/api/me').set('Authorization', bearer('token-stranger'));
     expect(res.status).toBe(403);
     expect(res.body.error.code).toBe('not_invited');
+    // People with several Google accounts need to see which one they used.
+    expect(res.body.error.message).toContain('stranger@example.com has not been given access');
   });
 
-  it('rejects a deactivated account', async () => {
+  it('rejects a deactivated account, naming the account', async () => {
     const { app } = setup();
     const res = await request(app).get('/api/me').set('Authorization', bearer('token-gone'));
     expect(res.status).toBe(403);
     expect(res.body.error.code).toBe('account_disabled');
+    expect(res.body.error.message).toContain('gone@example.com has been deactivated');
   });
 
   it('rejects an email address the provider has not verified', async () => {

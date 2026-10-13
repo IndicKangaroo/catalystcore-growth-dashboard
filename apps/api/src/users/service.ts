@@ -21,15 +21,17 @@ export interface UserService {
   update(email: string, patch: UpdateUserInput): Promise<UserRecord>;
 }
 
-const notInvited = () =>
+// The messages name the account, because people with several Google accounts often sign in with
+// the wrong one, and the first admin needs to see which email did not match ADMIN_EMAIL.
+const notInvited = (email: string) =>
   new AppError(
     403,
     'not_invited',
-    'This account has not been given access. Ask an admin to invite you.',
+    `${email} has not been given access. Ask an admin to invite this Google account, or sign out and use a different one.`,
   );
 
-const accountDisabled = () =>
-  new AppError(403, 'account_disabled', 'This account has been deactivated. Ask an admin.');
+const accountDisabled = (email: string) =>
+  new AppError(403, 'account_disabled', `${email} has been deactivated. Ask an admin.`);
 
 const userNotFound = () => new AppError(404, 'user_not_found', 'No such user');
 
@@ -54,19 +56,19 @@ export function createUserService(options: UserServiceOptions): UserService {
       const isBootstrapAdmin = bootstrapEmail !== undefined && email === bootstrapEmail;
       const existing = await repo.get(email);
 
-      if (existing && !existing.active) throw accountDisabled();
+      if (existing && !existing.active) throw accountDisabled(email);
       if (existing && existing.uid === token.uid) return existing;
-      if (!existing && !isBootstrapAdmin) throw notInvited();
+      if (!existing && !isBootstrapAdmin) throw notInvited(email);
 
       // First sign-in: link the Firebase account, or create the bootstrap admin.
       return repo.runTransaction(async (tx) => {
         const current = await tx.get(email);
         const timestamp = now().toISOString();
 
-        if (current && !current.active) throw accountDisabled();
+        if (current && !current.active) throw accountDisabled(email);
 
         if (!current) {
-          if (!isBootstrapAdmin) throw notInvited();
+          if (!isBootstrapAdmin) throw notInvited(email);
           const created: UserRecord = {
             email,
             name: token.name ?? null,

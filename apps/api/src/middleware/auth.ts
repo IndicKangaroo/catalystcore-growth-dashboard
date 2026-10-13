@@ -2,7 +2,8 @@ import { hasPermission } from '@growth/shared';
 import type { Permission, UserRecord } from '@growth/shared';
 import type { RequestHandler, Response } from 'express';
 import type { TokenVerifier, VerifiedToken } from '../auth/types';
-import { logger } from '../lib/logger';
+import { logger, errorFields } from '../lib/logger';
+import { classifyTokenError } from '../lib/tokenErrors';
 import type { UserService } from '../users/service';
 import { AppError } from './errors';
 
@@ -19,19 +20,37 @@ function readBearerToken(header: string | undefined): string | null {
   return match?.[1] ?? null;
 }
 
-function errorCode(err: unknown): string {
-  if (typeof err === 'object' && err !== null && 'code' in err && typeof err.code === 'string') {
-    return err.code;
-  }
-  return 'unknown';
-}
-
 async function verifyOrReject(verifier: TokenVerifier, idToken: string): Promise<VerifiedToken> {
   try {
     return await verifier.verify(idToken);
   } catch (err) {
-    // Log the reason code only, never the token.
-    logger.warn('ID token rejected', { reason: errorCode(err) });
+    // Log why, never the token. The SDK's message names the expected and the actual project when
+    // they differ, which is the usual reason a correct sign-in is rejected.
+    const detail = errorFields(err);
+    const problem = classifyTokenError(err);
+
+    if (problem === 'service_unavailable') {
+      logger.error('Could not reach the sign-in service to check an ID token', detail);
+      throw new AppError(
+        503,
+        'auth_unavailable',
+        'Server setup problem: the API could not reach Firebase Auth to check your sign-in. If you ' +
+          'are using the emulators, check that "npm run emulators" is running.',
+      );
+    }
+
+    if (problem === 'wrong_project') {
+      logger.error('ID token belongs to a different Firebase project than the API', detail);
+      throw new AppError(
+        503,
+        'project_mismatch',
+        'Server setup problem: you signed in to a different Firebase project than the one the API ' +
+          'uses. Set VITE_FIREBASE_PROJECT_ID and FIREBASE_PROJECT_ID in .env to the same project ' +
+          'id, then restart "npm run dev".',
+      );
+    }
+
+    logger.warn('ID token rejected', detail);
     throw new AppError(
       401,
       'invalid_token',

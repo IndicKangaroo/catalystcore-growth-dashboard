@@ -1,5 +1,6 @@
 import type { ErrorRequestHandler, RequestHandler } from 'express';
-import { logger } from '../lib/logger';
+import { classifyDatabaseError, describeDatabaseProblem } from '../lib/databaseErrors';
+import { errorFields, logger } from '../lib/logger';
 
 /** Error with an HTTP status and a stable machine-readable code. */
 export class AppError extends Error {
@@ -38,9 +39,13 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
     res.status(400).json(errorBody('invalid_json', 'Request body is not valid JSON'));
     return;
   }
-  logger.error('Unhandled error', {
-    name: err instanceof Error ? err.name : 'unknown',
-    message: err instanceof Error ? err.message : String(err),
-  });
+  // Setup mistakes (no credentials, no database, ...) get a clear 503; the original error is logged.
+  const problem = classifyDatabaseError(err);
+  if (problem) {
+    logger.error('Database unavailable', { problem, ...errorFields(err) });
+    res.status(503).json(errorBody('database_unavailable', describeDatabaseProblem(problem)));
+    return;
+  }
+  logger.error('Unhandled error', errorFields(err));
   res.status(500).json(errorBody('internal_error', 'Something went wrong'));
 };
