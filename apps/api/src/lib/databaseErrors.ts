@@ -5,11 +5,7 @@
  * "Something went wrong", and the original error goes to the log.
  */
 export type DatabaseProblem =
-  | 'no_credentials'
-  | 'credentials_rejected'
-  | 'permission_denied'
-  | 'no_database'
-  | 'unreachable';
+  'no_credentials' | 'credentials_rejected' | 'permission_denied' | 'no_database' | 'unreachable';
 
 // gRPC status codes reported by the Firestore client.
 const GRPC_DEADLINE_EXCEEDED = 4;
