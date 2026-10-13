@@ -28,17 +28,28 @@ function readErrorBody(body: unknown): { code: string; message: string } | null 
   return typeof code === 'string' && typeof message === 'string' ? { code, message } : null;
 }
 
+const UNREACHABLE_MESSAGE =
+  'Could not reach the API. If you run it locally, check that "npm run dev" is running and read its output for the reason, then try again.';
+
 async function toApiError(response: Response): Promise<ApiError> {
   let parsed: { code: string; message: string } | null = null;
+  let isJson = true;
   try {
     parsed = readErrorBody(await response.json());
   } catch {
-    // The body was not JSON; the generic message below is used instead.
+    isJson = false;
+  }
+  if (parsed) return new ApiError(response.status, parsed.code, parsed.message);
+
+  // A server error that is not JSON did not come from our API: the dev server's proxy answers like
+  // this when the API is down, and so does a gateway in front of a deployment that is failing.
+  if (!isJson && response.status >= 500) {
+    return new ApiError(response.status, 'api_unreachable', UNREACHABLE_MESSAGE);
   }
   return new ApiError(
     response.status,
-    parsed?.code ?? 'http_error',
-    parsed?.message ?? `Request failed with status ${response.status}`,
+    'http_error',
+    `Request failed with status ${response.status}`,
   );
 }
 
@@ -51,12 +62,20 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
 
   if (options.body !== undefined) headers['Content-Type'] = 'application/json';
 
-  const response = await fetch(path, {
-    method: options.method ?? 'GET',
-    headers,
-    body: options.body === undefined ? undefined : JSON.stringify(options.body),
-    signal: options.signal,
-  });
+  let response: Response;
+  try {
+    response = await fetch(path, {
+      method: options.method ?? 'GET',
+      headers,
+      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+      signal: options.signal,
+    });
+  } catch (err) {
+    // fetch rejects with a TypeError when nothing answered at all (offline, server down). An
+    // aborted request is the caller's own doing and passes through unchanged.
+    if (err instanceof TypeError) throw new ApiError(0, 'network_error', UNREACHABLE_MESSAGE);
+    throw err;
+  }
 
   if (!response.ok) throw await toApiError(response);
   return (await response.json()) as T;

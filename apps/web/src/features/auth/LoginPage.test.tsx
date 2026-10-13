@@ -54,8 +54,17 @@ describe('LoginPage', () => {
     ['auth/cancelled-popup-request', 'The sign-in window was closed before it finished.'],
     ['auth/popup-blocked', 'Your browser blocked the sign-in window.'],
     ['auth/network-request-failed', 'Network problem. Check your connection and try again.'],
-    ['auth/something-unexpected', 'Sign-in failed. Try again.'],
-  ])('explains a %s failure in plain words', async (code, message) => {
+    ['auth/network-request-failed', 'check that "npm run emulators" is running'],
+    ['auth/web-storage-unsupported', 'Allow cookies and site data for this site'],
+    ['auth/user-disabled', 'disabled in Firebase. Ask an admin.'],
+    ['auth/too-many-requests', 'Too many attempts.'],
+    ['auth/unauthorized-domain', 'Authorized domains'],
+    ['auth/unauthorized-domain', 'http://localhost:5173 (not 127.0.0.1)'],
+    ['auth/operation-not-allowed', 'Google sign-in is not turned on for this Firebase project.'],
+    ['auth/configuration-not-found', 'press Get started, then enable Google.'],
+    ['auth/invalid-api-key', 'Firebase rejected the web API key.'],
+    ['auth/api-key-not-valid.-please-pass-a-valid-api-key.', 'Firebase rejected the web API key.'],
+  ])('explains a %s failure in plain words (%#)', async (code, message) => {
     const { session } = renderLogin({ status: 'signed_out' });
     vi.mocked(session.signIn).mockRejectedValue(Object.assign(new Error('firebase'), { code }));
 
@@ -63,6 +72,28 @@ describe('LoginPage', () => {
 
     expect(await screen.findByRole('alert')).toHaveTextContent(message);
     await waitFor(() => expect(signInButton()).toBeEnabled());
+  });
+
+  it('names the code of a failure it does not know, so it can be looked up', async () => {
+    const { session } = renderLogin({ status: 'signed_out' });
+    vi.mocked(session.signIn).mockRejectedValue(
+      Object.assign(new Error('firebase'), { code: 'auth/something-unexpected' }),
+    );
+
+    fireEvent.click(signInButton());
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Sign-in failed (auth/something-unexpected). Try again.',
+    );
+  });
+
+  it('keeps the message short when the failure has no code', async () => {
+    const { session } = renderLogin({ status: 'signed_out' });
+    vi.mocked(session.signIn).mockRejectedValue(new Error('boom'));
+
+    fireEvent.click(signInButton());
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Sign-in failed. Try again.');
   });
 
   it('sends a signed-in person on to the page they came from', () => {

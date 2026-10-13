@@ -3,6 +3,11 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { useSession } from './session';
 
+/**
+ * Turns a Firebase sign-in failure into words. Most of the unusual ones mean the Firebase project
+ * is not set up yet, so those say what to change; the person who sees them can pass them on to
+ * whoever set the dashboard up. An unknown failure shows its code so it can be looked up.
+ */
 function describeSignInError(err: unknown): string {
   const code =
     typeof err === 'object' && err !== null && 'code' in err && typeof err.code === 'string'
@@ -15,9 +20,24 @@ function describeSignInError(err: unknown): string {
     case 'auth/popup-blocked':
       return 'Your browser blocked the sign-in window. Allow pop-ups for this site and try again.';
     case 'auth/network-request-failed':
-      return 'Network problem. Check your connection and try again.';
+      return 'Network problem. Check your connection and try again. If you use the Firebase emulators, check that "npm run emulators" is running.';
+    case 'auth/web-storage-unsupported':
+      return 'Your browser is blocking the storage that sign-in needs. Allow cookies and site data for this site, then try again.';
+    case 'auth/user-disabled':
+      return 'This Google account has been disabled in Firebase. Ask an admin.';
+    case 'auth/too-many-requests':
+      return 'Too many attempts. Wait a few minutes and try again.';
+    case 'auth/unauthorized-domain':
+      return 'Sign-in setup problem: this web address is not allowed to sign in. In the Firebase console open Authentication, Settings, Authorized domains and add it. For local development, open the app at http://localhost:5173 (not 127.0.0.1).';
+    case 'auth/operation-not-allowed':
+      return 'Sign-in setup problem: Google sign-in is not turned on for this Firebase project. In the Firebase console open Authentication, Sign-in method and enable Google.';
+    case 'auth/configuration-not-found':
+      return 'Sign-in setup problem: Firebase Authentication has not been set up for this project. In the Firebase console open Authentication, press Get started, then enable Google.';
+    case 'auth/invalid-api-key':
+    case 'auth/api-key-not-valid.-please-pass-a-valid-api-key.':
+      return 'Sign-in setup problem: Firebase rejected the web API key. Copy VITE_FIREBASE_API_KEY again from the Firebase console (Project settings), save .env and restart the dev server.';
     default:
-      return 'Sign-in failed. Try again.';
+      return code ? `Sign-in failed (${code}). Try again.` : 'Sign-in failed. Try again.';
   }
 }
 

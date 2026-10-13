@@ -91,14 +91,29 @@ describe('apiFetch', () => {
     expect(error.message).toBe('This account has not been invited.');
   });
 
-  it('falls back to a generic error when the body is not JSON', async () => {
-    fetchMock.mockResolvedValue(fakeResponse(502));
+  it.each([500, 502, 503])(
+    'says the API could not be reached when a %i answer is not JSON',
+    async (status) => {
+      // The dev server's proxy answers like this when the API is down.
+      fetchMock.mockResolvedValue(fakeResponse(status));
+
+      const error = await failureOf(apiFetch('/api/me'));
+
+      expect(error.status).toBe(status);
+      expect(error.code).toBe('api_unreachable');
+      expect(error.message).toContain('Could not reach the API');
+      expect(error.message).toContain('npm run dev');
+    },
+  );
+
+  it('falls back to a generic error when a client error is not JSON', async () => {
+    fetchMock.mockResolvedValue(fakeResponse(404));
 
     const error = await failureOf(apiFetch('/api/me'));
 
-    expect(error.status).toBe(502);
+    expect(error.status).toBe(404);
     expect(error.code).toBe('http_error');
-    expect(error.message).toBe('Request failed with status 502');
+    expect(error.message).toBe('Request failed with status 404');
   });
 
   it('falls back to a generic error when the body has an unexpected shape', async () => {
@@ -108,11 +123,23 @@ describe('apiFetch', () => {
 
     expect(error.status).toBe(500);
     expect(error.code).toBe('http_error');
+    expect(error.message).toBe('Request failed with status 500');
   });
 
-  it('lets network failures through unchanged', async () => {
+  it('explains a network failure instead of showing the browser’s "Failed to fetch"', async () => {
     fetchMock.mockRejectedValue(new TypeError('Failed to fetch'));
 
-    await expect(apiFetch('/api/me')).rejects.toThrow('Failed to fetch');
+    const error = await failureOf(apiFetch('/api/me'));
+
+    expect(error.status).toBe(0);
+    expect(error.code).toBe('network_error');
+    expect(error.message).toContain('Could not reach the API');
+  });
+
+  it('lets an aborted request through unchanged', async () => {
+    const aborted = new DOMException('The operation was aborted.', 'AbortError');
+    fetchMock.mockRejectedValue(aborted);
+
+    await expect(apiFetch('/api/me')).rejects.toBe(aborted);
   });
 });
