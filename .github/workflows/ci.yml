@@ -42,9 +42,17 @@ jobs:
         if: always()
         run: npx eslint .
 
+      # Marks each badly formatted file in the check annotations, so no one has to open the log.
       - name: Prettier
         if: always()
-        run: npx prettier --check .
+        run: |
+          set -o pipefail
+          if ! npx prettier --check . 2>&1 | tee prettier.log; then
+            grep '^\[warn\] ' prettier.log | grep -v 'Code style issues' | sed 's/^\[warn\] //' | while read -r file; do
+              echo "::error file=${file},title=Prettier::${file} is not formatted. Run: npx prettier --write ${file}"
+            done
+            exit 1
+          fi
 
       - name: Test
         if: always()
@@ -87,13 +95,19 @@ jobs:
           set -o pipefail
           npm run test:emulator 2>&1 | tee emulator-test.log
 
-      # Puts the end of the output into the check annotations, so a failure is readable without
-      # opening the full log.
-      - name: Summarize failure
-        if: failure()
+      # Puts the end of the output into the check annotations, so the result (and, on a failure, the
+      # reason) is readable without opening the full log.
+      - name: Report emulator results
+        if: always()
         run: |
-          for file in emulator-test.log firebase-debug.log; do
-            [ -f "$file" ] || continue
-            text="$(tail -n 60 "$file" | sed 's/\x1b\[[0-9;]*m//g' | head -c 3500 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\r//g;s/\n/%0A/g')"
-            echo "::error title=Emulator tests: end of $file::${text}"
-          done
+          annotate() { # level, title, file, number of lines
+            [ -f "$3" ] || return 0
+            text="$(tail -n "$4" "$3" | sed 's/\x1b\[[0-9;]*m//g' | head -c 3500 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\r//g;s/\n/%0A/g')"
+            echo "::$1 title=$2::${text}"
+          }
+          if [ "${{ job.status }}" = "success" ]; then
+            annotate notice "Emulator tests passed" emulator-test.log 25
+          else
+            annotate error "Emulator tests: end of the test output" emulator-test.log 60
+            annotate error "Emulator tests: end of firebase-debug.log" firebase-debug.log 40
+          fi

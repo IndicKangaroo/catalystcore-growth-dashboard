@@ -8,8 +8,9 @@ import { bearer } from './testing/fakes';
 
 // The unit tests fake Firebase. This file runs the real wiring (Admin SDK token checks, Firestore
 // transactions) against the Firebase Auth and Firestore emulators, signing in the way the browser
-// does with Google. Run it with `npm run test:emulator` (needs Java); without the emulators the
-// whole file is skipped.
+// does with Google. Run it with `npm run test:emulator` in the repository root, which starts the
+// emulators first (needs Java). It is left out of `npm run test` (see vitest.config.ts), and it
+// fails, rather than skips, when the emulators are not there.
 
 const PROJECT_ID = 'demo-growth';
 const ADMIN_EMAIL = 'admin@example.com';
@@ -65,151 +66,152 @@ async function signInWithGoogle(email: string, name?: string): Promise<string> {
   return body.idToken;
 }
 
-describe.skipIf(!authHost || !firestoreHost)(
-  'signing in against the Firebase emulators',
-  { timeout: 30_000 },
-  () => {
-    let app: Express;
+describe('signing in against the Firebase emulators', () => {
+  let app: Express;
 
-    beforeAll(() => {
-      const config = loadConfig({
-        NODE_ENV: 'test',
-        FIREBASE_PROJECT_ID: PROJECT_ID,
-        ADMIN_EMAIL,
-      });
-      app = createApp(config, createFirebaseDeps(PROJECT_ID));
+  beforeAll(() => {
+    if (!authHost || !firestoreHost) {
+      throw new Error(
+        'The Firebase emulators are not running. Use "npm run test:emulator" in the repository root, which starts them first.',
+      );
+    }
+    const config = loadConfig({
+      NODE_ENV: 'test',
+      FIREBASE_PROJECT_ID: PROJECT_ID,
+      ADMIN_EMAIL,
+    });
+    app = createApp(config, createFirebaseDeps(PROJECT_ID));
+  });
+
+  beforeEach(resetEmulators);
+
+  const get = (path: string, token: string) =>
+    request(app).get(path).set('Authorization', bearer(token));
+
+  it('signs in the first admin and creates their record, even without a Google name', async () => {
+    const token = await signInWithGoogle(ADMIN_EMAIL);
+
+    const res = await get('/api/me', token);
+
+    expect(res.status).toBe(200);
+    expect(res.body.user).toEqual({ email: ADMIN_EMAIL, name: null, role: 'admin' });
+    expect(res.body.permissions).toContain('users:manage');
+  });
+
+  it('copies the Google name on first sign-in', async () => {
+    const token = await signInWithGoogle(ADMIN_EMAIL, 'Ada Admin');
+
+    const res = await get('/api/me', token);
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.name).toBe('Ada Admin');
+  });
+
+  it('keeps one record across sign-ins and remembers the last sign-in', async () => {
+    const token = await signInWithGoogle(ADMIN_EMAIL);
+    await get('/api/me', token);
+    await get('/api/me', token);
+
+    const list = await get('/api/users', token);
+
+    expect(list.status).toBe(200);
+    expect(list.body.users).toHaveLength(1);
+    expect(list.body.users[0].uid).not.toBeNull();
+    expect(list.body.users[0].lastLoginAt).not.toBeNull();
+  });
+
+  it('lets two first sign-ins arrive at the same moment', async () => {
+    const token = await signInWithGoogle(ADMIN_EMAIL);
+
+    const results = await Promise.all([get('/api/me', token), get('/api/me', token)]);
+
+    expect(results.map((res) => res.status)).toEqual([200, 200]);
+    const list = await get('/api/users', token);
+    expect(list.body.users).toHaveLength(1);
+  });
+
+  it('turns away an account that was never invited', async () => {
+    const token = await signInWithGoogle('stranger@example.com');
+
+    const res = await get('/api/me', token);
+
+    expect(res.status).toBe(403);
+    expect(res.body.error.code).toBe('not_invited');
+  });
+
+  it('rejects a token that is not a Firebase ID token', async () => {
+    const res = await get('/api/me', 'not-a-real-token');
+
+    expect(res.status).toBe(401);
+    expect(res.body.error.code).toBe('invalid_token');
+  });
+
+  it('signs in an invited person with their role, and keeps admin pages closed to them', async () => {
+    const adminToken = await signInWithGoogle(ADMIN_EMAIL);
+    await get('/api/me', adminToken);
+
+    const invite = await request(app)
+      .post('/api/users')
+      .set('Authorization', bearer(adminToken))
+      .send({ email: 'Dev@Example.com', role: 'developer' });
+    expect(invite.status).toBe(201);
+    expect(invite.body.user.email).toBe('dev@example.com');
+
+    const devToken = await signInWithGoogle('dev@example.com', 'Dee Veloper');
+    const me = await get('/api/me', devToken);
+    expect(me.status).toBe(200);
+    expect(me.body.user).toEqual({
+      email: 'dev@example.com',
+      name: 'Dee Veloper',
+      role: 'developer',
     });
 
-    beforeEach(resetEmulators);
+    const forbidden = await get('/api/users', devToken);
+    expect(forbidden.status).toBe(403);
+    expect(forbidden.body.error.code).toBe('forbidden');
+  });
 
-    const get = (path: string, token: string) =>
-      request(app).get(path).set('Authorization', bearer(token));
+  it('cuts off a deactivated person on their very next request', async () => {
+    const adminToken = await signInWithGoogle(ADMIN_EMAIL);
+    await get('/api/me', adminToken);
+    await request(app)
+      .post('/api/users')
+      .set('Authorization', bearer(adminToken))
+      .send({ email: 'dev@example.com', role: 'developer' });
+    const devToken = await signInWithGoogle('dev@example.com');
+    expect((await get('/api/me', devToken)).status).toBe(200);
 
-    it('signs in the first admin and creates their record, even without a Google name', async () => {
-      const token = await signInWithGoogle(ADMIN_EMAIL);
+    const patch = await request(app)
+      .patch('/api/users/dev%40example.com')
+      .set('Authorization', bearer(adminToken))
+      .send({ active: false });
+    expect(patch.status).toBe(200);
 
-      const res = await get('/api/me', token);
+    const after = await get('/api/me', devToken);
+    expect(after.status).toBe(403);
+    expect(after.body.error.code).toBe('account_disabled');
+  });
 
-      expect(res.status).toBe(200);
-      expect(res.body.user).toEqual({ email: ADMIN_EMAIL, name: null, role: 'admin' });
-      expect(res.body.permissions).toContain('users:manage');
-    });
-
-    it('copies the Google name on first sign-in', async () => {
-      const token = await signInWithGoogle(ADMIN_EMAIL, 'Ada Admin');
-
-      const res = await get('/api/me', token);
-
-      expect(res.status).toBe(200);
-      expect(res.body.user.name).toBe('Ada Admin');
-    });
-
-    it('keeps one record across sign-ins and remembers the last sign-in', async () => {
-      const token = await signInWithGoogle(ADMIN_EMAIL);
-      await get('/api/me', token);
-      await get('/api/me', token);
-
-      const list = await get('/api/users', token);
-
-      expect(list.status).toBe(200);
-      expect(list.body.users).toHaveLength(1);
-      expect(list.body.users[0].uid).not.toBeNull();
-      expect(list.body.users[0].lastLoginAt).not.toBeNull();
-    });
-
-    it('lets two first sign-ins arrive at the same moment', async () => {
-      const token = await signInWithGoogle(ADMIN_EMAIL);
-
-      const results = await Promise.all([get('/api/me', token), get('/api/me', token)]);
-
-      expect(results.map((res) => res.status)).toEqual([200, 200]);
-      const list = await get('/api/users', token);
-      expect(list.body.users).toHaveLength(1);
-    });
-
-    it('turns away an account that was never invited', async () => {
-      const token = await signInWithGoogle('stranger@example.com');
-
-      const res = await get('/api/me', token);
-
-      expect(res.status).toBe(403);
-      expect(res.body.error.code).toBe('not_invited');
-    });
-
-    it('rejects a token that is not a Firebase ID token', async () => {
-      const res = await get('/api/me', 'not-a-real-token');
-
-      expect(res.status).toBe(401);
-      expect(res.body.error.code).toBe('invalid_token');
-    });
-
-    it('signs in an invited person with their role, and keeps admin pages closed to them', async () => {
-      const adminToken = await signInWithGoogle(ADMIN_EMAIL);
-      await get('/api/me', adminToken);
-
-      const invite = await request(app)
-        .post('/api/users')
+  it('never leaves the dashboard without an active admin', async () => {
+    const adminToken = await signInWithGoogle(ADMIN_EMAIL);
+    await get('/api/me', adminToken);
+    const demote = () =>
+      request(app)
+        .patch('/api/users/admin%40example.com')
         .set('Authorization', bearer(adminToken))
-        .send({ email: 'Dev@Example.com', role: 'developer' });
-      expect(invite.status).toBe(201);
-      expect(invite.body.user.email).toBe('dev@example.com');
+        .send({ role: 'growth' });
 
-      const devToken = await signInWithGoogle('dev@example.com', 'Dee Veloper');
-      const me = await get('/api/me', devToken);
-      expect(me.status).toBe(200);
-      expect(me.body.user).toEqual({
-        email: 'dev@example.com',
-        name: 'Dee Veloper',
-        role: 'developer',
-      });
+    const refused = await demote();
+    expect(refused.status).toBe(409);
+    expect(refused.body.error.code).toBe('last_admin');
 
-      const forbidden = await get('/api/users', devToken);
-      expect(forbidden.status).toBe(403);
-      expect(forbidden.body.error.code).toBe('forbidden');
-    });
+    await request(app)
+      .post('/api/users')
+      .set('Authorization', bearer(adminToken))
+      .send({ email: 'second@example.com', role: 'admin' });
 
-    it('cuts off a deactivated person on their very next request', async () => {
-      const adminToken = await signInWithGoogle(ADMIN_EMAIL);
-      await get('/api/me', adminToken);
-      await request(app)
-        .post('/api/users')
-        .set('Authorization', bearer(adminToken))
-        .send({ email: 'dev@example.com', role: 'developer' });
-      const devToken = await signInWithGoogle('dev@example.com');
-      expect((await get('/api/me', devToken)).status).toBe(200);
-
-      const patch = await request(app)
-        .patch('/api/users/dev%40example.com')
-        .set('Authorization', bearer(adminToken))
-        .send({ active: false });
-      expect(patch.status).toBe(200);
-
-      const after = await get('/api/me', devToken);
-      expect(after.status).toBe(403);
-      expect(after.body.error.code).toBe('account_disabled');
-    });
-
-    it('never leaves the dashboard without an active admin', async () => {
-      const adminToken = await signInWithGoogle(ADMIN_EMAIL);
-      await get('/api/me', adminToken);
-      const demote = () =>
-        request(app)
-          .patch('/api/users/admin%40example.com')
-          .set('Authorization', bearer(adminToken))
-          .send({ role: 'growth' });
-
-      const refused = await demote();
-      expect(refused.status).toBe(409);
-      expect(refused.body.error.code).toBe('last_admin');
-
-      await request(app)
-        .post('/api/users')
-        .set('Authorization', bearer(adminToken))
-        .send({ email: 'second@example.com', role: 'admin' });
-
-      const allowed = await demote();
-      expect(allowed.status).toBe(200);
-      expect(allowed.body.user.role).toBe('growth');
-    });
-  },
-);
+    const allowed = await demote();
+    expect(allowed.status).toBe(200);
+    expect(allowed.body.user.role).toBe('growth');
+  });
+});
