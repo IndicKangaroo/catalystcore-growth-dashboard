@@ -42,6 +42,7 @@ npm run dev:web | dev:api   # one side only
 npm run typecheck           # tsc across workspaces
 npm run lint                # eslint + prettier check
 npm run test                # vitest
+npm run test:emulator       # sign-in against the real Auth + Firestore emulators (needs Java)
 npm run test:e2e            # (P9) playwright (needs emulators)
 npm run emulators           # firebase auth + firestore emulators (needs Java; see README)
 npm run ga4:check -- <propertyId>   # (P4) verify service account access to a GA4 property
