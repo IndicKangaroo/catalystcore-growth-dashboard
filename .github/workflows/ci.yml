@@ -59,3 +59,41 @@ jobs:
         run: |
           echo "::error title=Lockfile out of date::package-lock.json does not match package.json. Run npm install and commit the updated package-lock.json."
           exit 1
+
+  # Signs in against the real Firebase Auth and Firestore emulators. The unit tests fake both, so
+  # this is what proves the wiring between them works (D-026). Needs Java for the Firestore emulator.
+  emulator-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # The "check" job is the one that reports an out-of-date lockfile; a plain install is enough here.
+      - name: Install
+        run: npm ci || npm install
+
+      - name: Sign-in tests against the emulators
+        run: |
+          set -o pipefail
+          npm run test:emulator 2>&1 | tee emulator-test.log
+
+      # Puts the end of the output into the check annotations, so a failure is readable without
+      # opening the full log.
+      - name: Summarize failure
+        if: failure()
+        run: |
+          for file in emulator-test.log firebase-debug.log; do
+            [ -f "$file" ] || continue
+            text="$(tail -n 60 "$file" | sed 's/\x1b\[[0-9;]*m//g' | head -c 3500 | sed 's/%/%25/g' | sed ':a;N;$!ba;s/\r//g;s/\n/%0A/g')"
+            echo "::error title=Emulator tests: end of $file::${text}"
+          done

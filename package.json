@@ -19,6 +19,7 @@
     "lint": "eslint . && prettier --check .",
     "format": "prettier --write .",
     "test": "npm run test --workspaces --if-present",
+    "test:emulator": "npx --yes firebase-tools emulators:exec --only auth,firestore --project demo-growth \"npm run test:emulator -w @growth/api\"",
     "emulators": "npx --yes firebase-tools emulators:start --only auth,firestore --project demo-growth"
   },
   "devDependencies": {
