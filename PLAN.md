@@ -42,6 +42,7 @@ It is not a Firebase viewer. It joins Firebase/GA4 app analytics with manually e
 catalystcore-growth/
   PLAN.md  DECISIONS.md  AGENTS.md  README.md
   docs/PRD.md                      # copy of the requirements doc
+  docs/design/                     # the requester's UI design export (D-030)
   apps/
     web/                           # React app
       src/
@@ -134,7 +135,9 @@ Global query params on every read: `from`, `to`, `appIds`, `platform`, `campaign
 
 Global: filter bar (date range, app, platform, campaign, content type) synced to the URL; light/dark toggle.
 
-## 9. UI direction (proposal)
+## 9. UI direction
+
+**Source of truth: the requester's design export in `docs/design` (D-030).** It decides the look and the shell; the PRD decides what is in V1. The notes below are the earlier defaults and still hold where the design is silent.
 
 - **Look:** calm, dense-but-readable analytics UI. Neutral slate surfaces, one accent (indigo), generous whitespace, thin borders, no glow or gradient decoration.
 - **Themes:** light and dark via CSS variables on `:root` / `[data-theme]`; toggle in the header; respects `prefers-color-scheme`; saved in localStorage.

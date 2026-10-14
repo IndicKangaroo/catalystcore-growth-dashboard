@@ -4,7 +4,7 @@ This repo is the CatalystCore Growth Analytics dashboard. Read this file first, 
 
 ## Start of every session
 
-1. Read `AGENTS.md`, `PLAN.md` (find the current phase), `DECISIONS.md`.
+1. Read `AGENTS.md`, `PLAN.md` (find the current phase), `DECISIONS.md`. For UI work also read `docs/design/README.md` (the requester's design, D-030).
 2. Run `git status` and `git log -5` to see where things stand.
 3. Work on the current phase only. If a task needs a decision that isn't logged, ask the user or log it as `proposed` in `DECISIONS.md`.
 
@@ -55,7 +55,7 @@ npm run build               # build all
 - Validate every request body, query and env with Zod. Return consistent errors: `{ error: { code, message } }`.
 - Prefer small pure functions for metric math (retention, attribution classification) with unit tests.
 - Frontend: feature folders; server state via TanStack Query; filters live in the URL query string.
-- Styling: Tailwind with CSS-variable tokens for both themes. No hard-coded colors; check light and dark.
+- Styling: Tailwind with CSS-variable tokens for both themes. No hard-coded colors; check light and dark. The look follows `docs/design` (D-030); where the design shows something outside V1 or against the product rules above, build the rules, not the picture.
 - Components that show attribution must use `ProvenanceBadge`. Charts use the shared theme and colorblind-safe palette.
 - Accessibility: keyboard reachable controls, visible focus, labels on inputs, contrast in both themes, information never conveyed by color alone.
 - Dates: store UTC ISO strings; day bucketing uses `Asia/Kolkata` (see D-014).
