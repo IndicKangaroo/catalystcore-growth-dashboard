@@ -8,12 +8,14 @@
     "build": "tsup",
     "start": "node dist/index.js",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:emulator": "vitest run --config vitest.emulator.config.ts"
   },
   "dependencies": {
     "@growth/shared": "*",
     "cors": "^2.8.5",
     "express": "^5.1.0",
+    "firebase-admin": "^13.0.0",
     "helmet": "^8.0.0",
     "zod": "^3.25.0"
   },

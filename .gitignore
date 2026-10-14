@@ -11,6 +11,8 @@ coverage/
 service-account*.json
 *-service-account.json
 *-key.json
+# The file name Firebase gives a downloaded Admin SDK key, in case one lands in the repository.
+*firebase-adminsdk*.json
 
 # OS / editor
 .DS_Store

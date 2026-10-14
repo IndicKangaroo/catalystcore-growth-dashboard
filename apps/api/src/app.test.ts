@@ -3,23 +3,30 @@ import { describe, expect, it } from 'vitest';
 import { createApp } from './app';
 import { ConfigError, loadConfig } from './lib/config';
 
+// No Firebase dependencies: this is how the API runs before sign-in has been configured.
 const app = createApp(loadConfig({ NODE_ENV: 'test' }));
 
 describe('GET /api/health', () => {
-  it('reports ok and the active analytics provider', async () => {
+  it('is public and reports the active analytics provider', async () => {
     const res = await request(app).get('/api/health');
     expect(res.status).toBe(200);
     expect(res.body).toEqual({ status: 'ok', provider: 'seed' });
   });
 });
 
+describe('when sign-in is not configured', () => {
+  it('answers 503 with the standard error shape on protected routes', async () => {
+    const res = await request(app).get('/api/me');
+    expect(res.status).toBe(503);
+    expect(res.body.error.code).toBe('auth_not_configured');
+  });
+});
+
 describe('error handling', () => {
-  it('returns the consistent error shape for unknown routes', async () => {
-    const res = await request(app).get('/api/nope');
+  it('returns the consistent error shape for unknown routes outside /api', async () => {
+    const res = await request(app).get('/nope');
     expect(res.status).toBe(404);
-    expect(res.body).toEqual({
-      error: { code: 'not_found', message: 'No route for GET /api/nope' },
-    });
+    expect(res.body).toEqual({ error: { code: 'not_found', message: 'No route for GET /nope' } });
   });
 
   it('returns 400 with the error shape for malformed JSON', async () => {

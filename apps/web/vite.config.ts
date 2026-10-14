@@ -4,6 +4,9 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  // One .env at the repository root serves both apps. Only variables starting with VITE_ reach
+  // the browser, so server settings in the same file stay private.
+  envDir: '../..',
   server: {
     port: 5173,
     // In development the API runs on its own port; same-origin calls to /api are proxied to it.

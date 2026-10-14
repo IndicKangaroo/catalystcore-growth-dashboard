@@ -12,8 +12,11 @@
   },
   "dependencies": {
     "@growth/shared": "*",
+    "@tanstack/react-query": "^5.60.0",
+    "firebase": "^11.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.0"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.0",
