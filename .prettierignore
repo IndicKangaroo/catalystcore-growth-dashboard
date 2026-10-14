@@ -3,3 +3,6 @@ dist
 coverage
 package-lock.json
 *.md
+
+# Design export from Stitch (reference HTML): not formatted by Prettier, not part of the build.
+docs/design/

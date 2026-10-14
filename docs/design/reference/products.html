@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary":"#ffffff","inverse-on-surface":"#eef0ff","on-tertiary-fixed":"#2f1500","surface-tint":"#4d44e3","primary":"#3525cd","on-tertiary-container":"#ffd2b1","error":"#ba1a1a","on-secondary-fixed-variant":"#005049","outline":"#777587","surface-variant":"#dae2fd","primary-container":"#4f46e5","on-secondary-container":"#006f66","secondary-container":"#86f2e4","surface":"#faf8ff","surface-bright":"#faf8ff","on-primary-fixed-variant":"#3323cc","inverse-primary":"#c3c0ff","on-secondary-fixed":"#00201d","tertiary":"#703a00","on-primary":"#ffffff","tertiary-fixed":"#ffdcc3","error-container":"#ffdad6","on-primary-fixed":"#0f0069","on-surface":"#131b2e","secondary":"#006a61","on-surface-variant":"#464555","surface-container-lowest":"#ffffff","tertiary-container":"#934e00","inverse-surface":"#283044","on-secondary":"#ffffff","primary-fixed":"#e2dfff","primary-fixed-dim":"#c3c0ff","surface-container-highest":"#dae2fd","surface-container":"#eaedff","tertiary-fixed-dim":"#ffb77d","secondary-fixed":"#89f5e7","on-primary-container":"#dad7ff","on-error":"#ffffff","outline-variant":"#c7c4d8","surface-container-low":"#f2f3ff","on-background":"#131b2e","background":"#faf8ff","surface-container-high":"#e2e7ff","surface-dim":"#d2d9f4","on-tertiary-fixed-variant":"#6e3900","on-error-container":"#93000a","secondary-fixed-dim":"#6bd8cb"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","space-lg":"1.25rem","space-xl":"2rem","gutter-desktop":"1.5rem","margin-desktop":"2rem","margin":"1rem","space-sm":"0.5rem","gutter":"1rem","space-md":"0.75rem"},"fontFamily":{"display-lg":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"label-md":["Inter"],"metric-stat":["Inter"],"headline-lg":["Inter"],"display-lg-mobile":["Inter"],"label-mono":["JetBrains Mono"],"caption":["Inter"],"body-lg":["Inter"],"body-md":["Inter"]},"fontSize":{"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"500"}],"metric-stat":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"display-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-mono":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"400"}],"caption":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"500"}],"body-lg":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-14 px-space-md border-b border-outline-variant/30 flex items-center gap-space-sm"><img alt="CatalystCore Studios Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UO5tFmC1jmHZIpjl2ZwHhPTGRCAXEpfOAqeXXSpvKFZYiU_mqk-65S5EC9sqeVjj54KKKoIePndMbN14HoI69KVTBO_ZRkWmLMRMXw2ebQeO_OEK00FAd_NXDvTh5DzGPyX4p-CXZTo-z35W40HKOjo_g7SKuId_C8fX1G6KVvuJAUcmaroyzrr_ndQ4WkZDQ3QDbCnTmKVmX6vfF9xO5heW5o4VUsNQKvFQS21FzrJd8JfFPTNpP1JroR"/><div class="flex flex-col min-w-0 leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">CatalystCore</span><span class="font-caption text-caption text-on-surface-variant flex items-center gap-1"><span class="text-primary font-medium">Studios</span><span class="px-1 py-0.5 rounded bg-surface-container-high text-on-surface font-caption text-[10px] font-semibold uppercase tracking-wider">Analytics</span></span></div></div><div class="p-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-medium rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span>Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="products" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span>Products</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="audience" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>Audience</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="retention" href="#"><span class="material-symbols-outlined text-[18px]">timelapse</span><span>Retention</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="revenue" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span>Revenue</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="quality-and-stability" href="#"><span class="material-symbols-outlined text-[18px]">health_and_safety</span><span>Quality &amp; Stability</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="reports" href="#"><span class="material-symbols-outlined text-[18px]">assessment</span><span>Reports</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">tune</span><span>Settings</span></a></nav></div></div><div class="p-space-sm border-t border-outline-variant/30 bg-surface/50 flex flex-col gap-2"><div class="flex items-center gap-2 px-space-xs py-1"><span class="w-2 h-2 rounded-full bg-secondary shrink-0 animate-pulse"></span><span class="font-caption text-caption text-on-surface-variant truncate">All sources healthy • 12m ago</span></div><div class="flex items-center justify-between px-space-xs font-label-mono text-label-mono text-[11px] text-on-surface-variant"><span class="font-medium">CatalystCore OS</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface">v1.0.4</span></div></div></aside><div class="pl-60"><header class="fixed top-0 left-60 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"><span class="font-label-md text-label-md font-semibold text-on-surface">CatalystCore Studios</span><span class="text-outline-variant">/</span><span class="text-primary font-medium">Overview</span></div><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="hidden xl:flex items-center gap-1.5 px-2 py-0.5 rounded border border-outline-variant/40 bg-surface font-caption text-caption text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-secondary">cloud_done</span><span>Firebase &amp; Play Console Synced 12m ago</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant/30"><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 7 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface font-semibold shadow-xs transition-colors" type="button">Last 30 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 90 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Custom</button></div><label class="hidden md:flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/><span class="text-xs select-none">Compare: Previous period</span></label><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="flex items-center gap-space-sm"><button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="flex items-center gap-2 pl-1"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwa77A-RqXesBZpE2OEnWWMeMPiypbLCE7SzWKRpSgpmABd2mNNmtYfiGCPcVlKaynncOWORc2bDG1I1TyWd3wNe0DHxAp5YPHi4qznBkqyrfPWyW-gPVNPUpO3Rrpi8yBe9I4h6ZGYx7gTiC--IIHs1HSMIGmX6UHuYqjaQu-Ch0U-sqsYaM1dxXmSP__dSOfFNW21-uRUZjSf8pWbh8xM-jEUmlsrjw6pGC-q0eCFchYSzQMCjnGVg"/><div class="hidden sm:flex flex-col leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">Alex Vance</span><span class="font-caption text-caption text-on-surface-variant">Founder</span></div></div></div></div></header><main class="relative pt-14 w-full px-gutter-desktop min-h-screen bg-background"><div class="flex flex-col w-full pb-16">
+<!-- Interactive State Sync Script -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Sync Sidebar Active State
+      const currentPath = 'products';
+      document.querySelectorAll('aside nav a').forEach(a => {
+        if (a.getAttribute('data-path') === currentPath) {
+          a.className = 'flex items-center gap-space-sm px-space-sm py-2 rounded-lg bg-primary-container text-on-primary font-medium shadow-sm transition-colors';
+        } else {
+          a.className = 'flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors';
+        }
+      });
+
+      // Update Shell Breadcrumb
+      const breadcrumbTrailing = document.querySelector('header span.text-primary');
+      if (breadcrumbTrailing) {
+        breadcrumbTrailing.textContent = 'Products';
+      }
+    });
+
+    function toggleView(mode) {
+      const tableView = document.getElementById('product-table-view');
+      const gridView = document.getElementById('product-grid-view');
+      const btnTable = document.getElementById('view-toggle-table');
+      const btnGrid = document.getElementById('view-toggle-grid');
+
+      if (mode === 'grid') {
+        tableView.classList.add('hidden');
+        gridView.classList.remove('hidden');
+        btnGrid.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs', 'font-semibold');
+        btnGrid.classList.remove('text-on-surface-variant');
+        btnTable.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs', 'font-semibold');
+        btnTable.classList.add('text-on-surface-variant');
+      } else {
+        gridView.classList.add('hidden');
+        tableView.classList.remove('hidden');
+        btnTable.classList.add('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs', 'font-semibold');
+        btnTable.classList.remove('text-on-surface-variant');
+        btnGrid.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'shadow-xs', 'font-semibold');
+        btnGrid.classList.add('text-on-surface-variant');
+      }
+    }
+
+    function filterProducts(filterType, element) {
+      document.querySelectorAll('#filter-pills button').forEach(btn => {
+        btn.classList.remove('bg-primary-container', 'text-on-primary', 'font-medium');
+        btn.classList.add('bg-surface-container-lowest', 'text-on-surface-variant', 'border-surface-container-high');
+      });
+      element.classList.remove('bg-surface-container-lowest', 'text-on-surface-variant', 'border-surface-container-high');
+      element.classList.add('bg-primary-container', 'text-on-primary', 'font-medium');
+
+      const rows = document.querySelectorAll('.product-row-item');
+      rows.forEach(row => {
+        const status = row.getAttribute('data-status');
+        if (filterType === 'all' || status === filterType) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+  </script>
+<!-- Notice Banner: Telemetry Active -->
+<div class="mt-4 mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-surface-container-low shadow-sm">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-secondary/10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">
+<span class="font-semibold text-on-surface">Sample studio dataset active:</span> Telemetry feeds calculated from integrated Firebase Analytics and Google Play Developer API pipelines.
+      </p>
+</div>
+<div class="flex items-center gap-2 self-end sm:self-auto shrink-0 font-label-mono text-caption text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-secondary inline-block"></span>
+<span>Live Pipeline Engine • Latency: 140ms</span>
+</div>
+</div>
+<!-- Page Header -->
+<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-6">
+<div class="flex flex-col gap-1 max-w-3xl">
+<div class="flex items-center gap-2">
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight">Products</h1>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-mono text-caption font-semibold">5 Registered</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+        Manage telemetry integrations, review live app performance, and compare studio assets across Firebase &amp; Google Play Console pipelines.
+      </p>
+</div>
+<!-- Top Action Controls -->
+<div class="flex items-center flex-wrap gap-2.5">
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-lowest text-on-surface shadow-xs hover:bg-surface-container-low transition-colors font-label-md text-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">file_download</span>
+<span>Export Catalog</span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-surface-container-lowest text-on-surface shadow-xs hover:bg-surface-container-low transition-colors font-label-md text-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">compare_arrows</span>
+<span>Compare Selected <span class="px-1.5 py-0.2 rounded bg-surface-container-high text-primary font-label-mono text-[11px]">2</span></span>
+</button>
+<button class="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-primary-container text-on-primary shadow-sm hover:opacity-95 transition-all font-label-md text-label-md font-semibold" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Add New Product</span>
+</button>
+</div>
+</div>
+<!-- Summary Metric Ribbon (4 compact KPI cards) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+<!-- Card 1: Total Apps -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium tracking-wide">Studio Portfolio</span>
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant/80">layers</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight">4 Apps</span>
+<span class="font-caption text-caption text-on-surface-variant">(+1 Archived)</span>
+</div>
+<div class="mt-2.5 pt-2.5 flex items-center justify-between font-caption text-caption text-on-surface-variant bg-surface-container-low/50 px-2 py-1 rounded-md">
+<span class="flex items-center gap-1.5 text-secondary font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> 3 Connected
+        </span>
+<span class="flex items-center gap-1.5 text-tertiary-container font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary-container"></span> 1 Needs Setup
+        </span>
+</div>
+</div>
+<!-- Card 2: Collective Active Users -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium tracking-wide">Collective Active Users (30d)</span>
+<span class="material-symbols-outlined text-[18px] text-primary">groups</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight">42,850</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[11px] font-semibold bg-secondary/10 text-secondary">
+<span class="material-symbols-outlined text-[12px]">trending_up</span>+14.2%
+        </span>
+</div>
+<div class="mt-2.5 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Prev: 37,520 users</span>
+<span class="font-label-mono text-[11px] text-secondary">DAU/MAU 38.4%</span>
+</div>
+</div>
+<!-- Card 3: Monitored Revenue -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium tracking-wide">Monitored Revenue (30d)</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">monetization_on</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight">$3,428.50</span>
+<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[11px] font-semibold bg-secondary/10 text-secondary">
+<span class="material-symbols-outlined text-[12px]">trending_up</span>+8.1%
+        </span>
+</div>
+<div class="mt-2.5 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>$1,748 IAP • $1,680 Ads</span>
+<span class="font-label-mono text-[11px] text-on-surface">ARPU $0.08</span>
+</div>
+</div>
+<!-- Card 4: Pipeline Health -->
+<div class="p-4 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium tracking-wide">Sync Health &amp; Ingestion</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">sync_saved_locally</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+          Pipelines Healthy
+        </span>
+</div>
+<div class="mt-2.5 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Sync interval: 15m</span>
+<span class="font-label-mono text-[11px]">Synced 12m ago</span>
+</div>
+</div>
+</div>
+<!-- Filter & Search Bar Toolbar -->
+<div class="p-3 bg-surface-container-lowest rounded-xl shadow-sm mb-4 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
+<!-- Left: Search and Pills -->
+<div class="flex flex-col sm:flex-row sm:items-center gap-3 flex-1 min-w-0">
+<!-- Search Input -->
+<div class="relative min-w-[260px] max-w-sm flex-1">
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[18px]">search</span>
+<input class="w-full h-9 pl-9 pr-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder:text-on-surface-variant/70" placeholder="Search by app name, package id, or platform..." type="text"/>
+</div>
+<!-- Filter tabs / pills -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0" id="filter-pills">
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-medium transition-colors shrink-0" onclick="filterProducts('all', this)">
+          All (5)
+        </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors shrink-0" onclick="filterProducts('connected', this)">
+          Connected (3)
+        </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors shrink-0" onclick="filterProducts('needs_setup', this)">
+          Needs Setup (1)
+        </button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant hover:text-on-surface font-label-md text-label-md transition-colors shrink-0" onclick="filterProducts('unavailable', this)">
+          Unavailable (1)
+        </button>
+</div>
+</div>
+<!-- Right: Dropdowns and View Switch -->
+<div class="flex items-center gap-2.5 shrink-0 self-end lg:self-auto">
+<!-- Platform Dropdown -->
+<div class="relative">
+<select class="h-9 px-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option>All Platforms (Android, iOS Beta)</option>
+<option>Android (Google Play)</option>
+<option>iOS (TestFlight / App Store)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-on-surface-variant text-[16px] pointer-events-none">expand_more</span>
+</div>
+<!-- Sort Dropdown -->
+<div class="relative">
+<select class="h-9 px-3 pr-8 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/20">
+<option>Sort by: Highest Active Users</option>
+<option>Sort by: Revenue (30d)</option>
+<option>Sort by: Crash-Free Rate</option>
+<option>Sort by: Recently Synced</option>
+</select>
+<span class="material-symbols-outlined absolute right-2.5 top-2.5 text-on-surface-variant text-[16px] pointer-events-none">swap_vert</span>
+</div>
+<!-- View Switch Toggle -->
+<div class="flex items-center p-0.5 rounded-lg bg-surface-container-low">
+<button class="p-1.5 rounded-md bg-surface-container-lowest text-on-surface shadow-xs transition-colors" id="view-toggle-table" onclick="toggleView('table')" title="Table View" type="button">
+<span class="material-symbols-outlined text-[18px]">table_rows</span>
+</button>
+<button class="p-1.5 rounded-md text-on-surface-variant hover:text-on-surface transition-colors" id="view-toggle-grid" onclick="toggleView('grid')" title="Grid View" type="button">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TABLE VIEW -->
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-8" id="product-table-view">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[1100px]">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-md text-[11px] tracking-wider uppercase font-semibold">
+<th class="py-3 px-4 w-10 text-center">
+<input class="rounded w-3.5 h-3.5 text-primary accent-primary cursor-pointer" type="checkbox"/>
+</th>
+<th class="py-3 px-4">Application &amp; Package</th>
+<th class="py-3 px-4">Pipeline Status</th>
+<th class="py-3 px-4 text-right">Active Users (30d)</th>
+<th class="py-3 px-4 text-right">New Users</th>
+<th class="py-3 px-4 text-right">Revenue (30d)</th>
+<th class="py-3 px-4">Retention (D1/D7/D30)</th>
+<th class="py-3 px-4 text-right">Stability</th>
+<th class="py-3 px-4 text-right">Last Sync</th>
+<th class="py-3 px-4 text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: Grind Quest -->
+<tr class="product-row-item hover:bg-surface-container-low/40 transition-colors" data-status="connected">
+<td class="py-3.5 px-4 text-center">
+<input checked="" class="rounded w-3.5 h-3.5 text-primary accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-headline-sm font-semibold shadow-xs shrink-0">
+<span class="material-symbols-outlined text-[20px]">sports_esports</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface hover:text-primary cursor-pointer">Grind Quest</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-mono text-[10px]">v1.2.0</span>
+</div>
+<span class="font-label-mono text-caption text-on-surface-variant truncate">com.catalystcore.grindquest</span>
+<div class="flex items-center gap-1.5 text-caption text-on-surface-variant/80 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-secondary">android</span>
+<span>Android (Play)</span>
+<span>•</span>
+<span class="material-symbols-outlined text-[13px] text-primary">phone_iphone</span>
+<span>iOS TestFlight</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span>
+                Connected
+              </span>
+<div class="flex items-center gap-1 text-[11px] text-on-surface-variant mt-1">
+<span>Firebase</span>•<span>Play</span>•<span>AdMob</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface">26,400</span>
+<span class="text-secondary font-label-mono text-[11px] font-semibold">+15.8%</span>
+</div>
+<!-- Inline Mini Sparkline (Under 2KB SVG) -->
+<svg class="w-16 h-4 text-secondary mt-1" fill="none" viewbox="0 0 64 16">
+<path d="M1 14L10 12L20 13L30 8L40 9L50 4L63 2" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-body-sm font-medium">7,820</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface">$2,180.00</span>
+<span class="text-caption text-on-surface-variant">$1,420 IAP • $760 Ads</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 w-36">
+<div class="flex justify-between font-label-mono text-[11px] text-on-surface-variant">
+<span>D1: 44%</span>
+<span>D7: 19%</span>
+<span>D30: 9.2%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container flex overflow-hidden">
+<div class="bg-primary h-full" style="width: 44%"></div>
+<div class="bg-secondary h-full" style="width: 19%"></div>
+<div class="bg-surface-variant h-full" style="width: 9.2%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-label-mono text-body-sm font-semibold text-secondary">99.85%</span>
+<span class="text-[11px] text-secondary font-medium">Optimal</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-caption text-on-surface-variant">12m ago</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1.5">
+<a class="px-2.5 py-1 rounded-md bg-surface-container text-primary hover:bg-primary-container hover:text-on-primary font-label-md text-label-md font-semibold transition-colors whitespace-nowrap" href="#">
+                  View Analytics →
+                </a>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2: PDF & Image Toolkit -->
+<tr class="product-row-item hover:bg-surface-container-low/40 transition-colors" data-status="connected">
+<td class="py-3.5 px-4 text-center">
+<input checked="" class="rounded w-3.5 h-3.5 text-primary accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-secondary text-on-secondary flex items-center justify-center font-headline-sm font-semibold shadow-xs shrink-0">
+<span class="material-symbols-outlined text-[20px]">picture_as_pdf</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface hover:text-primary cursor-pointer">PDF &amp; Image Toolkit</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-mono text-[10px]">v2.0.4</span>
+</div>
+<span class="font-label-mono text-caption text-on-surface-variant truncate">com.catalystcore.pdftoolkit</span>
+<div class="flex items-center gap-1.5 text-caption text-on-surface-variant/80 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-secondary">android</span>
+<span>Android (Google Play)</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Connected
+              </span>
+<div class="flex items-center gap-1 text-[11px] text-on-surface-variant mt-1">
+<span>Firebase</span>•<span>Play Console</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface">11,200</span>
+<span class="text-secondary font-label-mono text-[11px] font-semibold">+9.4%</span>
+</div>
+<svg class="w-16 h-4 text-secondary mt-1" fill="none" viewbox="0 0 64 16">
+<path d="M1 12L12 11L24 13L36 7L48 8L63 3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-body-sm font-medium">3,410</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface">$920.50</span>
+<span class="text-caption text-on-surface-variant">AdMob Rewarded &amp; Banner</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 w-36">
+<div class="flex justify-between font-label-mono text-[11px] text-on-surface-variant">
+<span>D1: 38%</span>
+<span>D7: 14%</span>
+<span>D30: 6.1%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container flex overflow-hidden">
+<div class="bg-primary h-full" style="width: 38%"></div>
+<div class="bg-secondary h-full" style="width: 14%"></div>
+<div class="bg-surface-variant h-full" style="width: 6.1%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-label-mono text-body-sm font-semibold text-secondary">99.91%</span>
+<span class="text-[11px] text-secondary font-medium">Optimal</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-caption text-on-surface-variant">18m ago</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1.5">
+<a class="px-2.5 py-1 rounded-md bg-surface-container text-primary hover:bg-primary-container hover:text-on-primary font-label-md text-label-md font-semibold transition-colors whitespace-nowrap" href="#">
+                  View Analytics →
+                </a>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3: ID Photo Maker -->
+<tr class="product-row-item hover:bg-surface-container-low/40 transition-colors" data-status="connected">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded w-3.5 h-3.5 text-primary accent-primary cursor-pointer" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-inverse-surface text-inverse-on-surface flex items-center justify-center font-headline-sm font-semibold shadow-xs shrink-0">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface hover:text-primary cursor-pointer">ID Photo Maker</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-label-mono text-[10px]">v1.0.8</span>
+</div>
+<span class="font-label-mono text-caption text-on-surface-variant truncate">com.catalystcore.idphotomaker</span>
+<div class="flex items-center gap-1.5 text-caption text-on-surface-variant/80 mt-0.5">
+<span class="material-symbols-outlined text-[13px] text-secondary">android</span>
+<span>Android (Google Play)</span>
+</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                Connected
+              </span>
+<div class="flex items-center gap-1 text-[11px] text-on-surface-variant mt-1">
+<span>Firebase</span>•<span>Play Console</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface">5,250</span>
+<span class="text-secondary font-label-mono text-[11px] font-semibold">+4.2%</span>
+</div>
+<svg class="w-16 h-4 text-secondary mt-1" fill="none" viewbox="0 0 64 16">
+<path d="M1 10L14 11L28 9L42 10L52 6L63 4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-body-sm font-medium">1,180</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface">$328.00</span>
+<span class="text-caption text-on-surface-variant">In-app Premium unlock</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex flex-col gap-1 w-36">
+<div class="flex justify-between font-label-mono text-[11px] text-on-surface-variant">
+<span>D1: 35%</span>
+<span>D7: 12%</span>
+<span>D30: 5.4%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container flex overflow-hidden">
+<div class="bg-primary h-full" style="width: 35%"></div>
+<div class="bg-secondary h-full" style="width: 12%"></div>
+<div class="bg-surface-variant h-full" style="width: 5.4%"></div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex flex-col items-end">
+<span class="font-label-mono text-body-sm font-semibold text-on-surface">99.70%</span>
+<span class="text-[11px] text-on-surface-variant font-medium">Healthy</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-caption text-on-surface-variant">35m ago</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-1.5">
+<a class="px-2.5 py-1 rounded-md bg-surface-container text-primary hover:bg-primary-container hover:text-on-primary font-label-md text-label-md font-semibold transition-colors whitespace-nowrap" href="#">
+                  View Analytics →
+                </a>
+<button class="p-1 rounded text-on-surface-variant hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4: Habit Minimalist (Needs Setup) -->
+<tr class="product-row-item hover:bg-surface-container-low/40 transition-colors bg-tertiary-fixed/10" data-status="needs_setup">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded w-3.5 h-3.5 text-on-surface-variant opacity-40 cursor-not-allowed" disabled="" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-tertiary-container text-on-tertiary flex items-center justify-center font-headline-sm font-semibold shadow-xs shrink-0">
+<span class="material-symbols-outlined text-[20px]">checklist</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface">Habit Minimalist</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-mono text-[10px]">v0.9.0-rc</span>
+</div>
+<span class="font-label-mono text-caption text-on-surface-variant truncate">com.catalystcore.habit</span>
+<span class="text-caption text-tertiary-container font-medium mt-0.5">Upcoming / Staging Release</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium bg-tertiary-fixed text-on-tertiary-fixed-variant">
+<span class="material-symbols-outlined text-[14px]">warning</span>
+                Needs Setup
+              </span>
+<div class="text-[11px] text-tertiary-container mt-1">
+                Pending Firebase JSON upload
+              </div>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-on-surface-variant">—</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-on-surface-variant">—</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-on-surface-variant">—</td>
+<td class="py-3.5 px-4">
+<span class="font-caption text-caption text-on-surface-variant italic">Awaiting SDK connection</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-caption text-on-surface-variant">Ready for sync</span>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-caption text-on-surface-variant">Never</td>
+<td class="py-3.5 px-4 text-center">
+<div class="flex items-center justify-center gap-2">
+<button class="px-2.5 py-1 rounded-md bg-tertiary-container text-on-tertiary hover:opacity-90 font-label-md text-label-md font-semibold transition-opacity whitespace-nowrap shadow-xs" type="button">
+                  Connect SDK
+                </button>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Docs</a>
+</div>
+</td>
+</tr>
+<!-- Row 5: Focus Flow Timer (Data Unavailable) -->
+<tr class="product-row-item hover:bg-surface-container-low/40 transition-colors opacity-75" data-status="unavailable">
+<td class="py-3.5 px-4 text-center">
+<input class="rounded w-3.5 h-3.5 text-on-surface-variant opacity-30 cursor-not-allowed" disabled="" type="checkbox"/>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center font-headline-sm font-semibold shadow-xs shrink-0">
+<span class="material-symbols-outlined text-[20px]">timer_off</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-2">
+<span class="font-headline-sm text-body-lg font-semibold text-on-surface-variant line-through">Focus Flow Timer</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-mono text-[10px]">Archived v0.4</span>
+</div>
+<span class="font-label-mono text-caption text-on-surface-variant truncate">com.catalystcore.focusflow</span>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-md text-[11px] font-medium bg-surface-container-high text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">error_outline</span>
+                Data Unavailable
+              </span>
+<div class="text-[11px] text-error mt-1 truncate max-w-[130px]" title="Play Console API token expired">
+                API Token Expired
+              </div>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-caption text-caption text-on-surface-variant cursor-help" title="API Credentials expired on Nov 14. Reconnect in Settings.">
+                Unavailable ℹ️
+              </span>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-on-surface-variant">—</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-on-surface-variant">—</td>
+<td class="py-3.5 px-4">
+<span class="font-caption text-caption text-on-surface-variant">Pipeline disconnected</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<span class="font-label-mono text-caption text-error font-medium">Stale Token</span>
+</td>
+<td class="py-3.5 px-4 text-right font-label-mono text-caption text-on-surface-variant">14d ago</td>
+<td class="py-3.5 px-4 text-center">
+<button class="px-2.5 py-1 rounded-md bg-surface-container-high text-primary hover:bg-primary-container hover:text-on-primary font-label-md text-label-md font-semibold transition-colors whitespace-nowrap" type="button">
+                Reconnect Source
+              </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- GRID VIEW (Initially hidden, togglable) -->
+<div class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8" id="product-grid-view">
+<!-- Grid Card 1 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-primary-container text-on-primary flex items-center justify-center font-headline-lg shadow-xs">
+<span class="material-symbols-outlined text-[24px]">sports_esports</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Grind Quest</h3>
+<p class="font-label-mono text-caption text-on-surface-variant">v1.2.0 • Android / iOS Beta</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Live
+          </span>
+</div>
+<p class="font-label-mono text-[11px] text-on-surface-variant mb-4 bg-surface-container-low p-1.5 rounded">com.catalystcore.grindquest</p>
+<div class="grid grid-cols-2 gap-3 pt-2 mb-4 border-t border-surface-container-low">
+<div>
+<span class="font-caption text-caption text-on-surface-variant">Active (30d)</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">26,400 <span class="text-secondary text-[11px] font-semibold">+15.8%</span></p>
+</div>
+<div>
+<span class="font-caption text-caption text-on-surface-variant">Revenue (30d)</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">$2,180.00</p>
+</div>
+</div>
+<div class="flex items-center justify-between text-caption text-on-surface-variant mb-2">
+<span>Crash-Free: <strong class="text-secondary font-label-mono">99.85%</strong></span>
+<span>D7: <strong class="text-on-surface font-label-mono">19%</strong></span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between border-t border-surface-container-low">
+<span class="font-label-mono text-caption text-on-surface-variant">Synced 12m ago</span>
+<a class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-semibold" href="#">View Analytics →</a>
+</div>
+</div>
+<!-- Grid Card 2 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-secondary text-on-secondary flex items-center justify-center font-headline-lg shadow-xs">
+<span class="material-symbols-outlined text-[24px]">picture_as_pdf</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">PDF &amp; Image Toolkit</h3>
+<p class="font-label-mono text-caption text-on-surface-variant">v2.0.4 • Android</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Live
+          </span>
+</div>
+<p class="font-label-mono text-[11px] text-on-surface-variant mb-4 bg-surface-container-low p-1.5 rounded">com.catalystcore.pdftoolkit</p>
+<div class="grid grid-cols-2 gap-3 pt-2 mb-4 border-t border-surface-container-low">
+<div>
+<span class="font-caption text-caption text-on-surface-variant">Active (30d)</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">11,200 <span class="text-secondary text-[11px] font-semibold">+9.4%</span></p>
+</div>
+<div>
+<span class="font-caption text-caption text-on-surface-variant">Revenue (30d)</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">$920.50</p>
+</div>
+</div>
+<div class="flex items-center justify-between text-caption text-on-surface-variant mb-2">
+<span>Crash-Free: <strong class="text-secondary font-label-mono">99.91%</strong></span>
+<span>D7: <strong class="text-on-surface font-label-mono">14%</strong></span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between border-t border-surface-container-low">
+<span class="font-label-mono text-caption text-on-surface-variant">Synced 18m ago</span>
+<a class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-semibold" href="#">View Analytics →</a>
+</div>
+</div>
+<!-- Grid Card 3 -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between gap-3 mb-3">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-inverse-surface text-inverse-on-surface flex items-center justify-center font-headline-lg shadow-xs">
+<span class="material-symbols-outlined text-[24px]">badge</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">ID Photo Maker</h3>
+<p class="font-label-mono text-caption text-on-surface-variant">v1.0.8 • Android</p>
+</div>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-medium bg-secondary/10 text-secondary">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Live
+          </span>
+</div>
+<p class="font-label-mono text-[11px] text-on-surface-variant mb-4 bg-surface-container-low p-1.5 rounded">com.catalystcore.idphotomaker</p>
+<div class="grid grid-cols-2 gap-3 pt-2 mb-4 border-t border-surface-container-low">
+<div>
+<span class="font-caption text-caption text-on-surface-variant">Active (30d)</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">5,250 <span class="text-secondary text-[11px] font-semibold">+4.2%</span></p>
+</div>
+<div>
+<span class="font-caption text-caption text-on-surface-variant">Revenue (30d)</span>
+<p class="font-headline-sm text-headline-sm text-on-surface mt-0.5">$328.00</p>
+</div>
+</div>
+<div class="flex items-center justify-between text-caption text-on-surface-variant mb-2">
+<span>Crash-Free: <strong class="text-on-surface font-label-mono">99.70%</strong></span>
+<span>D7: <strong class="text-on-surface font-label-mono">12%</strong></span>
+</div>
+</div>
+<div class="mt-4 pt-3 flex items-center justify-between border-t border-surface-container-low">
+<span class="font-label-mono text-caption text-on-surface-variant">Synced 35m ago</span>
+<a class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-semibold" href="#">View Analytics →</a>
+</div>
+</div>
+</div>
+<!-- Studio Asset Comparison Matrix & Benchmark Drawer -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Comparison Matrix Card -->
+<div class="lg:col-span-2 p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between pb-3 border-b border-surface-container-low mb-4">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">App Comparison Matrix (Top 3 Connected)</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Normalizing velocity, user economics, and stickiness across active releases.</p>
+</div>
+<span class="px-2.5 py-1 rounded-md bg-surface-container text-on-surface-variant font-label-mono text-[11px]">30-Day Window</span>
+</div>
+<div class="grid grid-cols-3 gap-4 mb-4">
+<!-- App 1 Column -->
+<div class="p-3.5 rounded-lg bg-surface-container-low/60 flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">Grind Quest</span>
+</div>
+<div class="space-y-1.5 pt-1">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>DAU/MAU</span>
+<span class="font-label-mono text-on-surface font-semibold">41.2%</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>ARPAU</span>
+<span class="font-label-mono text-secondary font-semibold">$0.082</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>D7 Retention</span>
+<span class="font-label-mono text-on-surface font-semibold">19.0%</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>Ad Load</span>
+<span class="font-label-mono text-on-surface">3.2 / sess</span>
+</div>
+</div>
+</div>
+<!-- App 2 Column -->
+<div class="p-3.5 rounded-lg bg-surface-container-low/60 flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">PDF Toolkit</span>
+</div>
+<div class="space-y-1.5 pt-1">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>DAU/MAU</span>
+<span class="font-label-mono text-on-surface font-semibold">32.8%</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>ARPAU</span>
+<span class="font-label-mono text-secondary font-semibold">$0.082</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>D7 Retention</span>
+<span class="font-label-mono text-on-surface font-semibold">14.0%</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>Ad Load</span>
+<span class="font-label-mono text-on-surface">1.8 / sess</span>
+</div>
+</div>
+</div>
+<!-- App 3 Column -->
+<div class="p-3.5 rounded-lg bg-surface-container-low/60 flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-inverse-surface"></span>
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">ID Photo</span>
+</div>
+<div class="space-y-1.5 pt-1">
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>DAU/MAU</span>
+<span class="font-label-mono text-on-surface font-semibold">22.4%</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>ARPAU</span>
+<span class="font-label-mono text-secondary font-semibold">$0.062</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>D7 Retention</span>
+<span class="font-label-mono text-on-surface font-semibold">12.0%</span>
+</div>
+<div class="flex justify-between font-caption text-caption text-on-surface-variant">
+<span>IAP Conv.</span>
+<span class="font-label-mono text-on-surface">2.4%</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Comparative Bar Progression -->
+<div class="space-y-2 pt-2">
+<div class="flex justify-between text-caption text-on-surface-variant font-label-md">
+<span>Active Users Volume Share</span>
+<span>Grind Quest (61.6%) • PDF Toolkit (26.1%) • ID Photo (12.3%)</span>
+</div>
+<div class="w-full h-2 rounded-full bg-surface-container flex overflow-hidden">
+<div class="bg-primary-container h-full" style="width: 61.6%" title="Grind Quest: 61.6%"></div>
+<div class="bg-secondary h-full" style="width: 26.1%" title="PDF Toolkit: 26.1%"></div>
+<div class="bg-inverse-surface h-full" style="width: 12.3%" title="ID Photo: 12.3%"></div>
+</div>
+</div>
+</div>
+<!-- Telemetry Ingestion Log & Quick Diagnostics -->
+<div class="p-5 rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-3 border-b border-surface-container-low mb-3">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Pipeline Ingestion</h2>
+<span class="material-symbols-outlined text-secondary text-[20px]">hub</span>
+</div>
+<div class="space-y-3 font-body-sm text-body-sm">
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0"></span>
+<div>
+<p class="font-medium text-on-surface">Google Play Console Hook</p>
+<p class="font-caption text-caption text-on-surface-variant">Hourly fetch complete • 12,410 events verified</p>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-secondary mt-1.5 shrink-0"></span>
+<div>
+<p class="font-medium text-on-surface">Firebase BigQuery Streaming</p>
+<p class="font-caption text-caption text-on-surface-variant">Realtime stream operational • 0 schema errors</p>
+</div>
+</div>
+<div class="flex items-start gap-2.5">
+<span class="w-2 h-2 rounded-full bg-tertiary-container mt-1.5 shrink-0"></span>
+<div>
+<p class="font-medium text-on-surface">SDK Setup Action Required</p>
+<p class="font-caption text-caption text-tertiary-container">Habit Minimalist awaiting configuration file</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-surface-container-low flex items-center justify-between">
+<a class="font-label-md text-label-md text-primary font-semibold hover:underline" href="#">Manage API Credentials →</a>
+<span class="font-label-mono text-caption text-on-surface-variant">Sync #8492</span>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

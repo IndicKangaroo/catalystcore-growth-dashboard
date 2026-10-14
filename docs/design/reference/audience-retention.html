@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary":"#ffffff","inverse-on-surface":"#eef0ff","on-tertiary-fixed":"#2f1500","surface-tint":"#4d44e3","primary":"#3525cd","on-tertiary-container":"#ffd2b1","error":"#ba1a1a","on-secondary-fixed-variant":"#005049","outline":"#777587","surface-variant":"#dae2fd","primary-container":"#4f46e5","on-secondary-container":"#006f66","secondary-container":"#86f2e4","surface":"#faf8ff","surface-bright":"#faf8ff","on-primary-fixed-variant":"#3323cc","inverse-primary":"#c3c0ff","on-secondary-fixed":"#00201d","tertiary":"#703a00","on-primary":"#ffffff","tertiary-fixed":"#ffdcc3","error-container":"#ffdad6","on-primary-fixed":"#0f0069","on-surface":"#131b2e","secondary":"#006a61","on-surface-variant":"#464555","surface-container-lowest":"#ffffff","tertiary-container":"#934e00","inverse-surface":"#283044","on-secondary":"#ffffff","primary-fixed":"#e2dfff","primary-fixed-dim":"#c3c0ff","surface-container-highest":"#dae2fd","surface-container":"#eaedff","tertiary-fixed-dim":"#ffb77d","secondary-fixed":"#89f5e7","on-primary-container":"#dad7ff","on-error":"#ffffff","outline-variant":"#c7c4d8","surface-container-low":"#f2f3ff","on-background":"#131b2e","background":"#faf8ff","surface-container-high":"#e2e7ff","surface-dim":"#d2d9f4","on-tertiary-fixed-variant":"#6e3900","on-error-container":"#93000a","secondary-fixed-dim":"#6bd8cb"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","space-lg":"1.25rem","space-xl":"2rem","gutter-desktop":"1.5rem","margin-desktop":"2rem","margin":"1rem","space-sm":"0.5rem","gutter":"1rem","space-md":"0.75rem"},"fontFamily":{"display-lg":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"label-md":["Inter"],"metric-stat":["Inter"],"headline-lg":["Inter"],"display-lg-mobile":["Inter"],"label-mono":["JetBrains Mono"],"caption":["Inter"],"body-lg":["Inter"],"body-md":["Inter"]},"fontSize":{"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"500"}],"metric-stat":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"display-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-mono":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"400"}],"caption":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"500"}],"body-lg":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-14 px-space-md border-b border-outline-variant/30 flex items-center gap-space-sm"><img alt="CatalystCore Studios Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UO5tFmC1jmHZIpjl2ZwHhPTGRCAXEpfOAqeXXSpvKFZYiU_mqk-65S5EC9sqeVjj54KKKoIePndMbN14HoI69KVTBO_ZRkWmLMRMXw2ebQeO_OEK00FAd_NXDvTh5DzGPyX4p-CXZTo-z35W40HKOjo_g7SKuId_C8fX1G6KVvuJAUcmaroyzrr_ndQ4WkZDQ3QDbCnTmKVmX6vfF9xO5heW5o4VUsNQKvFQS21FzrJd8JfFPTNpP1JroR"/><div class="flex flex-col min-w-0 leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">CatalystCore</span><span class="font-caption text-caption text-on-surface-variant flex items-center gap-1"><span class="text-primary font-medium">Studios</span><span class="px-1 py-0.5 rounded bg-surface-container-high text-on-surface font-caption text-[10px] font-semibold uppercase tracking-wider">Analytics</span></span></div></div><div class="p-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-medium rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span>Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="products" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span>Products</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="audience" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>Audience</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="retention" href="#"><span class="material-symbols-outlined text-[18px]">timelapse</span><span>Retention</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="revenue" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span>Revenue</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="quality-and-stability" href="#"><span class="material-symbols-outlined text-[18px]">health_and_safety</span><span>Quality &amp; Stability</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="reports" href="#"><span class="material-symbols-outlined text-[18px]">assessment</span><span>Reports</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">tune</span><span>Settings</span></a></nav></div></div><div class="p-space-sm border-t border-outline-variant/30 bg-surface/50 flex flex-col gap-2"><div class="flex items-center gap-2 px-space-xs py-1"><span class="w-2 h-2 rounded-full bg-secondary shrink-0 animate-pulse"></span><span class="font-caption text-caption text-on-surface-variant truncate">All sources healthy • 12m ago</span></div><div class="flex items-center justify-between px-space-xs font-label-mono text-label-mono text-[11px] text-on-surface-variant"><span class="font-medium">CatalystCore OS</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface">v1.0.4</span></div></div></aside><div class="pl-60"><header class="fixed top-0 left-60 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"><span class="font-label-md text-label-md font-semibold text-on-surface">CatalystCore Studios</span><span class="text-outline-variant">/</span><span class="text-primary font-medium">Overview</span></div><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="hidden xl:flex items-center gap-1.5 px-2 py-0.5 rounded border border-outline-variant/40 bg-surface font-caption text-caption text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-secondary">cloud_done</span><span>Firebase &amp; Play Console Synced 12m ago</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant/30"><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 7 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface font-semibold shadow-xs transition-colors" type="button">Last 30 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 90 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Custom</button></div><label class="hidden md:flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/><span class="text-xs select-none">Compare: Previous period</span></label><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="flex items-center gap-space-sm"><button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="flex items-center gap-2 pl-1"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwa77A-RqXesBZpE2OEnWWMeMPiypbLCE7SzWKRpSgpmABd2mNNmtYfiGCPcVlKaynncOWORc2bDG1I1TyWd3wNe0DHxAp5YPHi4qznBkqyrfPWyW-gPVNPUpO3Rrpi8yBe9I4h6ZGYx7gTiC--IIHs1HSMIGmX6UHuYqjaQu-Ch0U-sqsYaM1dxXmSP__dSOfFNW21-uRUZjSf8pWbh8xM-jEUmlsrjw6pGC-q0eCFchYSzQMCjnGVg"/><div class="hidden sm:flex flex-col leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">Alex Vance</span><span class="font-caption text-caption text-on-surface-variant">Founder</span></div></div></div></div></header><main class="relative pt-14 w-full px-gutter-desktop min-h-screen bg-background"><div class="flex flex-col w-full pb-16 space-y-6">
+<!-- Breadcrumb and Top Navigation Synchronizer -->
+<script>
+    // Update breadcrumb and active sidebar state on load
+    document.addEventListener("DOMContentLoaded", () => {
+      const breadcrumbEl = document.querySelector("header .text-primary");
+      if (breadcrumbEl) {
+        breadcrumbEl.textContent = "Audience & Retention";
+      }
+      // Highlight sidebar 'Audience' and 'Retention' paths
+      const navLinks = document.querySelectorAll("aside nav a");
+      navLinks.forEach(link => {
+        const path = link.getAttribute("data-path");
+        if (path === "audience" || path === "retention") {
+          link.classList.remove("text-on-surface-variant", "hover:bg-surface-container-low");
+          link.classList.add("bg-primary-container", "text-on-primary", "font-medium", "shadow-sm");
+        }
+      });
+    });
+  </script>
+<!-- Page Header & Filtering Ribbon -->
+<div class="flex flex-col xl:flex-row xl:items-end justify-between gap-4 pt-2">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-caption text-caption uppercase tracking-wider font-semibold">Cohort Diagnostics</span>
+<span class="text-on-surface-variant text-caption font-caption">•</span>
+<span class="text-on-surface-variant text-caption font-caption">Cross-Portfolio Engine v2.4</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Audience &amp; Retention Analytics</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl mt-0.5">
+        Cross-portfolio cohort degradation, user lifecycle transitions, sticky ratios, and behavioral retention loops across active studio products.
+      </p>
+</div>
+<!-- Action Controls Toolbar -->
+<div class="flex flex-wrap items-center gap-2.5">
+<div class="inline-flex p-1 bg-surface-container-low rounded-xl">
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all font-semibold bg-surface-container-lowest text-primary shadow-sm" id="gran-weekly" onclick="setGranularity('weekly')" type="button">Weekly Cohorts</button>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all text-on-surface-variant hover:text-on-surface" id="gran-daily" onclick="setGranularity('daily')" type="button">Daily Cohorts</button>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md transition-all text-on-surface-variant hover:text-on-surface" id="gran-monthly" onclick="setGranularity('monthly')" type="button">Monthly Cohorts</button>
+</div>
+<button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container-low transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">tune</span>
+<span>Model Settings</span>
+</button>
+<button class="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md shadow-sm hover:bg-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+<span>Export CSV</span>
+</button>
+</div>
+</div>
+<!-- Scope Filter Strip -->
+<div class="flex flex-wrap items-center justify-between gap-3 p-2 bg-surface-container-lowest rounded-xl shadow-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider px-2 font-medium">Scope:</span>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md bg-primary text-on-primary font-medium shadow-xs transition-colors" type="button">
+        All Active Apps <span class="ml-1 opacity-80 font-label-mono text-[11px]">(42,850 MAU)</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" type="button">
+        Grind Quest <span class="ml-1 text-on-surface-variant/70 font-label-mono text-[11px]">(RPG)</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" type="button">
+        PDF &amp; Image Toolkit
+      </button>
+<button class="px-3 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" type="button">
+        ID Photo Maker
+      </button>
+</div>
+<div class="flex items-center gap-2 px-2 text-on-surface-variant font-label-mono text-label-mono">
+<span class="flex h-2 w-2 rounded-full bg-secondary"></span>
+<span>Tracking Window: Nov 1 – Nov 30, 2024</span>
+</div>
+</div>
+<!-- High-Impact Cohort & Retention KPI Ribbon -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+<!-- KPI 1: Stickiness (DAU/MAU) -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium">Stickiness (DAU/MAU)</span>
+<span class="material-symbols-outlined text-[18px] text-primary">all_inclusive</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight font-semibold">38.4%</span>
+<span class="inline-flex items-center text-[12px] font-medium text-secondary">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>+2.1%
+          </span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low/60 -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Genre Baseline</span>
+<span class="font-label-mono text-on-surface font-semibold">28.5% (+9.9%)</span>
+</div>
+</div>
+</div>
+<!-- KPI 2: Day 1 Retention -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium">Day 1 Retention</span>
+<span class="px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-caption text-[10px] font-semibold">WEIGHTED</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight font-semibold">41.8%</span>
+<span class="inline-flex items-center text-[12px] font-medium text-secondary">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>+2.3% pts
+          </span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low/60 -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Play Console Benchmark</span>
+<span class="font-label-mono text-on-surface font-semibold">39.5%</span>
+</div>
+</div>
+</div>
+<!-- KPI 3: Day 7 Retention -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium">Day 7 Retention</span>
+<span class="px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-caption text-[10px] font-semibold">KEY INFLECTION</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight font-semibold">17.6%</span>
+<span class="inline-flex items-center text-[12px] font-medium text-secondary">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>+1.4% pts
+          </span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low/60 -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Play Console Benchmark</span>
+<span class="font-label-mono text-on-surface font-semibold">16.2%</span>
+</div>
+</div>
+</div>
+<!-- KPI 4: Day 30 Retention -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium">Day 30 Retention</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">check_circle</span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight font-semibold">8.4%</span>
+<span class="inline-flex items-center text-[12px] font-medium text-secondary">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>+0.8% pts
+          </span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low/60 -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Play Console Benchmark</span>
+<span class="font-label-mono text-on-surface font-semibold">7.1%</span>
+</div>
+</div>
+</div>
+<!-- KPI 5: Churn Velocity & Core Health -->
+<div class="p-4 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant mb-2">
+<span class="font-label-md text-label-md font-medium">Monthly Churn</span>
+<span class="flex items-center gap-1 font-caption text-[11px] text-secondary font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> HEALTHY
+        </span>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="font-metric-stat text-metric-stat text-on-surface tracking-tight font-semibold">4.8%</span>
+<span class="inline-flex items-center text-[12px] font-medium text-secondary">
+<span class="material-symbols-outlined text-[14px]">arrow_downward</span>-0.6%
+          </span>
+</div>
+<div class="mt-2 pt-2 bg-surface-container-low/60 -mx-4 -mb-4 px-4 py-2 flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Plateau Reached</span>
+<span class="font-label-mono text-on-surface font-semibold">Day 21+</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Primary Interactive Visualization: Retention Decay Curve & Benchmark -->
+<div class="p-5 bg-surface-container-lowest rounded-xl shadow-sm space-y-4">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Retention Decay Curves &amp; Benchmark Overlay</h2>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-label-mono text-[11px]">D0 → D60 Horizon</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Evaluating retention half-life across active products against portfolio baseline.
+        </p>
+</div>
+<!-- Legend Indicator Badges -->
+<div class="flex flex-wrap items-center gap-3 font-label-md text-label-md">
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-1 bg-primary rounded-full"></span>
+<span class="text-on-surface font-medium">Current Nov Cohort (Weighted)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-1 bg-secondary rounded-full"></span>
+<span class="text-on-surface-variant">Grind Quest</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-1 bg-primary-fixed-dim rounded-full"></span>
+<span class="text-on-surface-variant">PDF &amp; Image Toolkit</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3.5 h-0.5 border-b-2 border-dashed border-outline-variant"></span>
+<span class="text-on-surface-variant/80">Prior 30d Baseline</span>
+</div>
+</div>
+</div>
+<!-- Decay Curve SVG Chart Canvas -->
+<div class="relative w-full h-[280px] bg-surface-container-low/30 rounded-lg p-3 overflow-hidden flex flex-col justify-between">
+<!-- Plateau Callout Pill inside Chart -->
+<div class="absolute right-12 top-6 bg-surface-container-lowest/95 backdrop-blur-sm shadow-sm rounded-lg p-2.5 max-w-xs z-10 hidden sm:block">
+<div class="flex items-center gap-1.5 text-secondary font-label-md text-label-md font-semibold">
+<span class="material-symbols-outlined text-[16px]">verified</span>
+<span>Retention Plateau</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant mt-0.5 leading-snug">
+          Curve stabilizes after Day 21 at <strong>~9.8%</strong>. This forms the recurring active core generating 78% of monthly IAP and ad impressions.
+        </p>
+</div>
+<!-- SVG Multi-Series Curves -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 900 240">
+<defs>
+<lineargradient id="primaryArea" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#4f46e5" stop-opacity="0.18"></stop>
+<stop offset="100%" stop-color="#4f46e5" stop-opacity="0.00"></stop>
+</lineargradient>
+<lineargradient id="grindArea" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#006a61" stop-opacity="0.12"></stop>
+<stop offset="100%" stop-color="#006a61" stop-opacity="0.00"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Grid Lines -->
+<line stroke="#dae2fd" stroke-dasharray="3 3" stroke-width="1" x1="40" x2="880" y1="20" y2="20"></line>
+<line stroke="#dae2fd" stroke-dasharray="3 3" stroke-width="1" x1="40" x2="880" y1="70" y2="70"></line>
+<line stroke="#dae2fd" stroke-dasharray="3 3" stroke-width="1" x1="40" x2="880" y1="120" y2="120"></line>
+<line stroke="#dae2fd" stroke-dasharray="3 3" stroke-width="1" x1="40" x2="880" y1="170" y2="170"></line>
+<line stroke="#c7c4d8" stroke-width="1" x1="40" x2="880" y1="220" y2="220"></line>
+<!-- Y Axis Labels -->
+<text fill="#777587" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="24">100%</text>
+<text fill="#777587" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="74">50%</text>
+<text fill="#777587" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="124">25%</text>
+<text fill="#777587" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="174">10%</text>
+<text fill="#777587" font-family="JetBrains Mono" font-size="10" text-anchor="end" x="32" y="222">0%</text>
+<!-- Baseline / Prior Window Curve (Dashed Slate) -->
+<!-- Coordinates map: D0=40,20; D1=160,128; D3=280,165; D7=400,187; D14=520,201; D21=640,207; D30=760,210; D60=870,215 -->
+<path d="M 40 20 Q 110 135, 160 137 T 280 172 T 400 191 T 520 203 T 640 208 T 760 212 L 870 216" fill="none" stroke="#777587" stroke-dasharray="4 4" stroke-width="1.75"></path>
+<!-- PDF Toolkit (Purple-dim line) -->
+<path d="M 40 20 Q 115 142, 160 144 T 280 180 T 400 198 T 520 207 T 640 212 T 760 215 L 870 219" fill="none" stroke="#c3c0ff" stroke-width="2"></path>
+<!-- Grind Quest (RPG) curve (Teal) -->
+<path d="M 40 20 Q 110 115, 160 120 T 280 152 T 400 178 T 520 193 T 640 200 T 760 204 L 870 210" fill="none" stroke="#006a61" stroke-width="2.25"></path>
+<path d="M 40 20 Q 110 115, 160 120 T 280 152 T 400 178 T 520 193 T 640 200 T 760 204 L 870 210 L 870 220 L 40 220 Z" fill="url(#grindArea)"></path>
+<!-- Current Nov Weighted Portfolio Curve (Indigo) with Fill Area -->
+<path d="M 40 20 Q 105 125, 160 126 T 280 158 T 400 182 T 520 196 T 640 202 T 760 206 L 870 212 L 870 220 L 40 220 Z" fill="url(#primaryArea)"></path>
+<path d="M 40 20 Q 105 125, 160 126 T 280 158 T 400 182 T 520 196 T 640 202 T 760 206 L 870 212" fill="none" stroke="#3525cd" stroke-width="2.75"></path>
+<!-- Data Node Markers & Value Chips for Current Weighted Portfolio -->
+<!-- D0 -->
+<circle class="ring-2 ring-white" cx="40" cy="20" fill="#3525cd" r="4"></circle>
+<!-- D1: 41.8% -> cy=126 -->
+<circle cx="160" cy="126" fill="#3525cd" r="4.5"></circle>
+<text fill="#3525cd" font-family="Inter" font-size="11" font-weight="600" text-anchor="middle" x="160" y="116">41.8%</text>
+<!-- D3: 28.4% -> cy=158 -->
+<circle cx="280" cy="158" fill="#3525cd" r="4"></circle>
+<text fill="#131b2e" font-family="Inter" font-size="10" font-weight="500" text-anchor="middle" x="280" y="150">28.4%</text>
+<!-- D7: 17.6% -> cy=182 -->
+<circle cx="400" cy="182" fill="#3525cd" r="4.5"></circle>
+<text fill="#3525cd" font-family="Inter" font-size="11" font-weight="600" text-anchor="middle" x="400" y="174">17.6%</text>
+<!-- D14: 12.5% -> cy=196 -->
+<circle cx="520" cy="196" fill="#3525cd" r="4"></circle>
+<text fill="#131b2e" font-family="Inter" font-size="10" text-anchor="middle" x="520" y="188">12.5%</text>
+<!-- D21: 9.8% -> cy=202 -->
+<circle cx="640" cy="202" fill="#3525cd" r="4"></circle>
+<text fill="#131b2e" font-family="Inter" font-size="10" text-anchor="middle" x="640" y="195">9.8%</text>
+<!-- D30: 8.4% -> cy=206 -->
+<circle cx="760" cy="206" fill="#3525cd" r="4.5"></circle>
+<text fill="#3525cd" font-family="Inter" font-size="11" font-weight="600" text-anchor="middle" x="760" y="199">8.4%</text>
+<!-- D60: 5.6% -> cy=212 -->
+<circle cx="870" cy="212" fill="#3525cd" r="4"></circle>
+<text fill="#131b2e" font-family="Inter" font-size="10" text-anchor="middle" x="870" y="206">5.6%</text>
+<!-- Vertical Guide Lines -->
+<line stroke="#eaedff" stroke-width="1" x1="160" x2="160" y1="20" y2="220"></line>
+<line stroke="#eaedff" stroke-width="1" x1="400" x2="400" y1="20" y2="220"></line>
+<line stroke="#eaedff" stroke-width="1" x1="760" x2="760" y1="20" y2="220"></line>
+</svg>
+<!-- X-Axis Labels -->
+<div class="flex justify-between px-2 pt-1 font-label-mono text-[11px] text-on-surface-variant">
+<span class="w-12 text-center font-semibold text-on-surface">Day 0</span>
+<span class="w-12 text-center font-semibold text-primary">Day 1</span>
+<span class="w-12 text-center">Day 3</span>
+<span class="w-12 text-center font-semibold text-primary">Day 7</span>
+<span class="w-12 text-center">Day 14</span>
+<span class="w-12 text-center text-secondary font-semibold">Day 21 ★</span>
+<span class="w-12 text-center font-semibold text-primary">Day 30</span>
+<span class="w-12 text-center">Day 60</span>
+</div>
+</div>
+</div>
+<!-- Comprehensive Cohort Degradation Matrix (Heatmap Table) -->
+<div class="p-5 bg-surface-container-lowest rounded-xl shadow-sm space-y-3">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-1">
+<div>
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Cohort Degradation Matrix</h2>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-caption text-[11px] font-medium">Rolling Retention %</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Heatmap gradient highlights persistence across weekly acquisition blocks.</p>
+</div>
+<!-- Matrix Legend -->
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span>Low (&lt;10%)</span>
+<div class="flex h-3 w-24 rounded overflow-hidden">
+<div class="bg-primary/5 w-1/4 h-full"></div>
+<div class="bg-primary/20 w-1/4 h-full"></div>
+<div class="bg-primary/45 w-1/4 h-full"></div>
+<div class="bg-primary w-1/4 h-full"></div>
+</div>
+<span>High (40%+)</span>
+</div>
+</div>
+<!-- Data Heatmap Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm border-collapse min-w-[760px]">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-md text-[11px] uppercase tracking-wider">
+<th class="py-2.5 px-3 rounded-l-lg">Cohort Window</th>
+<th class="py-2.5 px-3">Acquired</th>
+<th class="py-2.5 px-3 text-center">Day 0</th>
+<th class="py-2.5 px-3 text-center">Day 1</th>
+<th class="py-2.5 px-3 text-center">Day 3</th>
+<th class="py-2.5 px-3 text-center">Day 7</th>
+<th class="py-2.5 px-3 text-center">Day 14</th>
+<th class="py-2.5 px-3 text-center">Day 21</th>
+<th class="py-2.5 px-3 text-center rounded-r-lg">Day 30</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container">
+<!-- Row 1: Oct 27 - Nov 02 (Baseline) -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5 px-3 font-medium text-on-surface flex items-center gap-2">
+<span>Oct 27 – Nov 02</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container text-on-surface-variant font-caption text-[10px]">Baseline</span>
+</td>
+<td class="py-2.5 px-3 font-label-mono text-on-surface-variant">10,840</td>
+<td class="py-2.5 px-3 text-center font-label-mono font-semibold bg-primary/90 text-on-primary rounded-xs">100%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/40 text-on-primary">40.2%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/25 text-on-surface">26.8%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/15 text-on-surface">16.4%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/10 text-on-surface">11.8%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/10 text-on-surface">9.1%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/5 text-on-surface font-semibold">7.9%</td>
+</tr>
+<!-- Row 2: Nov 03 - Nov 09 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5 px-3 font-medium text-on-surface">Nov 03 – Nov 09</td>
+<td class="py-2.5 px-3 font-label-mono text-on-surface-variant">11,200</td>
+<td class="py-2.5 px-3 text-center font-label-mono font-semibold bg-primary/90 text-on-primary rounded-xs">100%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/40 text-on-primary">41.0%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/25 text-on-surface">27.5%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/20 text-on-surface">17.1%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/10 text-on-surface">12.1%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/10 text-on-surface">9.5%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/5 text-on-surface font-semibold">8.2%</td>
+</tr>
+<!-- Row 3: Nov 10 - Nov 16 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5 px-3 font-medium text-on-surface">Nov 10 – Nov 16</td>
+<td class="py-2.5 px-3 font-label-mono text-on-surface-variant">10,450</td>
+<td class="py-2.5 px-3 text-center font-label-mono font-semibold bg-primary/90 text-on-primary rounded-xs">100%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/45 text-on-primary">42.4%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/30 text-on-surface">28.9%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/20 text-on-surface">17.8%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/15 text-on-surface">12.9%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/10 text-on-surface">10.1%</td>
+<td class="py-2.5 px-3 text-center font-label-mono text-on-surface-variant italic">Matures in 3d</td>
+</tr>
+<!-- Row 4: Nov 17 - Nov 23 -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-2.5 px-3 font-medium text-on-surface">Nov 17 – Nov 23</td>
+<td class="py-2.5 px-3 font-label-mono text-on-surface-variant">10,910</td>
+<td class="py-2.5 px-3 text-center font-label-mono font-semibold bg-primary/90 text-on-primary rounded-xs">100%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/45 text-on-primary">42.1%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/30 text-on-surface">28.2%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/20 text-on-surface">17.7%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/15 text-on-surface font-semibold">13.2%</td>
+<td class="py-2.5 px-3 text-center font-label-mono text-on-surface-variant italic" colspan="2">Tracking in progress</td>
+</tr>
+<!-- Row 5: Nov 24 - Nov 30 (Latest with Event) -->
+<tr class="bg-surface-container-low/30 hover:bg-surface-container-low/60 transition-colors">
+<td class="py-2.5 px-3 font-semibold text-primary flex items-center gap-2">
+<span>Nov 24 – Nov 30</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-secondary-container text-on-secondary-container font-caption text-[10px] font-semibold">
+<span class="material-symbols-outlined text-[12px]">celebration</span> Event Lift
+              </span>
+</td>
+<td class="py-2.5 px-3 font-label-mono font-semibold text-on-surface">10,360</td>
+<td class="py-2.5 px-3 text-center font-label-mono font-semibold bg-primary text-on-primary rounded-xs">100%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/50 text-on-primary font-semibold">43.8%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/35 text-on-surface font-semibold">30.1%</td>
+<td class="py-2.5 px-3 text-center font-label-mono bg-primary/25 text-on-surface font-semibold">19.2%</td>
+<td class="py-2.5 px-3 text-center font-label-mono text-on-surface-variant italic" colspan="3">Maturing next period</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Footnote Status Annotation -->
+<div class="flex items-center justify-between text-on-surface-variant font-caption text-caption pt-1">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px] text-secondary">info</span>
+<span>Nov 24 cohort received the v1.2.0 "Guild Raid" update in Grind Quest, generating a +1.6% pt D7 outperformance.</span>
+</span>
+<span class="font-label-mono text-[11px]">Synced from Play Console telemetry API</span>
+</div>
+</div>
+<!-- Two-Column Deep-Dive Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+<!-- Left Column: User Lifecycle Transitions & Churn Waterfall (7 Cols) -->
+<div class="lg:col-span-7 p-5 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between space-y-4">
+<div>
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">User Lifecycle Transitions</h2>
+<span class="px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-caption text-caption font-semibold">42,850 MAU</span>
+</div>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface" title="Lifecycle Definition">
+<span class="material-symbols-outlined text-[18px]">help_outline</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Active user categorization across adoption stages and reactivation channels.</p>
+<!-- Proportional Stacked Lifecycle Bar -->
+<div class="mt-4 space-y-2">
+<div class="flex h-4 w-full rounded-lg overflow-hidden bg-surface-container">
+<div class="bg-primary hover:opacity-90 transition-opacity" style="width: 29.0%" title="New Users: 29.0%"></div>
+<div class="bg-primary-container hover:opacity-90 transition-opacity" style="width: 56.4%" title="Active Returning: 56.4%"></div>
+<div class="bg-secondary hover:opacity-90 transition-opacity" style="width: 9.9%" title="Reactivated: 9.9%"></div>
+<div class="bg-tertiary-container hover:opacity-90 transition-opacity" style="width: 4.6%" title="At Risk / Dormant: 4.6%"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption text-on-surface-variant">
+<span>Stage 1: Acquisition</span>
+<span>Stage 2: Core Engagement</span>
+<span>Stage 3: Winback</span>
+<span>Stage 4: Churn Risk</span>
+</div>
+</div>
+<!-- Detailed Bucket Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mt-4">
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-md text-[11px] text-on-surface-variant">New Users</span>
+</div>
+<div class="font-metric-stat text-[18px] text-on-surface font-semibold">12,410</div>
+<div class="font-label-mono text-[11px] text-primary">29.0% of MAU</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Returning Core</span>
+</div>
+<div class="font-metric-stat text-[18px] text-on-surface font-semibold">24,180</div>
+<div class="font-label-mono text-[11px] text-on-surface-variant">56.4% of MAU</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Resurrected</span>
+</div>
+<div class="font-metric-stat text-[18px] text-on-surface font-semibold">4,260</div>
+<div class="font-label-mono text-[11px] text-secondary">9.9% (+1.8%)</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-1.5 mb-1">
+<span class="w-2 h-2 rounded-full bg-tertiary-container"></span>
+<span class="font-label-md text-[11px] text-on-surface-variant">At Risk (&gt;14d)</span>
+</div>
+<div class="font-metric-stat text-[18px] text-on-surface font-semibold">1,980</div>
+<div class="font-label-mono text-[11px] text-tertiary-container">4.6% (Low risk)</div>
+</div>
+</div>
+<!-- Resurrection Attribution Drivers -->
+<div class="mt-4 pt-4 bg-surface-container-low/40 rounded-lg p-3">
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Resurrection Drivers (4,260 Users)</span>
+<span class="font-caption text-caption text-on-surface-variant font-medium">Attributed Telemetry</span>
+</div>
+<div class="space-y-2">
+<div>
+<div class="flex justify-between font-caption text-caption mb-1">
+<span class="text-on-surface font-medium">Push Notification Re-engagement (FCM Automated Triggers)</span>
+<span class="font-label-mono font-semibold text-on-surface">42% (1,789)</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 42%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-caption text-caption mb-1">
+<span class="text-on-surface font-medium">Game Content Update v1.2.0 ("Guild Raid")</span>
+<span class="font-label-mono font-semibold text-on-surface">36% (1,533)</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 36%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-caption text-caption mb-1">
+<span class="text-on-surface font-medium">Organic / Word-of-Mouth Return</span>
+<span class="font-label-mono font-semibold text-on-surface">22% (938)</span>
+</div>
+<div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden">
+<div class="bg-outline text-on-surface h-full rounded-full" style="width: 22%"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Footer Metric -->
+<div class="flex items-center justify-between pt-2 text-on-surface-variant font-caption text-caption">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">chevron_forward</span>
+<span>Dormancy to Resurrection Conversion: <strong>21.5%</strong> (Target &gt;15%)</span>
+</span>
+<button class="text-primary font-semibold hover:underline" type="button">Audit Lifecycle Engine →</button>
+</div>
+</div>
+<!-- Right Column: Demographic & Behavioral Segments (5 Cols) -->
+<div class="lg:col-span-5 p-5 bg-surface-container-lowest rounded-xl shadow-sm flex flex-col justify-between space-y-4">
+<div>
+<div class="flex items-center justify-between mb-1">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Geographic &amp; Tier Variances</h2>
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface font-caption text-[11px] font-medium">Tier-1 vs Global</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Retention delta grouped by regional monetization &amp; hardware tiers.</p>
+<!-- Geo Table Breakdown -->
+<div class="mt-3.5 space-y-2.5">
+<!-- Japan -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-base">🇯🇵</span>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Japan (Tier 1 APAC)</div>
+<div class="font-caption text-caption text-secondary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">military_tech</span> Highest Stickiness (DAU/MAU 44%)
+                </div>
+</div>
+</div>
+<div class="text-right font-label-mono text-[11px]">
+<div class="text-on-surface font-semibold">D1: 46.2% | D7: 21.5%</div>
+<div class="text-primary font-bold">D30: 11.8%</div>
+</div>
+</div>
+<!-- United States -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-base">🇺🇸</span>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">United States (Tier 1)</div>
+<div class="font-caption text-caption text-on-surface-variant">Largest Volume (41% of DAU)</div>
+</div>
+</div>
+<div class="text-right font-label-mono text-[11px]">
+<div class="text-on-surface font-semibold">D1: 44.5% | D7: 20.2%</div>
+<div class="text-primary font-bold">D30: 10.4%</div>
+</div>
+</div>
+<!-- Germany & UK -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-base">🇩🇪</span>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Germany &amp; UK (Europe)</div>
+<div class="font-caption text-caption text-on-surface-variant">High Ad eCPM Efficiency</div>
+</div>
+</div>
+<div class="text-right font-label-mono text-[11px]">
+<div class="text-on-surface font-semibold">D1: 43.1% | D7: 18.8%</div>
+<div class="text-on-surface-variant font-medium">D30: 9.6%</div>
+</div>
+</div>
+<!-- Rest of World -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="text-base">🌐</span>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Rest of World</div>
+<div class="font-caption text-caption text-on-surface-variant">Fastest Download Growth</div>
+</div>
+</div>
+<div class="text-right font-label-mono text-[11px]">
+<div class="text-on-surface font-semibold">D1: 36.4% | D7: 14.1%</div>
+<div class="text-on-surface-variant font-medium">D30: 6.5%</div>
+</div>
+</div>
+</div>
+<!-- Hardware & Android OS Distribution Pill -->
+<div class="mt-3 p-2.5 rounded-lg bg-surface-container-high/60 flex items-center justify-between text-on-surface font-caption text-caption">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">smartphone</span>
+<span>Android 14+ Flagship D30: <strong class="text-on-surface">11.2%</strong></span>
+</div>
+<span class="text-outline-variant">|</span>
+<div>
+<span>Android 13 &amp; Legacy: <strong class="text-on-surface">6.8%</strong></span>
+</div>
+</div>
+</div>
+<div class="pt-2 text-right">
+<button class="font-label-md text-label-md text-primary font-medium hover:underline inline-flex items-center gap-1" type="button">
+<span>Explore Regional Heatmap</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Retention Driver Analysis & Actionable Insights Card -->
+<div class="p-5 bg-surface-container-lowest rounded-xl shadow-sm space-y-4">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-primary">psychology</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Identified Retention Multipliers &amp; Telemetry Correlation</h2>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Algorithmic feature telemetry identifying statistical correlation with Day 7 and Day 30 user persistence.
+        </p>
+</div>
+<span class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-md text-label-md font-semibold self-start sm:self-auto">
+        Confidence Score: 98.4%
+      </span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+<!-- Multiplier 1 -->
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col justify-between space-y-3">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-caption text-[10px] font-semibold tracking-wider uppercase">High Impact</span>
+<span class="font-label-mono text-caption text-secondary font-semibold">+34% D30 Lift</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface">Cloud Sync &amp; Guest Account Linking</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            Users who enable Google Play Games cloud backup within 48 hours show a 34% higher Day 30 retention than local-only accounts.
+          </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-mono text-[11px] text-on-surface-variant">Current Adoption: 52%</span>
+<button class="font-label-md text-label-md text-primary font-medium hover:underline inline-flex items-center gap-0.5" type="button">
+            Optimize In-Game Modal <span class="material-symbols-outlined text-[13px]">north_east</span>
+</button>
+</div>
+</div>
+<!-- Multiplier 2 -->
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col justify-between space-y-3">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-primary-container text-on-primary font-caption text-[10px] font-semibold tracking-wider uppercase">Activation Speed</span>
+<span class="font-label-mono text-caption text-secondary font-semibold">+18% D7 Lift</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface">Onboarding Completion &lt; 180s</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            Streamlined 3-step tutorial in PDF &amp; Image Toolkit increased D7 retention from 14.1% to 17.6% across European cohorts.
+          </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-mono text-[11px] text-on-surface-variant">Drop-off: -4.2%</span>
+<button class="font-label-md text-label-md text-primary font-medium hover:underline inline-flex items-center gap-0.5" type="button">
+            View Funnel Steps <span class="material-symbols-outlined text-[13px]">north_east</span>
+</button>
+</div>
+</div>
+<!-- Multiplier 3 -->
+<div class="p-4 rounded-xl bg-surface-container-low flex flex-col justify-between space-y-3">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-caption text-[10px] font-semibold tracking-wider uppercase">Push Cadence</span>
+<span class="font-label-mono text-caption text-secondary font-semibold">+22% Re-engagement</span>
+</div>
+<h3 class="font-headline-sm text-[16px] text-on-surface">Day 3 Contextual Loot Reminder</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+            FCM push delivered 72h post-install offering offline idle rewards yields a 22% CTR and recovers 680 at-risk players weekly.
+          </p>
+</div>
+<div class="pt-2 flex items-center justify-between">
+<span class="font-label-mono text-[11px] text-on-surface-variant">Opt-in: 68.4%</span>
+<button class="font-label-md text-label-md text-primary font-medium hover:underline inline-flex items-center gap-0.5" type="button">
+            Configure FCM Rules <span class="material-symbols-outlined text-[13px]">north_east</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive tab toggle for cohort granularity
+  function setGranularity(type) {
+    const weeklyBtn = document.getElementById('gran-weekly');
+    const dailyBtn = document.getElementById('gran-daily');
+    const monthlyBtn = document.getElementById('gran-monthly');
+
+    const activeClasses = ['bg-surface-container-lowest', 'text-primary', 'font-semibold', 'shadow-sm'];
+    const inactiveClasses = ['text-on-surface-variant', 'hover:text-on-surface'];
+
+    [weeklyBtn, dailyBtn, monthlyBtn].forEach(btn => {
+      btn.classList.remove(...activeClasses);
+      btn.classList.add(...inactiveClasses);
+    });
+
+    const activeBtn = document.getElementById('gran-' + type);
+    if (activeBtn) {
+      activeBtn.classList.remove(...inactiveClasses);
+      activeBtn.classList.add(...activeClasses);
+    }
+  }
+</script></main></div></body></html>
