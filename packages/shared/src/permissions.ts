@@ -18,10 +18,14 @@ export const PERMISSIONS = [
   'timeline:write',
   'reports:read',
   'reports:generate',
+  'settings:read',
   'users:manage',
 ] as const;
 
 export type Permission = (typeof PERMISSIONS)[number];
+
+// `settings:read` is the studio's name, logo, time zone and date defaults, which every screen needs
+// to draw itself; changing them (`settings:write`) arrives with the settings screen in P10.
 
 // PRD section 19: Growth/Social gets analytics, campaigns, content and reports.
 const GROWTH_PERMISSIONS: readonly Permission[] = [
@@ -36,6 +40,7 @@ const GROWTH_PERMISSIONS: readonly Permission[] = [
   'timeline:write',
   'reports:read',
   'reports:generate',
+  'settings:read',
 ];
 
 // PRD section 19: Developer gets app analytics and technical metrics.
@@ -44,6 +49,7 @@ const DEVELOPER_PERMISSIONS: readonly Permission[] = [
   'metrics:read',
   'acquisition:read',
   'timeline:read',
+  'settings:read',
 ];
 
 export const ROLE_PERMISSIONS: Record<Role, readonly Permission[]> = {
