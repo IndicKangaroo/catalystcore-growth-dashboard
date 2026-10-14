@@ -181,3 +181,13 @@ V1 Definition of Done is PRD section 25; P0-P9 together must satisfy every item 
 | Q7 | The "pitch to other studios" direction: hosted product, or a template each studio deploys itself? | **Answered 2026-10-11:** a template each studio deploys itself. No multi-tenancy. See D-019. |
 | Q8 | How will the template be distributed and licensed (private repo per customer, paid license, open source)? | **Open.** Deferred to P10 at the requester's request. |
 | Q9 | Sign-in method, and which Firebase project the dashboard will run against? | **Assumed:** Google sign-in only; local development on the Firebase emulators. The real project ID is needed only at deploy time. Confirm or change. |
+
+## 13. Before production (reminders)
+
+Things the requester chose to do later (D-029). Do not tick these off silently: the requester confirms each one. At the start of P4, ask whether the first item should be done before real GA4 numbers are stored.
+
+- [ ] **Give the dashboard a Firebase project of its own.** Create it, enable Google sign-in and Firestore, and set the `FIREBASE_*` and `VITE_FIREBASE_*` values and the service account key in `.env`, as the README describes. Sign in again; the first admin is created from `ADMIN_EMAIL`.
+- [ ] **Clean up the project that was shared during development.** Remove the dashboard's documents (the ones in `users`, and any later collection such as `apps`) and the Firebase Auth accounts that came from signing in to the dashboard. Leave everything else in that project alone.
+- [ ] **Review the Firestore rules of every project the dashboard has touched.** Read each `match` block: matching rules are OR-ed, so a catch-all `match /{document=**}` that allows access overrides stricter rules above it. Fix the project's own rules before any real data goes in.
+- [ ] **Deploy the dashboard's deny-all `firestore.rules` (D-022) only to the dashboard's own project.** Deploying them to a project that an app uses would lock the app out of its data.
+- [ ] **Check the README's setup steps on the new project from a clean checkout**, and add the production web address to Firebase Authentication's authorized domains.
