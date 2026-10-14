@@ -56,7 +56,9 @@ The emulators forget everything when they stop, so the first sign-in creates the
 
 ### Option B: a real Firebase project
 
-1. In the [Firebase console](https://console.firebase.google.com), create a project or reuse one. Under **Authentication → Sign-in method** enable **Google**. Under **Firestore Database** create a database in production mode.
+**Use a Firebase project made just for the dashboard, not the project of one of your apps** (one deployment, one Firebase project: D-019). The dashboard keeps its own `users` collection in Firestore and signs people in through the project's Firebase Auth. In an app's project those would mix with the app's own users and data, and step 5 below replaces the project's Firestore rules, which would lock the app out of its own data. A new project is free. Your apps' analytics are connected separately, through a service account on each GA4 property.
+
+1. In the [Firebase console](https://console.firebase.google.com), create a **new** project. Under **Authentication → Sign-in method** enable **Google**. Under **Firestore Database** create a database in production mode.
 2. Under **Project settings → General → Your apps**, add a **Web app**. Copy its `apiKey` and `projectId` into `VITE_FIREBASE_API_KEY` and `VITE_FIREBASE_PROJECT_ID`. These identify the project and are not secrets.
 3. Set `FIREBASE_PROJECT_ID` to the same project id, and `ADMIN_EMAIL` to your Google account's email.
 4. Give the API credentials for Firestore. **Without this nobody can sign in**: the browser sign-in works, but the API cannot read the list of invited people, and the page says "Server setup problem". On your own machine:
@@ -64,7 +66,7 @@ The emulators forget everything when they stop, so the first sign-in creates the
    - Set `GOOGLE_APPLICATION_CREDENTIALS` in `.env` to the **full path** of that file, for example `GOOGLE_APPLICATION_CREDENTIALS=/home/you/keys/growth-admin.json` (on Windows use forward slashes: `C:/Users/you/keys/growth-admin.json`). A relative path is read from the `apps/api` folder and `~` is not expanded, so spell the path out.
    - Alternatively, run `gcloud auth application-default login` and leave the setting empty.
    - On Cloud Run the runtime service account is used and nothing needs setting.
-5. Deploy the deny-all Firestore rules once: `npx firebase-tools login`, then `npx firebase-tools deploy --only firestore:rules --project <your project id>`.
+5. Deploy the deny-all Firestore rules once: `npx firebase-tools login`, then `npx firebase-tools deploy --only firestore:rules --project <your project id>`. **Only do this on the dashboard's own project**: the rules deny every client read and write, so an app that uses the same Firestore database would stop working.
 6. Run `npm run dev`, open http://localhost:5173 (use `localhost`, not `127.0.0.1`, which Firebase does not allow by default) and sign in with the `ADMIN_EMAIL` account.
 
 Changes to `.env` take effect only after you stop `npm run dev` and start it again. When the API starts it prints how it will reach Firebase (the emulators or the real project, and whether the key file exists), and it stops with a "Cannot start" message if the key file cannot be read.
@@ -82,6 +84,7 @@ The page or the API log says what is wrong. The usual causes:
 | "no Firestore database yet" | The project has no database | Create one under **Firestore Database** in the Firebase console |
 | "cannot reach Firestore" or "could not reach Firebase Auth" | The emulators are not running, or only one of the two host settings is set | Run `npm run emulators` in another terminal and set both `FIRESTORE_EMULATOR_HOST` and `FIREBASE_AUTH_EMULATOR_HOST` |
 | "different Firebase project than the one the API uses" | `VITE_FIREBASE_PROJECT_ID` and `FIREBASE_PROJECT_ID` differ | Make them the same, then restart |
+| The Users page says "Something went wrong" and the API log shows a `ZodError` | The Firebase project is shared with an app whose own `users` collection holds other documents | The dashboard now skips documents it did not write and logs a warning. Move it to a project of its own, as described above |
 | "Could not reach the API" | The API is not running, or it stopped at startup | Read the output of `npm run dev`; a "Cannot start" line says why |
 | "...has not been given access" (it names the email you used) | You signed in with an account that is not invited, or `ADMIN_EMAIL` is not exactly that email | Check the email shown; set `ADMIN_EMAIL` to it for the first admin, or ask an admin to invite it |
 | "this web address is not allowed to sign in" | The address is not in **Authentication → Settings → Authorized domains** | Open the app at `http://localhost:5173`, or add the domain |

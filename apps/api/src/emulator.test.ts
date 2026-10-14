@@ -1,5 +1,6 @@
 import request from 'supertest';
 import type { Express } from 'express';
+import { getFirestore, Timestamp } from 'firebase-admin/firestore';
 import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createApp } from './app';
 import { loadConfig } from './lib/config';
@@ -213,5 +214,79 @@ describe('signing in against the Firebase emulators', () => {
     const allowed = await demote();
     expect(allowed.status).toBe(200);
     expect(allowed.body.user.role).toBe('growth');
+  });
+
+  // The dashboard keeps its people in a collection called "users". When the Firebase project is
+  // shared with an app that has a collection of the same name, that collection holds documents the
+  // dashboard did not write: no role, no uid, and a Firestore timestamp where a date string is
+  // expected. The dashboard must keep working, and must never let such a document sign anyone in.
+  describe('when the project is shared with an app that has its own users collection', () => {
+    async function addAppDocuments() {
+      const users = getFirestore().collection('users');
+      await users.add({
+        email: 'reader@example.com',
+        name: 'App Reader',
+        createdAt: Timestamp.now(),
+      });
+      await users.add({ email: 'owner@example.com', role: 'admin' });
+    }
+
+    it('still lists the people the dashboard knows about', async () => {
+      const adminToken = await signInWithGoogle(ADMIN_EMAIL);
+      await get('/api/me', adminToken);
+      await addAppDocuments();
+
+      const list = await get('/api/users', adminToken);
+
+      expect(list.status).toBe(200);
+      expect(list.body.users.map((user: { email: string }) => user.email)).toEqual([ADMIN_EMAIL]);
+    });
+
+    it('still accepts an invitation, and lists it', async () => {
+      const adminToken = await signInWithGoogle(ADMIN_EMAIL);
+      await get('/api/me', adminToken);
+      await addAppDocuments();
+
+      const invite = await request(app)
+        .post('/api/users')
+        .set('Authorization', bearer(adminToken))
+        .send({ email: 'dev@example.com', role: 'developer' });
+      const list = await get('/api/users', adminToken);
+
+      expect(invite.status).toBe(201);
+      expect(list.status).toBe(200);
+      expect(list.body.users.map((user: { email: string }) => user.email)).toEqual([
+        ADMIN_EMAIL,
+        'dev@example.com',
+      ]);
+    });
+
+    it('does not count an app document with an admin role as a dashboard admin', async () => {
+      const adminToken = await signInWithGoogle(ADMIN_EMAIL);
+      await get('/api/me', adminToken);
+      await addAppDocuments();
+
+      const refused = await request(app)
+        .patch('/api/users/admin%40example.com')
+        .set('Authorization', bearer(adminToken))
+        .send({ role: 'growth' });
+
+      expect(refused.status).toBe(409);
+      expect(refused.body.error.code).toBe('last_admin');
+    });
+
+    it('does not let an app document sign anyone in', async () => {
+      const adminToken = await signInWithGoogle(ADMIN_EMAIL);
+      await get('/api/me', adminToken);
+      await addAppDocuments();
+
+      for (const email of ['reader@example.com', 'owner@example.com']) {
+        const token = await signInWithGoogle(email);
+        const res = await get('/api/me', token);
+
+        expect(res.status).toBe(403);
+        expect(res.body.error.code).toBe('not_invited');
+      }
+    });
   });
 });
