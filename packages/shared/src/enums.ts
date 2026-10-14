@@ -103,3 +103,64 @@ export const EVENT_TYPE_LABELS: Record<EventType, string> = {
 export const ANALYTICS_PROVIDERS = ['seed', 'ga4'] as const;
 export const analyticsProviderSchema = z.enum(ANALYTICS_PROVIDERS);
 export type AnalyticsProviderName = z.infer<typeof analyticsProviderSchema>;
+
+// Quick date ranges for the global filter (PRD section 4). "Custom" is not a preset: a custom range
+// carries its own dates.
+export const DATE_PRESETS = ['today', '7d', '30d', '90d'] as const;
+export const datePresetSchema = z.enum(DATE_PRESETS);
+export type DatePreset = z.infer<typeof datePresetSchema>;
+export const DATE_PRESET_LABELS: Record<DatePreset, string> = {
+  today: 'Today',
+  '7d': 'Last 7 days',
+  '30d': 'Last 30 days',
+  '90d': 'Last 90 days',
+};
+
+// Why a number is missing. A missing number is a state with a reason, never zero (AGENTS.md).
+export const METRIC_STATES = [
+  'ok',
+  'not_connected',
+  'no_measured_attribution',
+  'not_enough_data',
+  'in_progress',
+] as const;
+export const metricStateSchema = z.enum(METRIC_STATES);
+export type MetricState = z.infer<typeof metricStateSchema>;
+export const METRIC_STATE_LABELS: Record<MetricState, string> = {
+  ok: 'Available',
+  not_connected: 'Not connected',
+  no_measured_attribution: 'No measured attribution available',
+  not_enough_data: 'Not enough data',
+  in_progress: 'In progress',
+};
+
+// Metrics that can be drawn over time (PRD sections 4 and 6). Revenue joins when a provider can
+// report it (D-013).
+export const METRICS = [
+  'active_users',
+  'new_users',
+  'sessions',
+  'engagement_time',
+  'attributed_users',
+] as const;
+export const metricSchema = z.enum(METRICS);
+export type Metric = z.infer<typeof metricSchema>;
+export const METRIC_LABELS: Record<Metric, string> = {
+  active_users: 'Active users',
+  new_users: 'New users',
+  sessions: 'Sessions',
+  engagement_time: 'Engagement time per user',
+  attributed_users: 'Attributed users (measured)',
+};
+
+// Acquisition channels from PRD section 7.
+export const ACQUISITION_CHANNELS = ['organic', 'social', 'google', 'referral', 'other'] as const;
+export const acquisitionChannelSchema = z.enum(ACQUISITION_CHANNELS);
+export type AcquisitionChannel = z.infer<typeof acquisitionChannelSchema>;
+export const ACQUISITION_CHANNEL_LABELS: Record<AcquisitionChannel, string> = {
+  organic: 'Organic',
+  social: 'Social',
+  google: 'Google',
+  referral: 'Referral',
+  other: 'Other',
+};
