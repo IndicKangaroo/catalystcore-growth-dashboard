@@ -5,6 +5,7 @@ import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { createApp } from './app';
 import { loadConfig } from './lib/config';
 import { createFirebaseDeps } from './lib/firebase';
+import { createSeedProvider } from './providers';
 import { bearer } from './testing/fakes';
 
 // The unit tests fake Firebase. This file runs the real wiring (Admin SDK token checks, Firestore
@@ -81,7 +82,7 @@ describe('signing in against the Firebase emulators', () => {
       FIREBASE_PROJECT_ID: PROJECT_ID,
       ADMIN_EMAIL,
     });
-    app = createApp(config, createFirebaseDeps(PROJECT_ID));
+    app = createApp(config, { ...createFirebaseDeps(PROJECT_ID), provider: createSeedProvider() });
   });
 
   beforeEach(resetEmulators);
@@ -214,6 +215,129 @@ describe('signing in against the Firebase emulators', () => {
     const allowed = await demote();
     expect(allowed.status).toBe(200);
     expect(allowed.body.user.role).toBe('growth');
+  });
+
+  describe('apps and studio settings', () => {
+    /** Signs in as the first admin, whose record is made by this first request. */
+    async function adminToken(): Promise<string> {
+      const token = await signInWithGoogle(ADMIN_EMAIL);
+      await get('/api/me', token);
+      return token;
+    }
+
+    const addApp = (token: string, fields: Record<string, unknown>) =>
+      request(app).post('/api/apps').set('Authorization', bearer(token)).send(fields);
+
+    it('adds, lists, changes and removes an app', async () => {
+      const token = await adminToken();
+
+      const created = await addApp(token, {
+        name: 'Grind Quest',
+        packageName: 'com.example.grindquest',
+        ga4PropertyId: 'properties/123456789',
+      });
+      expect(created.status).toBe(201);
+      const id = created.body.app.id as string;
+      expect(created.body.app).toMatchObject({
+        ga4PropertyId: '123456789',
+        createdBy: ADMIN_EMAIL,
+      });
+
+      const stored = await getFirestore().collection('apps').doc(id).get();
+      expect(stored.exists).toBe(true);
+      expect(stored.data()).toMatchObject({ id, name: 'Grind Quest', launchDate: null });
+
+      const list = await get('/api/apps', token);
+      expect(list.body.apps.map((entry: { id: string }) => entry.id)).toEqual([id]);
+
+      const patched = await request(app)
+        .patch(`/api/apps/${id}`)
+        .set('Authorization', bearer(token))
+        .send({ currentVersion: '1.2.0', ga4PropertyId: null });
+      expect(patched.status).toBe(200);
+      expect(patched.body.app).toMatchObject({ currentVersion: '1.2.0', ga4PropertyId: null });
+      expect((await get(`/api/apps/${id}`, token)).body.app.currentVersion).toBe('1.2.0');
+
+      const removed = await request(app)
+        .delete(`/api/apps/${id}`)
+        .set('Authorization', bearer(token));
+      expect(removed.status).toBe(204);
+      expect((await get(`/api/apps/${id}`, token)).status).toBe(404);
+    });
+
+    it('refuses a second app with the same package name, in any letter case', async () => {
+      const token = await adminToken();
+      await addApp(token, { name: 'Grind Quest', packageName: 'com.example.grindquest' });
+
+      const second = await addApp(token, { name: 'Copy', packageName: 'Com.Example.GrindQuest' });
+
+      expect(second.status).toBe(409);
+      expect(second.body.error.code).toBe('package_name_taken');
+      expect((await get('/api/apps', token)).body.apps).toHaveLength(1);
+    });
+
+    it('lets everyone read the apps and only an admin change them', async () => {
+      const token = await adminToken();
+      const created = await addApp(token, {
+        name: 'Grind Quest',
+        packageName: 'com.example.grindquest',
+      });
+      await request(app)
+        .post('/api/users')
+        .set('Authorization', bearer(token))
+        .send({ email: 'dev@example.com', role: 'developer' });
+      const devToken = await signInWithGoogle('dev@example.com');
+
+      const list = await get('/api/apps', devToken);
+      expect(list.status).toBe(200);
+      expect(list.body.apps).toHaveLength(1);
+
+      const forbidden = await request(app)
+        .delete(`/api/apps/${created.body.app.id}`)
+        .set('Authorization', bearer(devToken));
+      expect(forbidden.status).toBe(403);
+      expect((await get('/api/apps', token)).body.apps).toHaveLength(1);
+    });
+
+    it('reads the studio settings from the settings/studio document', async () => {
+      const token = await adminToken();
+
+      const before = await get('/api/settings/studio', token);
+      expect(before.status).toBe(200);
+      expect(before.body).toMatchObject({
+        configured: false,
+        settings: { timezone: 'Asia/Kolkata', currency: 'INR' },
+      });
+
+      await getFirestore()
+        .doc('settings/studio')
+        .set({ name: 'Example Studio', currency: 'eur', timezone: 'Europe/Berlin' });
+      const after = await get('/api/settings/studio', token);
+      expect(after.body).toMatchObject({
+        configured: true,
+        settings: { name: 'Example Studio', currency: 'EUR', timezone: 'Europe/Berlin' },
+      });
+
+      await getFirestore().doc('settings/studio').set({ timezone: 'Mars/Olympus' });
+      const broken = await get('/api/settings/studio', token);
+      expect(broken.status).toBe(503);
+      expect(broken.body.error.code).toBe('studio_settings_invalid');
+    });
+
+    it('ignores documents in the apps collection that the dashboard did not write', async () => {
+      const token = await adminToken();
+      await getFirestore().collection('apps').add({ title: 'Something else', price: 3 });
+
+      const created = await addApp(token, {
+        name: 'Grind Quest',
+        packageName: 'com.example.grindquest',
+      });
+      const list = await get('/api/apps', token);
+
+      expect(created.status).toBe(201);
+      expect(list.status).toBe(200);
+      expect(list.body.apps.map((entry: { name: string }) => entry.name)).toEqual(['Grind Quest']);
+    });
   });
 
   // The dashboard keeps its people in a collection called "users". When the Firebase project is

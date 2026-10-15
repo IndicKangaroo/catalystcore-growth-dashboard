@@ -3,7 +3,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createApp } from './app';
 import type { TokenVerifier } from './auth/types';
 import { loadConfig } from './lib/config';
-import { bearer, createFakeVerifier, makeToken } from './testing/fakes';
+import { bearer, createFakeVerifier, fakeDeps, makeToken } from './testing/fakes';
 import { createMemoryUserRepository } from './testing/memoryUserRepository';
 import type { UserRepository } from './users/types';
 
@@ -12,10 +12,10 @@ import type { UserRepository } from './users/types';
 const goodTokens = createFakeVerifier({ 'token-admin': makeToken('admin@example.com') });
 
 function appWith(verifier: TokenVerifier, users: UserRepository) {
-  return createApp(loadConfig({ NODE_ENV: 'test', ADMIN_EMAIL: 'admin@example.com' }), {
-    verifier,
-    users,
-  });
+  return createApp(
+    loadConfig({ NODE_ENV: 'test', ADMIN_EMAIL: 'admin@example.com' }),
+    fakeDeps({ verifier, users }),
+  );
 }
 
 /** A database that fails every call with this error, like Firestore without credentials. */
