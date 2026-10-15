@@ -37,9 +37,11 @@ export type StudioSettings = z.infer<typeof studioSettingsSchema>;
 
 export const DEFAULT_STUDIO_SETTINGS: StudioSettings = studioSettingsSchema.parse({});
 
-export type StudioSettingsResult =
-  | { ok: true; settings: StudioSettings }
-  | { ok: false; problem: string };
+// Two short names instead of one long union: the formatter lays out a union that does not fit on a
+// line differently from one version to the next, and a one-line union has no such choice.
+type StudioSettingsFound = { ok: true; settings: StudioSettings };
+type StudioSettingsProblem = { ok: false; problem: string };
+export type StudioSettingsResult = StudioSettingsFound | StudioSettingsProblem;
 
 /** Reads the stored document. A problem is worded for whoever has to fix the stored data. */
 export function parseStudioSettings(raw: unknown): StudioSettingsResult {

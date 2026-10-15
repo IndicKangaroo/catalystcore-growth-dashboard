@@ -15,9 +15,9 @@ export interface DateRange {
 }
 
 /** What a person picked: a quick range that moves with the calendar, or fixed dates. */
-export type RangeSpec =
-  | { kind: 'preset'; preset: DatePreset }
-  | { kind: 'custom'; from: string; to: string };
+type PresetRange = { kind: 'preset'; preset: DatePreset };
+type CustomRange = { kind: 'custom'; from: string; to: string };
+export type RangeSpec = PresetRange | CustomRange;
 
 export function daysInRange(range: DateRange): number {
   return daysBetween(range.from, range.to) + 1;
