@@ -76,8 +76,15 @@ export const updateAppSchema = createAppSchema
   });
 export type UpdateAppInput = z.infer<typeof updateAppSchema>;
 
+// The database makes 20 letters and digits; the pattern also takes what a hand-made or test id
+// needs. It keeps "/" and "." out of a document path, and Firestore reserves "__name__" ids.
+export const appIdSchema = z
+  .string()
+  .regex(/^[A-Za-z0-9_-]{1,128}$/, 'Not a valid app id')
+  .refine((id) => !/^__.*__$/.test(id), { message: 'Not a valid app id' });
+
 export const appRecordSchema = z.object({
-  id: z.string().min(1).max(128),
+  id: appIdSchema,
   name: appNameSchema,
   packageName: packageNameSchema,
   status: appStatusSchema,
@@ -94,7 +101,7 @@ export const appRecordSchema = z.object({
 });
 export type AppRecord = z.infer<typeof appRecordSchema>;
 
-export const appIdParamsSchema = z.object({ id: z.string().trim().min(1).max(128) });
+export const appIdParamsSchema = z.object({ id: appIdSchema });
 
 export const appsResponseSchema = z.object({ apps: z.array(appRecordSchema) });
 export type AppsResponse = z.infer<typeof appsResponseSchema>;

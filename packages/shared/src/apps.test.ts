@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { appRecordSchema, createAppSchema, ga4PropertyIdSchema, updateAppSchema } from './apps';
+import {
+  appIdParamsSchema,
+  appRecordSchema,
+  createAppSchema,
+  ga4PropertyIdSchema,
+  updateAppSchema,
+} from './apps';
 
 const minimal = { name: 'Grind Quest', packageName: 'com.example.grindquest' };
 
@@ -205,6 +211,18 @@ describe('updateAppSchema', () => {
       'iconUrl:',
     );
     expect(issuesOf(updateAppSchema, { ga4PropertyId: 'nope' })).toContain('ga4PropertyId:');
+  });
+});
+
+describe('appIdParamsSchema', () => {
+  it.each(['k3J9xQ0aZp1LmN4oRs7T', 'app-1', 'Grind_Quest'])('accepts the id %s', (id) => {
+    expect(appIdParamsSchema.parse({ id })).toEqual({ id });
+  });
+
+  // An id becomes part of a document path, so anything that could reach another document, or
+  // that Firestore keeps for itself, is refused before it gets there.
+  it.each(['', 'a/b', '.', '..', '__x__', 'a b', 'x'.repeat(129)])('refuses the id %j', (id) => {
+    expect(appIdParamsSchema.safeParse({ id }).success).toBe(false);
   });
 });
 
