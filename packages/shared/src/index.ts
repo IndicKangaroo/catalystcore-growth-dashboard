@@ -5,6 +5,7 @@ export * from './dates';
 export * from './enums';
 export * from './fields';
 export * from './filters';
+export * from './health';
 export * from './permissions';
 export * from './provenance';
 export * from './studio';

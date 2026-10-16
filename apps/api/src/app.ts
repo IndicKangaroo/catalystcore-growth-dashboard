@@ -1,3 +1,4 @@
+import type { HealthResponse } from '@growth/shared';
 import cors from 'cors';
 import express, { type Express } from 'express';
 import helmet from 'helmet';
@@ -20,7 +21,8 @@ export function createApp(config: Config, deps?: AppDeps): Express {
 
   // Public, no auth: used by uptime checks and by the web app's status card.
   app.get('/api/health', (_req, res) => {
-    res.json({ status: 'ok', provider: config.ANALYTICS_PROVIDER });
+    const body: HealthResponse = { status: 'ok', provider: config.ANALYTICS_PROVIDER };
+    res.json(body);
   });
 
   app.use('/api', deps ? createProtectedRouter(config, deps) : createUnconfiguredRouter());

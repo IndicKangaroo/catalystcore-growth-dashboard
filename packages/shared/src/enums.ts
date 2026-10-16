@@ -103,6 +103,11 @@ export const EVENT_TYPE_LABELS: Record<EventType, string> = {
 export const ANALYTICS_PROVIDERS = ['seed', 'ga4'] as const;
 export const analyticsProviderSchema = z.enum(ANALYTICS_PROVIDERS);
 export type AnalyticsProviderName = z.infer<typeof analyticsProviderSchema>;
+// "Demo data" is the label D-003 requires wherever the seed provider's numbers are shown.
+export const ANALYTICS_PROVIDER_LABELS: Record<AnalyticsProviderName, string> = {
+  seed: 'Demo data',
+  ga4: 'Google Analytics 4',
+};
 
 // Quick date ranges for the global filter (PRD section 4). "Custom" is not a preset: a custom range
 // carries its own dates.
