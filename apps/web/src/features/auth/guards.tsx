@@ -2,16 +2,9 @@ import type { Permission } from '@growth/shared';
 import type { ReactNode } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { CenteredCard } from '../../components/CenteredCard';
+import { Notice } from '../../components/Notice';
 import { useSession } from './session';
-
-function CenteredCard({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-4 p-6">
-      <h1 className="text-xl font-semibold">{title}</h1>
-      {children}
-    </main>
-  );
-}
 
 /** Handles the states that apply to every page: still loading, no access, or the API failing. */
 export function SessionGate() {
@@ -30,7 +23,7 @@ export function SessionGate() {
   if (state.status === 'denied') {
     return (
       <CenteredCard title="No access">
-        <p role="alert">{state.message}</p>
+        <Notice tone="danger">{state.message}</Notice>
         <div>
           <Button variant="secondary" onClick={() => void signOut()}>
             Sign out
@@ -43,7 +36,7 @@ export function SessionGate() {
   if (state.status === 'error') {
     return (
       <CenteredCard title="Something went wrong">
-        <p role="alert">{state.message}</p>
+        <Notice tone="danger">{state.message}</Notice>
         <div className="flex gap-2">
           <Button onClick={() => window.location.reload()}>Try again</Button>
           <Button variant="secondary" onClick={() => void signOut()}>
@@ -79,10 +72,12 @@ export function RequirePermission({
   if (!can(permission)) {
     return (
       <section aria-labelledby="not-allowed-title">
-        <h1 id="not-allowed-title" className="text-xl font-semibold">
+        <h1 id="not-allowed-title" className="text-2xl font-semibold tracking-tight text-fg">
           Not allowed
         </h1>
-        <p className="mt-2 text-fg-muted">Your role does not include access to this page.</p>
+        <p className="mt-1 text-sm text-fg-muted">
+          Your role does not include access to this page.
+        </p>
       </section>
     );
   }

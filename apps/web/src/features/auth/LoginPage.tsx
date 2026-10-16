@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import { Card } from '../../components/Card';
+import { CenteredCard } from '../../components/CenteredCard';
+import { LogoTile } from '../../components/LogoTile';
+import { Notice } from '../../components/Notice';
+import { PRODUCT_NAME } from '../../lib/product';
 import { useSession } from './session';
 
 /**
@@ -54,14 +59,15 @@ export default function LoginPage() {
 
   if (state.status === 'not_configured') {
     return (
-      <main className="mx-auto flex min-h-screen max-w-md flex-col justify-center gap-3 p-6">
-        <h1 className="text-xl font-semibold">Sign-in is not set up yet</h1>
+      <CenteredCard title="Sign-in is not set up yet">
         <p className="text-fg-muted">
-          Add your Firebase web settings (<code>VITE_FIREBASE_API_KEY</code> and{' '}
-          <code>VITE_FIREBASE_PROJECT_ID</code>) to the <code>.env</code> file, then restart the dev
-          server. The README explains how.
+          Add your Firebase web settings (
+          <code className="font-mono text-[13px]">VITE_FIREBASE_API_KEY</code> and{' '}
+          <code className="font-mono text-[13px]">VITE_FIREBASE_PROJECT_ID</code>) to the{' '}
+          <code className="font-mono text-[13px]">.env</code> file, then restart the dev server. The
+          README explains how.
         </p>
-      </main>
+      </CenteredCard>
     );
   }
 
@@ -78,24 +84,27 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-sm flex-col justify-center gap-6 p-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Growth Analytics</h1>
-        <p className="mt-1 text-fg-muted">Sign in with your Google account to continue.</p>
-      </div>
-      <div>
-        <Button onClick={() => void handleSignIn()} disabled={busy}>
-          {busy ? 'Opening Google…' : 'Sign in with Google'}
-        </Button>
-      </div>
-      {error && (
-        <p role="alert" className="text-danger">
-          {error}
+    <main className="flex min-h-screen items-center justify-center bg-canvas p-4">
+      <Card className="w-full max-w-sm p-6">
+        <div className="flex items-center gap-3">
+          <LogoTile name={PRODUCT_NAME} />
+          <h1 className="text-xl font-semibold tracking-tight text-fg">{PRODUCT_NAME}</h1>
+        </div>
+        <p className="mt-4 text-sm text-fg-muted">Sign in with your Google account to continue.</p>
+        <div className="mt-5">
+          <Button onClick={() => void handleSignIn()} disabled={busy}>
+            {busy ? 'Opening Google…' : 'Sign in with Google'}
+          </Button>
+        </div>
+        {error && (
+          <Notice tone="danger" className="mt-4">
+            {error}
+          </Notice>
+        )}
+        <p className="mt-5 text-xs text-fg-subtle">
+          Access is by invitation. Ask an admin if you cannot get in.
         </p>
-      )}
-      <p className="text-sm text-fg-muted">
-        Access is by invitation. Ask an admin if you cannot get in.
-      </p>
+      </Card>
     </main>
   );
 }
