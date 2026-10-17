@@ -1,13 +1,14 @@
 import { existsSync } from 'node:fs';
 import { createApp } from './app';
-import type { AppDeps } from './deps';
+import type { FirebaseDeps } from './deps';
 import { ConfigError, loadConfig } from './lib/config';
 import { createFirebaseDeps } from './lib/firebase';
 import { describeFirebaseSetup, describeStartupFailure } from './lib/firebaseSetup';
 import { errorFields, logger } from './lib/logger';
+import { createProvider } from './providers';
 
 /** Describes the Firebase setup in the log, then connects. A known setup mistake ends the start. */
-function startFirebase(projectId: string): AppDeps {
+function startFirebase(projectId: string): FirebaseDeps {
   for (const note of describeFirebaseSetup(process.env, existsSync)) {
     logger[note.level](note.message);
   }
@@ -23,14 +24,18 @@ function startFirebase(projectId: string): AppDeps {
 
 try {
   const config = loadConfig();
-  const deps = config.FIREBASE_PROJECT_ID ? startFirebase(config.FIREBASE_PROJECT_ID) : undefined;
-  if (!deps) {
+  // Chosen before anything connects, so a provider that is not available stops the start.
+  const provider = createProvider(config.ANALYTICS_PROVIDER);
+  const firebase = config.FIREBASE_PROJECT_ID
+    ? startFirebase(config.FIREBASE_PROJECT_ID)
+    : undefined;
+  if (!firebase) {
     logger.warn(
       'FIREBASE_PROJECT_ID is not set: sign-in is disabled and protected routes return 503',
     );
   }
 
-  const app = createApp(config, deps);
+  const app = createApp(config, firebase ? { ...firebase, provider } : undefined);
   app.listen(config.PORT, () => {
     logger.info('API listening', { port: config.PORT, provider: config.ANALYTICS_PROVIDER });
   });

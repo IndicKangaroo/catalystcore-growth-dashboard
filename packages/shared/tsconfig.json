@@ -1,4 +1,10 @@
 {
   "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    // The shared code uses the web-standard URL and URLSearchParams, which both Node and browsers
+    // have; naming the DOM library here keeps this package's own typecheck independent of which
+    // other packages happen to be installed.
+    "lib": ["ES2023", "DOM", "DOM.Iterable"]
+  },
   "include": ["src"]
 }

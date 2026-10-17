@@ -77,6 +77,17 @@ describe('apiFetch', () => {
     expect(init.body).toBe(JSON.stringify({ email: 'new@example.com', role: 'growth' }));
   });
 
+  it('returns nothing, without reading a body, when the API answers 204 No Content', async () => {
+    const json = vi.fn();
+    fetchMock.mockResolvedValue({ ok: true, status: 204, json });
+
+    const result = await apiFetch<void>('/api/apps/abc', { method: 'DELETE' });
+
+    expect(result).toBeUndefined();
+    expect(json).not.toHaveBeenCalled();
+    expect(lastRequest().init.method).toBe('DELETE');
+  });
+
   it('turns an error response into an ApiError with the server code and message', async () => {
     fetchMock.mockResolvedValue(
       fakeResponse(403, {

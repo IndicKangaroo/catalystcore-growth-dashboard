@@ -28,6 +28,10 @@ describe('permission matrix', () => {
     }
   });
 
+  it('lets every role read the studio settings that the screens are drawn from', () => {
+    expect(ROLES.filter((role) => !hasPermission(role, 'settings:read'))).toEqual([]);
+  });
+
   it('keeps developer to read-only analytics', () => {
     const granted = permissionsFor('developer');
     expect(granted.every((permission) => permission.endsWith(':read'))).toBe(true);

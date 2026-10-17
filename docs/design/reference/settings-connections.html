@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary":"#ffffff","inverse-on-surface":"#eef0ff","on-tertiary-fixed":"#2f1500","surface-tint":"#4d44e3","primary":"#3525cd","on-tertiary-container":"#ffd2b1","error":"#ba1a1a","on-secondary-fixed-variant":"#005049","outline":"#777587","surface-variant":"#dae2fd","primary-container":"#4f46e5","on-secondary-container":"#006f66","secondary-container":"#86f2e4","surface":"#faf8ff","surface-bright":"#faf8ff","on-primary-fixed-variant":"#3323cc","inverse-primary":"#c3c0ff","on-secondary-fixed":"#00201d","tertiary":"#703a00","on-primary":"#ffffff","tertiary-fixed":"#ffdcc3","error-container":"#ffdad6","on-primary-fixed":"#0f0069","on-surface":"#131b2e","secondary":"#006a61","on-surface-variant":"#464555","surface-container-lowest":"#ffffff","tertiary-container":"#934e00","inverse-surface":"#283044","on-secondary":"#ffffff","primary-fixed":"#e2dfff","primary-fixed-dim":"#c3c0ff","surface-container-highest":"#dae2fd","surface-container":"#eaedff","tertiary-fixed-dim":"#ffb77d","secondary-fixed":"#89f5e7","on-primary-container":"#dad7ff","on-error":"#ffffff","outline-variant":"#c7c4d8","surface-container-low":"#f2f3ff","on-background":"#131b2e","background":"#faf8ff","surface-container-high":"#e2e7ff","surface-dim":"#d2d9f4","on-tertiary-fixed-variant":"#6e3900","on-error-container":"#93000a","secondary-fixed-dim":"#6bd8cb"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","space-lg":"1.25rem","space-xl":"2rem","gutter-desktop":"1.5rem","margin-desktop":"2rem","margin":"1rem","space-sm":"0.5rem","gutter":"1rem","space-md":"0.75rem"},"fontFamily":{"display-lg":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"label-md":["Inter"],"metric-stat":["Inter"],"headline-lg":["Inter"],"display-lg-mobile":["Inter"],"label-mono":["JetBrains Mono"],"caption":["Inter"],"body-lg":["Inter"],"body-md":["Inter"]},"fontSize":{"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"500"}],"metric-stat":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"display-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-mono":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"400"}],"caption":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"500"}],"body-lg":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-14 px-space-md border-b border-outline-variant/30 flex items-center gap-space-sm"><img alt="CatalystCore Studios Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UO5tFmC1jmHZIpjl2ZwHhPTGRCAXEpfOAqeXXSpvKFZYiU_mqk-65S5EC9sqeVjj54KKKoIePndMbN14HoI69KVTBO_ZRkWmLMRMXw2ebQeO_OEK00FAd_NXDvTh5DzGPyX4p-CXZTo-z35W40HKOjo_g7SKuId_C8fX1G6KVvuJAUcmaroyzrr_ndQ4WkZDQ3QDbCnTmKVmX6vfF9xO5heW5o4VUsNQKvFQS21FzrJd8JfFPTNpP1JroR"/><div class="flex flex-col min-w-0 leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">CatalystCore</span><span class="font-caption text-caption text-on-surface-variant flex items-center gap-1"><span class="text-primary font-medium">Studios</span><span class="px-1 py-0.5 rounded bg-surface-container-high text-on-surface font-caption text-[10px] font-semibold uppercase tracking-wider">Analytics</span></span></div></div><div class="p-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-medium rounded-lg shadow-sm"><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="overview" href="#">Overview</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="products" href="#">Products</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="audience" href="#">Audience</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="retention" href="#">Retention</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="revenue" href="#">Revenue</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="quality-and-stability" href="#">Quality &amp; Stability</a><a class="flex items-center px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="reports" href="#">Reports</a><a aria-current="page" class="flex items-center px-space-sm py-2 transition-colors bg-primary-container text-on-primary font-medium rounded-lg shadow-sm" data-path="settings-and-data-connections" href="#">Settings</a></nav></div></div><div class="p-space-sm border-t border-outline-variant/30 bg-surface/50 flex flex-col gap-2"><div class="flex items-center gap-2 px-space-xs py-1"><span class="w-2 h-2 rounded-full bg-secondary shrink-0 animate-pulse"></span><span class="font-caption text-caption text-on-surface-variant truncate">All sources healthy • 12m ago</span></div><div class="flex items-center justify-between px-space-xs font-label-mono text-label-mono text-[11px] text-on-surface-variant"><span class="font-medium">CatalystCore OS</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface">v1.0.4</span></div></div></aside><div class="pl-60"><header class="fixed top-0 left-60 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"><span class="font-label-md text-label-md font-semibold text-on-surface">CatalystCore Studios</span><span class="text-outline-variant">/</span><span class="text-primary font-medium">Settings &amp; Connections</span></div><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="hidden xl:flex items-center gap-1.5 px-2 py-0.5 rounded border border-outline-variant/40 bg-surface font-caption text-caption text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-secondary">cloud_done</span><span>Firebase &amp; Play Console Synced 12m ago</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant/30"><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 7 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface font-semibold shadow-xs transition-colors" type="button">Last 30 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 90 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Custom</button></div><label class="hidden md:flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/><span class="text-xs select-none">Compare: Previous period</span></label><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="flex items-center gap-space-sm"><button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="flex items-center gap-2 pl-1"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwa77A-RqXesBZpE2OEnWWMeMPiypbLCE7SzWKRpSgpmABd2mNNmtYfiGCPcVlKaynncOWORc2bDG1I1TyWd3wNe0DHxAp5YPHi4qznBkqyrfPWyW-gPVNPUpO3Rrpi8yBe9I4h6ZGYx7gTiC--IIHs1HSMIGmX6UHuYqjaQu-Ch0U-sqsYaM1dxXmSP__dSOfFNW21-uRUZjSf8pWbh8xM-jEUmlsrjw6pGC-q0eCFchYSzQMCjnGVg"/><div class="hidden sm:flex flex-col leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">Alex Vance</span><span class="font-caption text-caption text-on-surface-variant">Founder</span></div></div></div></div></header><main class="relative pt-14 w-full px-gutter-desktop min-h-screen bg-background"><div class="flex flex-col w-full pb-16">
+<!-- Top Context & Command Header -->
+<section class="py-space-lg flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Workspace Configuration</span>
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+<span class="font-label-mono text-label-mono text-secondary font-medium">Telemetry Node: US-Central1</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Data Connections &amp; Telemetry Pipeline</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+        Manage continuous event ingestion, external developer console service accounts, telemetry routing keys, and automated reporting SLA parameters across studio products.
+      </p>
+</div>
+<!-- Global Connection Actions -->
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="flex items-center gap-2 px-3.5 h-9 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container-low transition-colors" id="syncAllBtn" type="button">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">sync</span>
+<span>Re-sync All Pipelines</span>
+</button>
+<button class="flex items-center gap-2 px-3.5 h-9 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md shadow-sm hover:opacity-95 transition-opacity" onclick="document.getElementById('newConnectionModal').classList.toggle('hidden')" type="button">
+<span class="material-symbols-outlined text-[16px]">add_link</span>
+<span>Connect New Source</span>
+</button>
+</div>
+</section>
+<!-- Health & SLA Diagnostic Strip -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-xl">
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Streaming Pipeline</span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary animate-pulse"></span> Operational
+        </span>
+</div>
+<div class="mt-space-md">
+<div class="font-metric-stat text-metric-stat text-on-surface tracking-tight">140ms</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">bolt</span>
+<span>Avg. BigQuery streaming latency</span>
+</div>
+</div>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Ingestion Backlog</span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> 0 Queue Lag
+        </span>
+</div>
+<div class="mt-space-md">
+<div class="font-metric-stat text-metric-stat text-on-surface tracking-tight">0 events</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span>
+<span>184,320 events ingested / 30d</span>
+</div>
+</div>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Pipeline Error Rate</span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
+        </span>
+</div>
+<div class="mt-space-md">
+<div class="font-metric-stat text-metric-stat text-on-surface tracking-tight">0.00%</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">verified</span>
+<span>Zero rejected payload batches</span>
+</div>
+</div>
+</div>
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant font-medium">Webhook Ingress</span>
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> 200 OK
+        </span>
+</div>
+<div class="mt-space-md">
+<div class="font-metric-stat text-metric-stat text-on-surface tracking-tight">99.98%</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-caption text-caption mt-1">
+<span class="material-symbols-outlined text-[14px] text-primary">cloud_sync</span>
+<span>Next scheduled pull in 48m</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 1: Connected Data Pipelines & Services -->
+<section class="flex flex-col gap-space-md mb-space-xl">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Primary Telemetry Connectors</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Core external platforms linked to the CatalystCore centralized analytical lake.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-low px-2 py-1 rounded">3 of 4 Active</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+<!-- 1. Google Play Console Connector -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">shop_two</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h3 class="font-label-md text-label-md font-semibold text-on-surface">Google Play Developer API</h3>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Connected
+                  </span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Vitals, ANRs, App Licensing &amp; Net Store Revenue</span>
+</div>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-high/60 px-2 py-0.5 rounded text-[11px]">Synced 12m ago</span>
+</div>
+<div class="space-y-2 mt-4 pt-3 bg-surface-container-low/40 p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Service Account</span>
+<span class="font-label-mono text-label-mono text-on-surface font-medium truncate max-w-[280px]" title="catalyst-play-telemetry@catalystcore-analytics.iam.gserviceaccount.com">catalyst-play-telemetry@catalystcore-analytics.iam...</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Permissions</span>
+<span class="text-on-surface font-medium">Read-only Financial, Crash &amp; ANR Vitals</span>
+</div>
+<div class="flex items-start justify-between text-body-sm font-body-sm pt-1">
+<span class="text-on-surface-variant shrink-0">Namespaces</span>
+<div class="flex flex-wrap gap-1 justify-end max-w-[320px]">
+<span class="font-label-mono text-[11px] bg-surface-container-lowest px-1.5 py-0.5 rounded text-on-surface">com.catalystcore.grindquest</span>
+<span class="font-label-mono text-[11px] bg-surface-container-lowest px-1.5 py-0.5 rounded text-on-surface">com.catalystcore.pdftoolkit</span>
+<span class="font-label-mono text-[11px] bg-surface-container-lowest px-1.5 py-0.5 rounded text-on-surface">com.catalystcore.idphotomaker</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md mt-space-md">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[15px] text-secondary">schedule</span>
+<span>Next pull in 48 minutes</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors" type="button">Rotate Key</button>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:opacity-95 transition-opacity" type="button">Test Connection</button>
+</div>
+</div>
+</div>
+<!-- 2. Firebase & BigQuery Export -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">dataset</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h3 class="font-label-md text-label-md font-semibold text-on-surface">Firebase &amp; BigQuery Stream</h3>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Streaming Active
+                  </span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Real-time cohort attribution, custom events &amp; raw partition storage</span>
+</div>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-high/60 px-2 py-0.5 rounded text-[11px]">Buffer: 140ms</span>
+</div>
+<div class="space-y-2 mt-4 pt-3 bg-surface-container-low/40 p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">GCP Project ID</span>
+<span class="font-label-mono text-label-mono text-on-surface font-medium">catalystcore-studios-prod</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Target BigQuery Dataset</span>
+<span class="font-label-mono text-label-mono text-primary font-medium">analytics_320914801</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">30-Day Event Volume</span>
+<span class="text-on-surface font-medium">184,320 events <span class="text-on-surface-variant text-[11px] font-normal">(Avg 6.1k/day)</span></span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md mt-space-md">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[15px] text-secondary">database</span>
+<span>Daily auto-partitioning enabled</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors" type="button">View Schema</button>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:opacity-95 transition-opacity" type="button">Sync Now</button>
+</div>
+</div>
+</div>
+<!-- 3. Google AdMob Reporting API -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[24px]">monetization_on</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h3 class="font-label-md text-label-md font-semibold text-on-surface">Google AdMob Reporting API</h3>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Connected
+                  </span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Rewarded video yield, eCPM, mediation fill &amp; network latency</span>
+</div>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-high/60 px-2 py-0.5 rounded text-[11px]">Hourly Sync</span>
+</div>
+<div class="space-y-2 mt-4 pt-3 bg-surface-container-low/40 p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Publisher ID</span>
+<span class="font-label-mono text-label-mono text-on-surface font-medium">pub-8192039108420192</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Settlement Currency</span>
+<span class="text-on-surface font-medium">USD ($) • Auto-converted to local reports</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Ingested Metrics</span>
+<span class="text-on-surface font-medium">Impressions, Requests, eCPM, Fill Rate</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md mt-space-md">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[15px] text-secondary">check_circle</span>
+<span>Mediation waterfall tracking active</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors" type="button">Ad Unit Mapping</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-lowest text-on-surface font-label-md text-label-md shadow-sm hover:bg-surface-container-low transition-colors" type="button">Configure</button>
+</div>
+</div>
+</div>
+<!-- 4. Apple App Store Connect / TestFlight API -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary-container text-[24px]">app_badging</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-2">
+<h3 class="font-label-md text-label-md font-semibold text-on-surface">App Store Connect &amp; TestFlight API</h3>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-tertiary-fixed text-on-tertiary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Awaiting Keys
+                  </span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">iOS TestFlight crash logs &amp; build release telemetry for Grind Quest v1.2.0b</span>
+</div>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container-high/60 px-2 py-0.5 rounded text-[11px]">Key: AUTHKEY_928JFK4</span>
+</div>
+<div class="space-y-2 mt-4 pt-3 bg-surface-container-low/40 p-3 rounded-lg">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Issuer ID</span>
+<span class="font-label-mono text-label-mono text-on-surface font-medium">8e7c14a2-9b01-44cd-9f...</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Status</span>
+<span class="text-tertiary font-medium">Private AuthKey (.p8) file missing</span>
+</div>
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<span class="text-on-surface-variant">Pending Scope</span>
+<span class="text-on-surface font-medium">TestFlight Ingestion, App Analytics V1</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md mt-space-md">
+<div class="flex items-center gap-1.5 text-on-surface-variant font-caption text-caption">
+<span class="material-symbols-outlined text-[15px] text-tertiary">warning</span>
+<span>iOS builds unmonitored</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:opacity-95 transition-opacity" type="button">
+<span class="material-symbols-outlined text-[15px]">upload</span>
+<span>Upload .p8 Auth Key</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 2: Product-to-App Telemetry Mapping Matrix -->
+<section class="mb-space-xl">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-2 mb-space-md">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Product-to-App Telemetry Matrix</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Granular mapping of studio apps to runtime bundles, store listings, and real-time collectors.</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="relative">
+<input class="h-8 pl-8 pr-3 text-body-sm font-body-sm rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-outline shadow-sm focus:outline-none focus:ring-1 focus:ring-primary w-64" placeholder="Filter products or IDs..." type="text"/>
+<span class="material-symbols-outlined absolute left-2 top-2 text-[16px] text-outline">search</span>
+</div>
+</div>
+</div>
+<!-- Matrix Table -->
+<div class="rounded-xl bg-surface-container-lowest shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-caption text-caption uppercase tracking-wider">
+<th class="py-3 px-space-lg font-semibold">Studio Product</th>
+<th class="py-3 px-space-md font-semibold">Platform &amp; Package</th>
+<th class="py-3 px-space-md font-semibold">Firebase App ID</th>
+<th class="py-3 px-space-md font-semibold">Pipelines Linked</th>
+<th class="py-3 px-space-md font-semibold">Collector Status</th>
+<th class="py-3 px-space-lg text-right font-semibold">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container font-body-sm text-body-sm text-on-surface">
+<!-- Row 1: Grind Quest -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary font-headline-sm text-[14px]">GQ</div>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Grind Quest</div>
+<div class="font-caption text-caption text-on-surface-variant">RPG / Rogue-Lite • Live</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-mono text-label-mono text-[11px] text-on-surface">com.catalystcore.grindquest</span>
+<span class="font-caption text-caption text-on-surface-variant">Android (Google Play)</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-mono text-label-mono text-[11px] bg-surface-container px-2 py-0.5 rounded text-on-surface">1:492810:android:3f2a</span>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">Play Console</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">BigQuery</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">AdMob</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
+                </span>
+</td>
+<td class="py-3 px-space-lg text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container-low text-on-surface font-label-md text-[12px] hover:bg-surface-container transition-colors" type="button">Manage</button>
+</td>
+</tr>
+<!-- Row 2: PDF & Image Toolkit -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary font-headline-sm text-[14px]">PT</div>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">PDF &amp; Image Toolkit</div>
+<div class="font-caption text-caption text-on-surface-variant">Utility • Live</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-mono text-label-mono text-[11px] text-on-surface">com.catalystcore.pdftoolkit</span>
+<span class="font-caption text-caption text-on-surface-variant">Android (Google Play)</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-mono text-label-mono text-[11px] bg-surface-container px-2 py-0.5 rounded text-on-surface">1:492810:android:8b1c</span>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">Play Console</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">BigQuery</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">AdMob</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
+                </span>
+</td>
+<td class="py-3 px-space-lg text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container-low text-on-surface font-label-md text-[12px] hover:bg-surface-container transition-colors" type="button">Manage</button>
+</td>
+</tr>
+<!-- Row 3: ID Photo Maker -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary font-headline-sm text-[14px]">ID</div>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">ID Photo Maker</div>
+<div class="font-caption text-caption text-on-surface-variant">Productivity • Live</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-mono text-label-mono text-[11px] text-on-surface">com.catalystcore.idphotomaker</span>
+<span class="font-caption text-caption text-on-surface-variant">Android (Google Play)</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-mono text-label-mono text-[11px] bg-surface-container px-2 py-0.5 rounded text-on-surface">1:492810:android:9e4d</span>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex items-center gap-1.5 flex-wrap">
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">Play Console</span>
+<span class="px-2 py-0.5 rounded bg-surface-container font-caption text-[11px] text-on-surface font-medium">BigQuery</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed/30 text-on-secondary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span> Healthy
+                </span>
+</td>
+<td class="py-3 px-space-lg text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container-low text-on-surface font-label-md text-[12px] hover:bg-surface-container transition-colors" type="button">Manage</button>
+</td>
+</tr>
+<!-- Row 4: Habit Minimalist (Staging) -->
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center font-bold text-tertiary-container font-headline-sm text-[14px]">HM</div>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Habit Minimalist</div>
+<div class="font-caption text-caption text-on-surface-variant">Upcoming • Staging Build</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-mono text-label-mono text-[11px] text-on-surface">com.catalystcore.habitminimalist</span>
+<span class="font-caption text-caption text-on-surface-variant">Android / iOS Cross</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-caption text-caption text-outline italic">Pending Configuration</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-caption text-caption text-on-surface-variant">Awaiting google-services.json</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-caption text-caption font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> Needs Setup
+                </span>
+</td>
+<td class="py-3 px-space-lg text-right">
+<button class="px-2.5 py-1 rounded bg-primary-container text-on-primary font-label-md text-[12px] hover:opacity-95 transition-opacity" type="button">Upload Config</button>
+</td>
+</tr>
+<!-- Row 5: Focus Flow Timer (Archived) -->
+<tr class="hover:bg-surface-container-low/40 transition-colors opacity-60">
+<td class="py-3 px-space-lg">
+<div class="flex items-center gap-3">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center font-bold text-outline font-headline-sm text-[14px]">FF</div>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Focus Flow Timer</div>
+<div class="font-caption text-caption text-on-surface-variant">Productivity • Archived 2023</div>
+</div>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<div class="flex flex-col">
+<span class="font-label-mono text-label-mono text-[11px] text-on-surface">com.catalystcore.focusflow</span>
+<span class="font-caption text-caption text-on-surface-variant">Android (Unpublished)</span>
+</div>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-label-mono text-label-mono text-[11px] bg-surface-container px-2 py-0.5 rounded text-outline line-through">1:492810:android:1a0e</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="font-caption text-caption text-outline">Revoked / Disconnected</span>
+</td>
+<td class="py-3 px-space-md">
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> Disconnected
+                </span>
+</td>
+<td class="py-3 px-space-lg text-right">
+<button class="px-2.5 py-1 rounded bg-surface-container-low text-on-surface-variant font-label-md text-[12px] hover:text-on-surface transition-colors" type="button">Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<!-- Section 3 & 4: Ingestion Frequency, Retention & Availability Matrix (Split Grid) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-xl">
+<!-- Left Column: Metric Availability Matrix (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between h-full">
+<div>
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Metric Lineage &amp; Source Attribution</h2>
+<span class="font-caption text-caption text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">Multi-Source Federation</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+            Explicit provenance mapping displaying which operational metrics originate from which ingestion upstream.
+          </p>
+<div class="space-y-3">
+<!-- Firebase Partition -->
+<div class="p-3 rounded-lg bg-surface-container-low/40">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Firebase Telemetry Stream</span>
+<span class="font-caption text-caption text-primary font-medium">Real-time BigQuery lake</span>
+</div>
+<span class="font-label-mono text-[11px] text-secondary">Latency &lt; 200ms</span>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">DAU / MAU</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">D1/D7/D30 Cohort Retention</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Level Progression Events</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Session Length</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Feature Engagement Flags</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Custom Parameter Telemetry</span>
+</div>
+</div>
+<!-- Play Console Partition -->
+<div class="p-3 rounded-lg bg-surface-container-low/40">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Google Play Developer API</span>
+<span class="font-caption text-caption text-on-surface-variant">Store backend</span>
+</div>
+<span class="font-label-mono text-[11px] text-on-surface-variant">Daily Reconciliation</span>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">ANR Rate (&lt;0.47% SLA)</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Unfiltered Crash Rate</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Net IAP Revenue</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Refund Telemetry</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">First-time Store Installs</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Store Listing Conversion</span>
+</div>
+</div>
+<!-- AdMob Partition -->
+<div class="p-3 rounded-lg bg-surface-container-low/40">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Google AdMob Reporting API</span>
+<span class="font-caption text-caption text-on-surface-variant">Mediation platform</span>
+</div>
+<span class="font-label-mono text-[11px] text-on-surface-variant">Hourly Aggregation</span>
+</div>
+<div class="flex flex-wrap gap-1.5">
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Rewarded Video Impressions</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Global eCPM Trends</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Network Fill Rates</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Ad Mediation Requests</span>
+<span class="px-2 py-1 rounded-md bg-surface-container-lowest text-on-surface font-caption text-caption shadow-xs">Ad Revenue Attribution</span>
+</div>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-md text-caption font-caption text-on-surface-variant">
+<span>Schema revision: v2.4.1 (Strict types)</span>
+<a class="text-primary hover:underline font-medium" href="#">Download Data Dictionary JSON</a>
+</div>
+</div>
+</div>
+<!-- Right Column: Sync Schedule & Data Retention Policy (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+<!-- Sync Schedule Controls -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Ingestion Cadence</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Define the ingestion pull schedule for asynchronous store aggregations.</p>
+<div class="space-y-3">
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<input checked="" class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="sync_rate" type="radio"/>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Near-Realtime Streaming (Hybrid)</div>
+<div class="font-caption text-caption text-on-surface-variant">BigQuery buffer 140ms, hourly store syncs</div>
+</div>
+</div>
+<span class="font-caption text-[11px] font-semibold text-secondary bg-secondary-fixed/40 px-2 py-0.5 rounded">Recommended</span>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low/40 cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="sync_rate" type="radio"/>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Hourly Periodic Polling</div>
+<div class="font-caption text-caption text-on-surface-variant">Micro-batch processing across all connectors</div>
+</div>
+</div>
+<span class="font-caption text-[11px] text-on-surface-variant">Low quota</span>
+</label>
+<label class="flex items-center justify-between p-3 rounded-lg bg-surface-container-low/40 cursor-pointer hover:bg-surface-container transition-colors">
+<div class="flex items-center gap-3">
+<input class="w-4 h-4 text-primary focus:ring-primary border-outline-variant" name="sync_rate" type="radio"/>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Daily Nightly Batch (00:00 UTC)</div>
+<div class="font-caption text-caption text-on-surface-variant">Minimal API overhead; vitals consolidated only</div>
+</div>
+</div>
+<span class="font-caption text-[11px] text-on-surface-variant">Archive mode</span>
+</label>
+</div>
+</div>
+<!-- Retention & Privacy Settings Card -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-1">Retention &amp; Compliance</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Studio storage limits, IP anonymization, and test device exclusion.</p>
+<div class="space-y-4">
+<!-- Toggle 1: Retention -->
+<div class="flex items-start justify-between gap-4">
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">365-Day Raw Telemetry Retention</div>
+<div class="font-caption text-caption text-on-surface-variant">Auto-archive partitioned BigQuery rows older than 12 months to Coldline.</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle 2: GDPR / Anonymize IP -->
+<div class="flex items-start justify-between gap-4">
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Anonymize Client IP (Strict GDPR)</div>
+<div class="font-caption text-caption text-on-surface-variant">Truncate the last octet of IPv4 and last 80 bits of IPv6 addresses at ingress.</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<!-- Toggle 3: Exclude Studio internal IP -->
+<div class="flex flex-col gap-1.5 pt-2">
+<div class="flex items-start justify-between gap-4">
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Exclude Internal Studio Test Devices</div>
+<div class="font-caption text-caption text-on-surface-variant">Discards developer telemetry from testing builds and QA sessions.</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0 mt-0.5">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<span class="font-caption text-caption text-on-surface-variant">Active Subnet Mask:</span>
+<span class="font-label-mono text-label-mono text-[11px] bg-surface-container px-2 py-0.5 rounded text-on-surface">198.51.100.0/24</span>
+<button class="text-primary hover:underline font-caption text-caption font-medium ml-auto" type="button">Edit CIDR</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section 5: Account & Notification Preferences -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg mb-space-xl">
+<!-- Founder Profile (5 cols) -->
+<div class="lg:col-span-5 p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Founder Authority</h2>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-primary-fixed text-on-primary-fixed font-caption text-caption font-semibold">
+            Primary Owner
+          </span>
+</div>
+<div class="flex items-center gap-4 mb-space-md p-3 rounded-lg bg-surface-container-low/40">
+<img alt="Alex Vance avatar" class="w-14 h-14 rounded-full object-cover ring-2 ring-primary-fixed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwa77A-RqXesBZpE2OEnWWMeMPiypbLCE7SzWKRpSgpmABd2mNNmtYfiGCPcVlKaynncOWORc2bDG1I1TyWd3wNe0DHxAp5YPHi4qznBkqyrfPWyW-gPVNPUpO3Rrpi8yBe9I4h6ZGYx7gTiC--IIHs1HSMIGmX6UHuYqjaQu-Ch0U-sqsYaM1dxXmSP__dSOfFNW21-uRUZjSf8pWbh8xM-jEUmlsrjw6pGC-q0eCFchYSzQMCjnGVg"/>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Alex Vance</span>
+<span class="font-caption text-caption text-on-surface-variant">Founder &amp; Principal Architect</span>
+<span class="font-label-mono text-label-mono text-[12px] text-primary mt-0.5">alex@catalystcore.studio</span>
+</div>
+</div>
+<div class="space-y-2 text-body-sm font-body-sm">
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Studio Security Tier</span>
+<span class="font-medium text-on-surface">Hardware 2FA / WebAuthn Active</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Signing Certificates</span>
+<span class="font-label-mono text-label-mono text-[11px] text-on-surface">SHA-256 Validated</span>
+</div>
+<div class="flex justify-between py-1">
+<span class="text-on-surface-variant">Billing Allocation</span>
+<span class="font-medium text-secondary">Catalyst Core Pro Plan</span>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex gap-2">
+<button class="w-full py-2 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors" type="button">Manage Studio Team</button>
+</div>
+</div>
+<!-- Alert Thresholds & Notification Digest (7 cols) -->
+<div class="lg:col-span-7 p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Critical Vitals &amp; Alert Thresholds</h2>
+<span class="font-caption text-caption text-secondary font-medium">Automatic Pager Active</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">Configure automated alerts triggered when studio apps exceed health tolerances in the field.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md mb-space-md">
+<!-- Threshold 1: ANR -->
+<div class="p-3.5 rounded-lg bg-surface-container-low/50 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md font-semibold text-on-surface">ANR Bad Behavior SLA</span>
+<span class="font-label-mono text-[11px] text-error font-medium">&gt; 0.47%</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">Triggers immediate SMS &amp; webhook ping if Application Not Responding rate breaches Google Play Threshold.</p>
+</div>
+<div class="mt-3 flex items-center gap-2">
+<input class="h-8 w-20 px-2 rounded-md bg-surface-container-lowest text-on-surface font-label-mono text-label-mono text-center focus:ring-1 focus:ring-primary focus:outline-none" step="0.01" type="number" value="0.47"/>
+<span class="font-caption text-caption text-on-surface-variant">% of user sessions</span>
+</div>
+</div>
+<!-- Threshold 2: Crash Rate -->
+<div class="p-3.5 rounded-lg bg-surface-container-low/50 flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-md text-label-md font-semibold text-on-surface">Crash Velocity Spike</span>
+<span class="font-label-mono text-[11px] text-error font-medium">&gt; 1.00%</span>
+</div>
+<p class="font-caption text-caption text-on-surface-variant">Triggers roll-out pause advisory if crash rate exceeds baseline on any active rollout track.</p>
+</div>
+<div class="mt-3 flex items-center gap-2">
+<input class="h-8 w-20 px-2 rounded-md bg-surface-container-lowest text-on-surface font-label-mono text-label-mono text-center focus:ring-1 focus:ring-primary focus:outline-none" step="0.1" type="number" value="1.00"/>
+<span class="font-caption text-caption text-on-surface-variant">% crash-free sessions drop</span>
+</div>
+</div>
+</div>
+<!-- Digest Config -->
+<div class="p-3.5 rounded-lg bg-surface-container-low/30 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[22px]">mail</span>
+<div>
+<div class="font-label-md text-label-md font-semibold text-on-surface">Daily Executive Digest to Founder</div>
+<div class="font-caption text-caption text-on-surface-variant">Dispatched every morning at 08:00 UTC summarizing DAU, revenue, and vitals.</div>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer shrink-0">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-9 h-5 bg-surface-container-highest peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-outline-variant after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+<div class="pt-space-md flex justify-end gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:opacity-95 transition-opacity" onclick="alert('Threshold parameters and notification preferences updated successfully.')" type="button">
+          Save Alert Preferences
+        </button>
+</div>
+</div>
+</section>
+<!-- Interactive Slide-over / Modal for Connecting New Source (Hidden by default) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center bg-inverse-surface/40 backdrop-blur-xs p-4" id="newConnectionModal">
+<div class="bg-surface-container-lowest rounded-xl shadow-xl max-w-lg w-full p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">add_link</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Connect Telemetry Upstream</h3>
+</div>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('newConnectionModal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Select a developer store, crash analytics agent, or cloud warehouse destination to establish automated telemetry ingestion.
+      </p>
+<div class="space-y-2">
+<label class="block text-caption font-caption text-on-surface font-medium">Provider Service</label>
+<select class="w-full h-9 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm focus:ring-1 focus:ring-primary focus:outline-none">
+<option>Apple App Store Connect (.p8 AuthKey)</option>
+<option>Google Cloud Pub/Sub Topic</option>
+<option>Unity Gaming Services Analytics</option>
+<option>Sentry Crash Ingestion Webhook</option>
+<option>Amazon AWS S3 Parquet Bucket</option>
+</select>
+</div>
+<div class="space-y-2">
+<label class="block text-caption font-caption text-on-surface font-medium">Authentication Credential (JSON / Private Key)</label>
+<div class="p-6 rounded-lg bg-surface-container-low/50 border-dashed border-2 border-outline-variant/60 flex flex-col items-center justify-center gap-2 text-center">
+<span class="material-symbols-outlined text-outline text-[32px]">cloud_upload</span>
+<span class="font-label-md text-label-md text-on-surface font-medium">Drag and drop key file here, or browse</span>
+<span class="font-caption text-caption text-on-surface-variant">Accepts .json service accounts or .p8 App Store Connect keys</span>
+</div>
+</div>
+<div class="flex justify-end gap-2 pt-2">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-low text-on-surface font-label-md text-label-md hover:bg-surface-container transition-colors" onclick="document.getElementById('newConnectionModal').classList.add('hidden')">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md hover:opacity-95 transition-opacity" onclick="document.getElementById('newConnectionModal').classList.add('hidden')">
+          Initialize Pipeline
+        </button>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple interactive feedback for manual sync trigger
+  document.getElementById('syncAllBtn')?.addEventListener('click', function() {
+    const btn = this;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = `<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span>Initiating Sync...</span>`;
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.innerHTML = `<span class="material-symbols-outlined text-[16px] text-secondary">check</span><span>Pipelines Synchronized</span>`;
+      setTimeout(() => {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }, 2500);
+    }, 1200);
+  });
+</script></main></div></body></html>

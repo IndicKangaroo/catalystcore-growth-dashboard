@@ -78,5 +78,7 @@ export async function apiFetch<T>(path: string, options: RequestOptions = {}): P
   }
 
   if (!response.ok) throw await toApiError(response);
+  // 204 No Content (a delete) has no body to read. Callers of such a route ask for apiFetch<void>.
+  if (response.status === 204) return undefined as T;
   return (await response.json()) as T;
 }

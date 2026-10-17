@@ -1,38 +1,17 @@
 import { userRecordSchema } from '@growth/shared';
 import type { UserRecord } from '@growth/shared';
 import type { Firestore } from 'firebase-admin/firestore';
-import { logger } from '../lib/logger';
+import { readRecords } from '../lib/documents';
 import type { UserRepository, UserTransaction } from './types';
 
 const COLLECTION = 'users';
 
 /**
- * Reads a whole list of documents as user records. A document that is not a dashboard user record
- * is left out and counted, instead of failing the whole list: the usual cause is a Firebase
- * project that is shared with an app whose own `users` collection holds other documents. Access
- * is never granted from such a document, because sign-in looks a person up by their exact email
- * with the strict `parse` below.
+ * A list is read tolerantly (see `readRecords`). Access is never granted from a document that is
+ * left out, because sign-in looks a person up by their exact email with the strict `parse` below.
  */
-function readRecords(docs: { data(): unknown }[]): UserRecord[] {
-  const records: UserRecord[] = [];
-  let skipped = 0;
-  for (const doc of docs) {
-    const result = userRecordSchema.safeParse(doc.data());
-    if (result.success) {
-      records.push(result.data);
-    } else {
-      skipped += 1;
-    }
-  }
-  if (skipped > 0) {
-    logger.warn(
-      `Skipped ${skipped} document(s) in the "${COLLECTION}" collection that are not dashboard ` +
-        'user records. If this Firebase project is shared with an app, give the dashboard a ' +
-        'project of its own (see the README).',
-    );
-  }
-  return records;
-}
+const readUsers = (docs: { data(): unknown }[]): UserRecord[] =>
+  readRecords(docs, userRecordSchema, { collection: COLLECTION, what: 'dashboard user records' });
 
 /** Firestore-backed user storage. Documents are keyed by lowercase email. */
 export function createFirestoreUserRepository(db: Firestore): UserRepository {
@@ -49,7 +28,7 @@ export function createFirestoreUserRepository(db: Firestore): UserRepository {
 
     async list() {
       const snapshot = await users.get();
-      return readRecords(snapshot.docs);
+      return readUsers(snapshot.docs);
     },
 
     runTransaction(fn) {
@@ -61,7 +40,7 @@ export function createFirestoreUserRepository(db: Firestore): UserRepository {
           },
           async listAdmins() {
             const snapshot = await transaction.get(users.where('role', '==', 'admin'));
-            return readRecords(snapshot.docs);
+            return readUsers(snapshot.docs);
           },
           put(user) {
             transaction.set(users.doc(user.email), user);

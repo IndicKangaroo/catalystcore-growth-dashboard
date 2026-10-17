@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;family=JetBrains+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"on-tertiary":"#ffffff","inverse-on-surface":"#eef0ff","on-tertiary-fixed":"#2f1500","surface-tint":"#4d44e3","primary":"#3525cd","on-tertiary-container":"#ffd2b1","error":"#ba1a1a","on-secondary-fixed-variant":"#005049","outline":"#777587","surface-variant":"#dae2fd","primary-container":"#4f46e5","on-secondary-container":"#006f66","secondary-container":"#86f2e4","surface":"#faf8ff","surface-bright":"#faf8ff","on-primary-fixed-variant":"#3323cc","inverse-primary":"#c3c0ff","on-secondary-fixed":"#00201d","tertiary":"#703a00","on-primary":"#ffffff","tertiary-fixed":"#ffdcc3","error-container":"#ffdad6","on-primary-fixed":"#0f0069","on-surface":"#131b2e","secondary":"#006a61","on-surface-variant":"#464555","surface-container-lowest":"#ffffff","tertiary-container":"#934e00","inverse-surface":"#283044","on-secondary":"#ffffff","primary-fixed":"#e2dfff","primary-fixed-dim":"#c3c0ff","surface-container-highest":"#dae2fd","surface-container":"#eaedff","tertiary-fixed-dim":"#ffb77d","secondary-fixed":"#89f5e7","on-primary-container":"#dad7ff","on-error":"#ffffff","outline-variant":"#c7c4d8","surface-container-low":"#f2f3ff","on-background":"#131b2e","background":"#faf8ff","surface-container-high":"#e2e7ff","surface-dim":"#d2d9f4","on-tertiary-fixed-variant":"#6e3900","on-error-container":"#93000a","secondary-fixed-dim":"#6bd8cb"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"space-xs":"0.25rem","space-lg":"1.25rem","space-xl":"2rem","gutter-desktop":"1.5rem","margin-desktop":"2rem","margin":"1rem","space-sm":"0.5rem","gutter":"1rem","space-md":"0.75rem"},"fontFamily":{"display-lg":["Inter"],"body-sm":["Inter"],"headline-sm":["Inter"],"label-md":["Inter"],"metric-stat":["Inter"],"headline-lg":["Inter"],"display-lg-mobile":["Inter"],"label-mono":["JetBrains Mono"],"caption":["Inter"],"body-lg":["Inter"],"body-md":["Inter"]},"fontSize":{"display-lg":["36px",{"lineHeight":"44px","letterSpacing":"-0.025em","fontWeight":"600"}],"body-sm":["13px",{"lineHeight":"18px","letterSpacing":"0em","fontWeight":"400"}],"headline-sm":["18px",{"lineHeight":"24px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.01em","fontWeight":"500"}],"metric-stat":["28px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-lg":["24px",{"lineHeight":"32px","letterSpacing":"-0.02em","fontWeight":"600"}],"display-lg-mobile":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"label-mono":["12px",{"lineHeight":"16px","letterSpacing":"0em","fontWeight":"400"}],"caption":["11px",{"lineHeight":"14px","letterSpacing":"0.02em","fontWeight":"500"}],"body-lg":["15px",{"lineHeight":"22px","letterSpacing":"-0.005em","fontWeight":"400"}],"body-md":["14px",{"lineHeight":"20px","letterSpacing":"0em","fontWeight":"400"}]}}}};</script></head><body class="bg-background font-body-md text-on-surface min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-full w-60 bg-surface-container-lowest border-r border-outline-variant/40 z-50 flex flex-col justify-between"><div class="flex flex-col"><div class="h-14 px-space-md border-b border-outline-variant/30 flex items-center gap-space-sm"><img alt="CatalystCore Studios Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UO5tFmC1jmHZIpjl2ZwHhPTGRCAXEpfOAqeXXSpvKFZYiU_mqk-65S5EC9sqeVjj54KKKoIePndMbN14HoI69KVTBO_ZRkWmLMRMXw2ebQeO_OEK00FAd_NXDvTh5DzGPyX4p-CXZTo-z35W40HKOjo_g7SKuId_C8fX1G6KVvuJAUcmaroyzrr_ndQ4WkZDQ3QDbCnTmKVmX6vfF9xO5heW5o4VUsNQKvFQS21FzrJd8JfFPTNpP1JroR"/><div class="flex flex-col min-w-0 leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">CatalystCore</span><span class="font-caption text-caption text-on-surface-variant flex items-center gap-1"><span class="text-primary font-medium">Studios</span><span class="px-1 py-0.5 rounded bg-surface-container-high text-on-surface font-caption text-[10px] font-semibold uppercase tracking-wider">Analytics</span></span></div></div><div class="p-space-sm"><nav class="flex flex-col gap-1" data-active-classes="bg-primary-container text-on-primary font-medium rounded-lg shadow-sm"><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[18px]">grid_view</span><span>Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="products" href="#"><span class="material-symbols-outlined text-[18px]">inventory_2</span><span>Products</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="audience" href="#"><span class="material-symbols-outlined text-[18px]">group</span><span>Audience</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="retention" href="#"><span class="material-symbols-outlined text-[18px]">timelapse</span><span>Retention</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="revenue" href="#"><span class="material-symbols-outlined text-[18px]">payments</span><span>Revenue</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="quality-and-stability" href="#"><span class="material-symbols-outlined text-[18px]">health_and_safety</span><span>Quality &amp; Stability</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="reports" href="#"><span class="material-symbols-outlined text-[18px]">assessment</span><span>Reports</span></a><a class="flex items-center gap-space-sm px-space-sm py-2 rounded-lg text-on-surface-variant font-body-sm text-body-sm hover:bg-surface-container-low hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[18px]">tune</span><span>Settings</span></a></nav></div></div><div class="p-space-sm border-t border-outline-variant/30 bg-surface/50 flex flex-col gap-2"><div class="flex items-center gap-2 px-space-xs py-1"><span class="w-2 h-2 rounded-full bg-secondary shrink-0 animate-pulse"></span><span class="font-caption text-caption text-on-surface-variant truncate">All sources healthy • 12m ago</span></div><div class="flex items-center justify-between px-space-xs font-label-mono text-label-mono text-[11px] text-on-surface-variant"><span class="font-medium">CatalystCore OS</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface">v1.0.4</span></div></div></aside><div class="pl-60"><header class="fixed top-0 left-60 right-0 h-14 bg-surface-container-lowest/90 backdrop-blur-md border-b border-outline-variant/30 z-40 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-md"><div class="flex items-center gap-2 text-on-surface-variant font-body-sm text-body-sm"><span class="font-label-md text-label-md font-semibold text-on-surface">CatalystCore Studios</span><span class="text-outline-variant">/</span><span class="text-primary font-medium">Overview</span></div><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="hidden xl:flex items-center gap-1.5 px-2 py-0.5 rounded border border-outline-variant/40 bg-surface font-caption text-caption text-on-surface-variant"><span class="material-symbols-outlined text-[14px] text-secondary">cloud_done</span><span>Firebase &amp; Play Console Synced 12m ago</span></div></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-xs bg-surface-container-low p-1 rounded-lg border border-outline-variant/30"><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 7 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md bg-surface-container-lowest text-on-surface font-semibold shadow-xs transition-colors" type="button">Last 30 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Last 90 days</button><button class="px-2.5 py-1 rounded font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">Custom</button></div><label class="hidden md:flex items-center gap-2 cursor-pointer font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><input checked="" class="rounded border-outline-variant text-primary focus:ring-primary w-3.5 h-3.5" type="checkbox"/><span class="text-xs select-none">Compare: Previous period</span></label><div class="h-4 w-[1px] bg-outline-variant/50"></div><div class="flex items-center gap-space-sm"><button class="p-1.5 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[20px]">notifications</span></button><div class="flex items-center gap-2 pl-1"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-1 ring-outline-variant/40" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwa77A-RqXesBZpE2OEnWWMeMPiypbLCE7SzWKRpSgpmABd2mNNmtYfiGCPcVlKaynncOWORc2bDG1I1TyWd3wNe0DHxAp5YPHi4qznBkqyrfPWyW-gPVNPUpO3Rrpi8yBe9I4h6ZGYx7gTiC--IIHs1HSMIGmX6UHuYqjaQu-Ch0U-sqsYaM1dxXmSP__dSOfFNW21-uRUZjSf8pWbh8xM-jEUmlsrjw6pGC-q0eCFchYSzQMCjnGVg"/><div class="hidden sm:flex flex-col leading-tight"><span class="font-label-md text-label-md font-semibold text-on-surface truncate">Alex Vance</span><span class="font-caption text-caption text-on-surface-variant">Founder</span></div></div></div></div></header><main class="relative pt-14 w-full px-gutter-desktop min-h-screen bg-background"><div class="flex flex-col w-full pb-16">
+<!-- Top Context Header -->
+<div class="py-space-lg flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-1 max-w-2xl">
+<div class="flex items-center gap-2 font-caption text-caption text-on-surface-variant">
+<span>CatalystCore Studios</span>
+<span>/</span>
+<span class="text-primary font-medium">Reports &amp; Exports</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface text-[10px] font-semibold tracking-wider font-label-mono">V1 AUDIT ENGINE</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Performance Reports &amp; Exports</h1>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        Generate verified period summaries, review period-over-period delta benchmarks, and export standardized executive datasets for internal studio records or store compliance.
+      </p>
+</div>
+<!-- Global Export Actions -->
+<div class="flex flex-wrap items-center gap-space-sm shrink-0">
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm hover:bg-surface-container-low transition-colors flex items-center gap-1.5 shadow-sm" id="btn-schedule-digest">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">event_repeat</span>
+<span>Schedule Digest</span>
+</button>
+<button class="px-3.5 py-2 rounded-lg bg-surface-container-lowest text-on-surface font-body-sm text-body-sm hover:bg-surface-container-low transition-colors flex items-center gap-1.5 shadow-sm" id="btn-download-csv">
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant">archive</span>
+<span>Download CSV Bundle (.zip)</span>
+</button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md font-medium hover:bg-primary/90 transition-all flex items-center gap-1.5 shadow-sm" id="btn-export-pdf">
+<span class="material-symbols-outlined text-[16px]">picture_as_pdf</span>
+<span>Export Executive PDF</span>
+</button>
+</div>
+</div>
+<!-- Interactive Controls & Scope Bar -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-lg flex flex-col gap-space-md">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<!-- Scope Pill Selectors -->
+<div class="flex flex-wrap items-center gap-2">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold mr-1">Report Scope:</span>
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary font-label-md text-label-md font-medium flex items-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[14px]">grid_view</span>
+<span>Studio Portfolio (All Connected)</span>
+<span class="ml-1 px-1.5 py-0.2 rounded-full bg-surface-container-lowest/20 text-on-primary text-[10px]">3 Live</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>Grind Quest</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>PDF &amp; Image Toolkit</span>
+</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-md text-label-md hover:bg-surface-container hover:text-on-surface transition-colors flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span>ID Photo Maker</span>
+</button>
+</div>
+<!-- Sync & Freshness Status Indicator -->
+<div class="flex items-center gap-2 px-2.5 py-1 rounded-md bg-secondary-container/20 text-on-secondary-container font-caption text-caption">
+<span class="w-2 h-2 rounded-full bg-secondary shrink-0 animate-pulse"></span>
+<span class="font-medium">Data Freshness: 100% Verified</span>
+<span class="text-on-surface-variant font-label-mono text-[10px]">• Synced 14m ago from Firebase &amp; Play Console</span>
+</div>
+</div>
+<!-- Parameter Filters Bar -->
+<div class="pt-space-sm flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-wrap items-center gap-space-md">
+<!-- Date Range Filter -->
+<div class="flex items-center gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>Date Range:</span>
+</label>
+<div class="relative inline-flex items-center">
+<select class="appearance-none bg-surface-container-low text-on-surface font-body-sm text-body-sm px-3 py-1.5 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer">
+<option selected="">Last 30 Days (Nov 1 – Nov 30, 2024)</option>
+<option>Last 7 Days (Nov 24 – Nov 30, 2024)</option>
+<option>Last 90 Days (Sep 1 – Nov 30, 2024)</option>
+<option>Year to Date (Jan 1 – Nov 30, 2024)</option>
+<option>Custom Cohort Window...</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant absolute right-2 pointer-events-none">expand_more</span>
+</div>
+</div>
+<!-- Baseline Compare Toggle -->
+<label class="flex items-center gap-2 cursor-pointer bg-surface-container-low px-3 py-1.5 rounded-lg text-on-surface font-body-sm text-body-sm select-none hover:bg-surface-container transition-colors">
+<input checked="" class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+<span class="font-medium">Compare to Previous Period</span>
+<span class="font-label-mono text-[11px] text-on-surface-variant">(Oct 2 – Oct 31, 2024)</span>
+</label>
+<!-- Report Template Selector -->
+<div class="flex items-center gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant">Preset:</span>
+<div class="relative inline-flex items-center">
+<select class="appearance-none bg-surface-container-low text-on-surface font-body-sm text-body-sm px-3 py-1.5 pr-8 rounded-lg focus:outline-none focus:ring-primary cursor-pointer">
+<option selected="">Standard Executive Audit</option>
+<option>Monetization &amp; Unit Economics</option>
+<option>Cohort Retention &amp; Churn</option>
+<option>Play Console Vitals &amp; ANR Thresholds</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-on-surface-variant absolute right-2 pointer-events-none">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Quick Document View Toggles -->
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg">
+<button class="px-2.5 py-1 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md font-medium shadow-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">preview</span>
+<span>Report Preview</span>
+</button>
+<button class="px-2.5 py-1 rounded text-on-surface-variant hover:text-on-surface font-label-md text-label-md flex items-center gap-1 transition-colors" id="toggle-raw-data">
+<span class="material-symbols-outlined text-[14px]">data_object</span>
+<span>Raw JSON / Schema</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main Report Document Preview Canvas -->
+<div class="relative bg-surface-container-lowest rounded-xl shadow-md p-6 md:p-10 flex flex-col gap-space-xl">
+<!-- Report Document Header (Official Corporate / Investor Presentation Layout) -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 bg-surface-container-low/40 p-4 rounded-lg">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary font-bold shadow-sm">
+<span class="material-symbols-outlined text-[24px]">insights</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-mono text-[11px] uppercase tracking-wider text-primary font-semibold">Official Studio Audit Report</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">CatalystCore Studios Telemetry Summary</h2>
+<span class="font-caption text-caption text-on-surface-variant">Scope: Multi-app Studio Portfolio (Grind Quest, PDF Toolkit, ID Photo Maker)</span>
+</div>
+</div>
+<div class="flex flex-col md:items-end font-label-mono text-[11px] text-on-surface-variant leading-relaxed">
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-semibold text-[10px]">REP-2024-11-30</span>
+<span>• Generated Nov 30, 2024 16:42 UTC</span>
+</div>
+<div>Prepared by: Alex Vance (Founder &amp; Principal)</div>
+<div class="text-secondary font-medium flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">verified</span>
+<span>Cryptographically Verified Datasets</span>
+</div>
+</div>
+</div>
+<!-- Section 1: Executive KPI Scorecard (4 Bento Cards) -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">1.0 Executive Performance Scorecard</h3>
+<span class="font-caption text-caption text-on-surface-variant">Nov 1 – Nov 30, 2024 vs. Oct 2 – Oct 31, 2024</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Metric 1: Gross Net Revenue -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-3 hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Gross Net Revenue</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-mono text-[11px] font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span> +21.4%
+            </span>
+</div>
+<div>
+<div class="font-metric-stat text-metric-stat text-on-surface font-bold tracking-tight">$3,428.50</div>
+<div class="font-caption text-caption text-on-surface-variant mt-0.5">vs. $2,824.00 prior 30d</div>
+</div>
+<div class="pt-2 bg-surface-container-lowest/60 p-2 rounded-lg flex items-center justify-between font-label-mono text-[11px] text-on-surface-variant">
+<span>IAP: <strong class="text-on-surface font-semibold">$1,748.50</strong></span>
+<span class="text-outline-variant">|</span>
+<span>AdMob: <strong class="text-on-surface font-semibold">$1,680.00</strong></span>
+</div>
+</div>
+<!-- Metric 2: Total Active Portfolio -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-3 hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Active Portfolio (MAU)</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-mono text-[11px] font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span> +14.2%
+            </span>
+</div>
+<div>
+<div class="font-metric-stat text-metric-stat text-on-surface font-bold tracking-tight">42,850</div>
+<div class="font-caption text-caption text-on-surface-variant mt-0.5">vs. 37,520 prior 30d</div>
+</div>
+<div class="pt-2 bg-surface-container-lowest/60 p-2 rounded-lg flex items-center justify-between font-label-mono text-[11px] text-on-surface-variant">
+<span>DAU/MAU Stickiness:</span>
+<strong class="text-primary font-semibold">38.4%</strong>
+</div>
+</div>
+<!-- Metric 3: User Acquisition -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-3 hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Net New Installs</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-mono text-[11px] font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span> +8.6%
+            </span>
+</div>
+<div>
+<div class="font-metric-stat text-metric-stat text-on-surface font-bold tracking-tight">12,410</div>
+<div class="font-caption text-caption text-on-surface-variant mt-0.5">vs. 11,430 prior 30d</div>
+</div>
+<div class="pt-2 bg-surface-container-lowest/60 p-2 rounded-lg flex items-center justify-between font-label-mono text-[11px] text-on-surface-variant">
+<span>Organic: <strong class="text-on-surface font-semibold">68.2%</strong></span>
+<span class="text-outline-variant">|</span>
+<span>Referral: <strong class="text-on-surface font-semibold">31.8%</strong></span>
+</div>
+</div>
+<!-- Metric 4: Studio Stability Index -->
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-3 hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Crash-Free Sessions</span>
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/30 text-on-secondary-container font-label-mono text-[11px] font-semibold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">health_and_safety</span> +0.14%
+            </span>
+</div>
+<div>
+<div class="font-metric-stat text-metric-stat text-on-surface font-bold tracking-tight">99.82%</div>
+<div class="font-caption text-caption text-on-surface-variant mt-0.5">vs. 99.68% prior period</div>
+</div>
+<div class="pt-2 bg-surface-container-lowest/60 p-2 rounded-lg flex items-center justify-between font-label-mono text-[11px] text-on-surface-variant">
+<span>Critical ANRs:</span>
+<strong class="text-secondary font-semibold">0 Recorded</strong>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 2: Period-over-Period Performance Breakdown (Comparative Table) -->
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">2.0 Telemetry Comparative Baseline</h3>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface font-caption text-caption">Normalized 30-Day Windows</span>
+</div>
+<span class="font-caption text-caption text-on-surface-variant">Data verified by Google Play Developer API</span>
+</div>
+<div class="overflow-x-auto rounded-xl bg-surface-container-lowest">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-low/80 text-on-surface-variant font-caption text-caption uppercase tracking-wider">
+<th class="py-3 px-4 font-semibold">Metric Indicator</th>
+<th class="py-3 px-4 font-semibold text-right">Current Period (Nov 1–30)</th>
+<th class="py-3 px-4 font-semibold text-right">Prior Period (Oct 2–31)</th>
+<th class="py-3 px-4 font-semibold text-right">Absolute Delta</th>
+<th class="py-3 px-4 font-semibold text-right">Percentage Lift</th>
+<th class="py-3 px-4 font-semibold text-center">Audit Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low/60 font-label-mono text-[12px]">
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+                Portfolio Active Users (MAU)
+              </td>
+<td class="py-3.5 px-4 text-right text-on-surface font-semibold">42,850</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant">37,520</td>
+<td class="py-3.5 px-4 text-right text-secondary font-medium">+5,330</td>
+<td class="py-3.5 px-4 text-right text-secondary font-semibold">+14.2%</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">Exceeding Target</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-container"></span>
+                Daily Active Users (Avg DAU)
+              </td>
+<td class="py-3.5 px-4 text-right text-on-surface font-semibold">2,140</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant">1,890</td>
+<td class="py-3.5 px-4 text-right text-secondary font-medium">+250</td>
+<td class="py-3.5 px-4 text-right text-secondary font-semibold">+13.2%</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">Healthy</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+                Gross In-App Billing (Google Play)
+              </td>
+<td class="py-3.5 px-4 text-right text-on-surface font-semibold">$1,748.50</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant">$1,410.00</td>
+<td class="py-3.5 px-4 text-right text-secondary font-medium">+$338.50</td>
+<td class="py-3.5 px-4 text-right text-secondary font-semibold">+24.0%</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">Strong Growth</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span>
+                AdMob Net Network Revenue
+              </td>
+<td class="py-3.5 px-4 text-right text-on-surface font-semibold">$1,680.00</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant">$1,414.00</td>
+<td class="py-3.5 px-4 text-right text-secondary font-medium">+$266.00</td>
+<td class="py-3.5 px-4 text-right text-secondary font-semibold">+18.8%</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">On Track</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim"></span>
+                Day 1 Retention (Weighted Portfolio)
+              </td>
+<td class="py-3.5 px-4 text-right text-on-surface font-semibold">41.8%</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant">39.5%</td>
+<td class="py-3.5 px-4 text-right text-secondary font-medium">+2.3% pts</td>
+<td class="py-3.5 px-4 text-right text-secondary font-semibold">+5.8%</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">Above Genre Bmk</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary-fixed"></span>
+                Day 7 Retention (Weighted Portfolio)
+              </td>
+<td class="py-3.5 px-4 text-right text-on-surface font-semibold">17.6%</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant">16.2%</td>
+<td class="py-3.5 px-4 text-right text-secondary font-medium">+1.4% pts</td>
+<td class="py-3.5 px-4 text-right text-secondary font-semibold">+8.6%</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">Above Genre Bmk</span>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                User-Perceived Crash Rate
+              </td>
+<td class="py-3.5 px-4 text-right text-on-surface font-semibold">0.18%</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant">0.22%</td>
+<td class="py-3.5 px-4 text-right text-secondary font-medium">-0.04% pts</td>
+<td class="py-3.5 px-4 text-right text-secondary font-semibold">-18.2% (Better)</td>
+<td class="py-3.5 px-4 text-center">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">Play Healthy</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Section 3 & 4: Split Layout for Visuals and Product Breakdown -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Section 3: Product-by-Product Contribution (7 cols) -->
+<div class="lg:col-span-7 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">3.0 Product Contribution Matrix</h3>
+<span class="font-caption text-caption text-on-surface-variant">Unit Attribution</span>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Product Row 1: Grind Quest -->
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-3 hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold text-xs shadow-xs">
+                  GQ
+                </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-on-surface">Grind Quest</span>
+<span class="font-caption text-caption text-on-surface-variant">v1.2.0 • RPG Sim • Production Live</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">3 Synced APIs</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-2 pt-2 bg-surface-container-lowest/70 p-2.5 rounded-lg font-label-mono text-[11px] text-center">
+<div>
+<div class="text-on-surface-variant text-[10px]">MAU (SHARE)</div>
+<div class="font-semibold text-on-surface">26,400 (61.6%)</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">NET REVENUE</div>
+<div class="font-semibold text-on-surface">$2,180.00 (63.6%)</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">D7 RETENTION</div>
+<div class="font-semibold text-primary">19.0%</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">CRASH-FREE</div>
+<div class="font-semibold text-secondary">99.85%</div>
+</div>
+</div>
+</div>
+<!-- Product Row 2: PDF & Image Toolkit -->
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-3 hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs shadow-xs">
+                  PT
+                </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-on-surface">PDF &amp; Image Toolkit</span>
+<span class="font-caption text-caption text-on-surface-variant">v2.0.4 • Utility • Production Live</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container/20 text-on-secondary-container font-caption text-caption font-medium">2 Synced APIs</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-2 pt-2 bg-surface-container-lowest/70 p-2.5 rounded-lg font-label-mono text-[11px] text-center">
+<div>
+<div class="text-on-surface-variant text-[10px]">MAU (SHARE)</div>
+<div class="font-semibold text-on-surface">11,200 (26.1%)</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">NET REVENUE</div>
+<div class="font-semibold text-on-surface">$920.50 (26.8%)</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">D7 RETENTION</div>
+<div class="font-semibold text-primary">14.0%</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">CRASH-FREE</div>
+<div class="font-semibold text-secondary">99.91%</div>
+</div>
+</div>
+</div>
+<!-- Product Row 3: ID Photo Maker -->
+<div class="bg-surface-container-low p-4 rounded-xl flex flex-col gap-3 hover:bg-surface-container transition-colors">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container-highest text-on-surface flex items-center justify-center font-bold text-xs shadow-xs">
+                  ID
+                </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-semibold text-on-surface">ID Photo Maker</span>
+<span class="font-caption text-caption text-on-surface-variant">v1.0.8 • Productivity • Production Live</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-caption text-caption font-medium">Play API</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-2 pt-2 bg-surface-container-lowest/70 p-2.5 rounded-lg font-label-mono text-[11px] text-center">
+<div>
+<div class="text-on-surface-variant text-[10px]">MAU (SHARE)</div>
+<div class="font-semibold text-on-surface">5,250 (12.3%)</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">NET REVENUE</div>
+<div class="font-semibold text-on-surface">$328.00 (9.6%)</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">D7 RETENTION</div>
+<div class="font-semibold text-primary">12.0%</div>
+</div>
+<div>
+<div class="text-on-surface-variant text-[10px]">CRASH-FREE</div>
+<div class="font-semibold text-secondary">99.70%</div>
+</div>
+</div>
+</div>
+<!-- Product Row 4: Habit Minimalist (Staging / Inactive) -->
+<div class="bg-surface-container-low/40 p-3 rounded-xl flex items-center justify-between opacity-75">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-lg bg-surface-container text-on-surface-variant flex items-center justify-center font-bold text-xs">
+                HM
+              </div>
+<div class="flex flex-col">
+<span class="font-body-md text-body-md font-medium text-on-surface-variant">Habit Minimalist (Internal Staging)</span>
+<span class="font-caption text-caption text-on-surface-variant">v0.9.1 • Excluded from aggregate revenue &amp; active telemetry</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-mono text-[11px]">Awaiting SDK sync</span>
+</div>
+</div>
+</div>
+<!-- Section 4: Revenue & Monetization Split Chart Visual (5 cols) -->
+<div class="lg:col-span-5 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface-variant font-semibold">4.0 Monetization Split &amp; Velocity</h3>
+<span class="font-label-mono text-[11px] text-on-surface-variant">30D Velocity</span>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between gap-space-md h-full">
+<!-- Stacked Bar Visual -->
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface font-semibold">Channel Balance</span>
+<span class="font-label-mono text-on-surface-variant text-[11px]">$3,428.50 Total</span>
+</div>
+<div class="w-full h-4 rounded-full bg-surface-container flex overflow-hidden">
+<div class="h-full bg-primary" style="width: 51%" title="In-App Purchases: $1,748.50 (51.0%)"></div>
+<div class="h-full bg-secondary" style="width: 49%" title="AdMob Network: $1,680.00 (49.0%)"></div>
+</div>
+<div class="flex items-center justify-between font-caption text-caption pt-1 text-on-surface-variant">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-sm bg-primary"></span>
+<span>Google Play IAP: <strong>51.0%</strong> ($1,748.50)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-sm bg-secondary"></span>
+<span>AdMob Ads: <strong>49.0%</strong> ($1,680.00)</span>
+</div>
+</div>
+</div>
+<!-- Weekly Velocity Sparkline / Bar Chart (Inline SVG) -->
+<div class="flex flex-col gap-1.5">
+<span class="font-caption text-caption text-on-surface-variant uppercase tracking-wider font-semibold">Weekly Net Inflow Run-Rate</span>
+<div class="h-32 w-full pt-2">
+<svg class="w-full h-full overflow-visible" fill="none" preserveaspectratio="none" viewbox="0 0 320 90">
+<!-- Background gridlines -->
+<line stroke="#dae2fd" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="320" y1="20" y2="20"></line>
+<line stroke="#dae2fd" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="320" y1="50" y2="50"></line>
+<line stroke="#dae2fd" stroke-width="1" x1="0" x2="320" y1="80" y2="80"></line>
+<!-- Comparison baseline (Oct) -->
+<polyline fill="none" points="20,70 95,65 170,58 245,62 300,54" stroke="#c7c4d8" stroke-dasharray="4 2" stroke-width="1.5"></polyline>
+<!-- Active 30-Day Trendline (Nov) -->
+<polyline fill="none" points="20,62 95,45 170,36 245,28 300,18" stroke="#4f46e5" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></polyline>
+<!-- Data Points -->
+<circle cx="20" cy="62" fill="#4f46e5" r="3.5"></circle>
+<circle cx="95" cy="45" fill="#4f46e5" r="3.5"></circle>
+<circle cx="170" cy="36" fill="#4f46e5" r="3.5"></circle>
+<circle cx="245" cy="28" fill="#4f46e5" r="3.5"></circle>
+<circle cx="300" cy="18" fill="#3525cd" r="4" stroke="#ffffff" stroke-width="2"></circle>
+</svg>
+</div>
+<div class="flex justify-between font-label-mono text-[10px] text-on-surface-variant px-1 pt-1">
+<span>W1 ($680)</span>
+<span>W2 ($795)</span>
+<span>W3 ($890)</span>
+<span>W4 ($1,063)</span>
+</div>
+</div>
+<!-- Studio Compliance & Store Health Statement -->
+<div class="p-3 rounded-lg bg-surface-container-lowest flex items-start gap-2.5">
+<span class="material-symbols-outlined text-[18px] text-secondary shrink-0 mt-0.5">verified_user</span>
+<div class="flex flex-col font-caption text-caption leading-tight text-on-surface-variant">
+<span class="font-semibold text-on-surface">Store Health Compliance Confirmed</span>
+<span>Crash rate (0.18%) and ANR rate (0.04%) are well beneath Google Play's 1.09% &amp; 0.47% bad-behavior penalty bars.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Official Report Footer Sign-off -->
+<div class="pt-6 bg-surface-container-low/30 p-4 rounded-lg flex flex-col sm:flex-row items-center justify-between gap-4 font-caption text-caption text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary">security</span>
+<span>End of Period Telemetry Audit — CatalystCore Platform v1.0.4</span>
+</div>
+<div class="flex items-center gap-4">
+<span>Hash: <code class="font-label-mono text-[10px] bg-surface-container-high px-1 py-0.5 rounded text-on-surface">sha256:7b91..f8e3</code></span>
+<span>Signature: Verified Executive</span>
+</div>
+</div>
+</div>
+<!-- Historical Archives & Export Utility Section -->
+<div class="mt-space-xl flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Generated Audit Archives</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Previously synthesized telemetry dossiers, snapshots, and raw exports ready for on-demand download.</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-caption text-caption text-on-surface-variant">Retention: 365 Days per Studio Policy</span>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg">
+<!-- Archive Table (8 cols) -->
+<div class="lg:col-span-8 bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-caption text-caption uppercase tracking-wider">
+<th class="py-3 px-4 font-semibold">Report Dossier Name</th>
+<th class="py-3 px-4 font-semibold">Date Range</th>
+<th class="py-3 px-4 font-semibold">Format</th>
+<th class="py-3 px-4 font-semibold">Size</th>
+<th class="py-3 px-4 font-semibold">Generated Date</th>
+<th class="py-3 px-4 font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low font-label-mono text-[12px]">
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-error">picture_as_pdf</span>
+<span>Oct 2024 Full Studio Audit</span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant">Oct 1 – Oct 31, 2024</td>
+<td class="py-3.5 px-4"><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface text-[10px] font-semibold">PDF</span></td>
+<td class="py-3.5 px-4 text-on-surface-variant">1.8 MB</td>
+<td class="py-3.5 px-4 text-on-surface-variant">Oct 31, 2024 23:59</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="Download Archive">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" title="Copy Direct URL">
+<span class="material-symbols-outlined text-[16px]">link</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary">table_chart</span>
+<span>Q3 2024 Cohort &amp; Retention Study</span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant">Jul 1 – Sep 30, 2024</td>
+<td class="py-3.5 px-4"><span class="px-1.5 py-0.5 rounded bg-secondary-container/30 text-on-secondary-container text-[10px] font-semibold">CSV</span></td>
+<td class="py-3.5 px-4 text-on-surface-variant">420 KB</td>
+<td class="py-3.5 px-4 text-on-surface-variant">Oct 1, 2024 09:15</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="Download Archive">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" title="Copy Direct URL">
+<span class="material-symbols-outlined text-[16px]">link</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/40 transition-colors">
+<td class="py-3.5 px-4 font-body-sm text-body-sm font-semibold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-error">picture_as_pdf</span>
+<span>Grind Quest v1.2.0 Launch Benchmark</span>
+</td>
+<td class="py-3.5 px-4 text-on-surface-variant">Nov 1 – Nov 15, 2024</td>
+<td class="py-3.5 px-4"><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface text-[10px] font-semibold">PDF</span></td>
+<td class="py-3.5 px-4 text-on-surface-variant">2.4 MB</td>
+<td class="py-3.5 px-4 text-on-surface-variant">Nov 15, 2024 14:02</td>
+<td class="py-3.5 px-4 text-right">
+<div class="flex items-center justify-end gap-1">
+<button class="p-1 rounded text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors" title="Download Archive">
+<span class="material-symbols-outlined text-[16px]">download</span>
+</button>
+<button class="p-1 rounded text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors" title="Copy Direct URL">
+<span class="material-symbols-outlined text-[16px]">link</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Quick Export Settings & Format Presets (4 cols) -->
+<div class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between gap-4">
+<div class="flex flex-col gap-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">tune</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">Export Formatting Defaults</span>
+</div>
+<div class="space-y-3 font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex items-center justify-between">
+<span>Timestamp Format</span>
+<span class="font-label-mono text-[11px] bg-surface-container-low px-2 py-0.5 rounded text-on-surface">ISO-8601 (UTC)</span>
+</div>
+<div class="flex items-center justify-between">
+<span>CSV Field Delimiter</span>
+<span class="font-label-mono text-[11px] bg-surface-container-low px-2 py-0.5 rounded text-on-surface">Comma (,)</span>
+</div>
+<div class="flex items-center justify-between">
+<span>Telemetry Precision</span>
+<span class="font-label-mono text-[11px] bg-surface-container-low px-2 py-0.5 rounded text-on-surface">2 Decimals (Normalized)</span>
+</div>
+<div class="flex items-center justify-between">
+<span>Sanitize PII in Crash Reports</span>
+<span class="text-secondary font-medium font-label-mono text-[11px]">Enforced (Strict)</span>
+</div>
+</div>
+</div>
+<div class="pt-3 bg-surface-container-low/50 p-3 rounded-lg flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-medium text-on-surface">Raw Data Output Mode</span>
+<span class="font-caption text-caption text-on-surface-variant">Includes uncompressed hourly telemetry logs</span>
+</div>
+<input class="rounded text-primary focus:ring-primary w-4 h-4 cursor-pointer" type="checkbox"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Notification Toast Modal Container (Triggered by Export action) -->
+<div class="fixed bottom-6 right-6 max-w-md bg-surface-container-lowest p-4 rounded-xl shadow-xl z-50 transform translate-y-32 opacity-0 transition-all duration-300 pointer-events-none flex items-start gap-3" id="export-toast">
+<div class="w-8 h-8 rounded-lg bg-secondary/10 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">download_done</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-semibold text-on-surface" id="toast-title">Export Initiated</span>
+<span class="font-caption text-caption text-on-surface-variant" id="toast-desc">Synthesizing multi-app dataset and downloading package...</span>
+</div>
+</div>
+</div>
+<script>
+  // Simple client-side micro-interactions for Export buttons & toast
+  (function() {
+    const toast = document.getElementById('export-toast');
+    const toastTitle = document.getElementById('toast-title');
+    const toastDesc = document.getElementById('toast-desc');
+
+    function showNotification(title, message) {
+      if (!toast) return;
+      toastTitle.textContent = title;
+      toastDesc.textContent = message;
+      toast.classList.remove('translate-y-32', 'opacity-0', 'pointer-events-none');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-32', 'opacity-0', 'pointer-events-none');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    const btnPdf = document.getElementById('btn-export-pdf');
+    if (btnPdf) {
+      btnPdf.addEventListener('click', () => {
+        showNotification('Executive PDF Generated', 'Downloaded CatalystCore_Audit_Nov2024.pdf (1.8 MB)');
+      });
+    }
+
+    const btnCsv = document.getElementById('btn-download-csv');
+    if (btnCsv) {
+      btnCsv.addEventListener('click', () => {
+        showNotification('CSV Package Ready', 'Downloaded CatalystCore_Telemetry_Bundle.zip (380 KB)');
+      });
+    }
+
+    const btnDigest = document.getElementById('btn-schedule-digest');
+    if (btnDigest) {
+      btnDigest.addEventListener('click', () => {
+        showNotification('Digest Scheduled', 'Monthly digest scheduled for 1st of every month to alex@catalystcore.io');
+      });
+    }
+
+    const toggleRaw = document.getElementById('toggle-raw-data');
+    if (toggleRaw) {
+      toggleRaw.addEventListener('click', () => {
+        showNotification('Data Inspector', 'Telemetry schema: CatalystCore-V1-Normalized. All endpoints validated.');
+      });
+    }
+  })();
+</script></main></div></body></html>

@@ -2,8 +2,10 @@ import { getApps, initializeApp } from 'firebase-admin/app';
 import type { App } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
+import { createFirestoreAppRepository } from '../apps/firestoreRepository';
 import type { TokenVerifier } from '../auth/types';
-import type { AppDeps } from '../deps';
+import type { FirebaseDeps } from '../deps';
+import { createFirestoreSettingsRepository } from '../settings/firestoreRepository';
 import { createFirestoreUserRepository } from '../users/firestoreRepository';
 
 function createVerifier(app: App): TokenVerifier {
@@ -27,10 +29,13 @@ function createVerifier(app: App): TokenVerifier {
  * Run, or none at all against the emulators (FIRESTORE_EMULATOR_HOST and
  * FIREBASE_AUTH_EMULATOR_HOST are picked up by the SDK automatically).
  */
-export function createFirebaseDeps(projectId: string): AppDeps {
+export function createFirebaseDeps(projectId: string): FirebaseDeps {
   const app = getApps()[0] ?? initializeApp({ projectId });
+  const db = getFirestore(app);
   return {
     verifier: createVerifier(app),
-    users: createFirestoreUserRepository(getFirestore(app)),
+    users: createFirestoreUserRepository(db),
+    apps: createFirestoreAppRepository(db),
+    settings: createFirestoreSettingsRepository(db),
   };
 }
