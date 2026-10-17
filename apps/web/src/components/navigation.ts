@@ -18,7 +18,8 @@ export interface NavItem {
 /** The menu lists only screens that exist (D-030). A screen is added here when it is built. */
 export const NAV_ITEMS: readonly NavItem[] = [
   { to: '/', label: 'Overview', icon: 'overview', end: true, filters: 'range-and-apps' },
-  { to: '/apps', label: 'Apps', icon: 'apps', permission: 'apps:read', filters: 'range' },
+  // The Apps screen lists the apps themselves and shows no numbers yet, so it has nothing to filter.
+  { to: '/apps', label: 'Apps', icon: 'apps', permission: 'apps:read', filters: 'none' },
   {
     to: '/settings/users',
     label: 'Users',

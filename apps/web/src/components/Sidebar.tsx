@@ -13,6 +13,8 @@ const LINK_BASE =
 /**
  * The left rail: the studio's brand, the menu, and the theme toggle. Below the desktop width the
  * same markup becomes a row of links under the top bar (CSS only, so there is one menu, not two).
+ * Every link carries the filters in the address, so a range chosen on one screen is still chosen
+ * after a visit to a screen that does not use it.
  */
 export function Sidebar({ items }: { items: readonly NavItem[] }) {
   const { settings } = useStudio();
@@ -37,7 +39,7 @@ export function Sidebar({ items }: { items: readonly NavItem[] }) {
         {items.map((item) => (
           <NavLink
             key={item.to}
-            to={{ pathname: item.to, search: item.filters === 'none' ? '' : search }}
+            to={{ pathname: item.to, search }}
             end={item.end}
             className={({ isActive }) =>
               `${LINK_BASE} ${

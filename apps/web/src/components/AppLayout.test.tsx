@@ -143,7 +143,7 @@ describe('AppLayout', () => {
     await waitFor(() => expect(document.title).toBe('Apps · Orbit Studio'));
   });
 
-  it('carries the filters in the menu links, except to screens that do not use them', async () => {
+  it('carries the filters in every menu link, so they survive a visit to another screen', async () => {
     stubBackend({ apps: [makeApp({ id: 'a1', name: 'Alpha' })] });
     renderShell(readyState('admin'), { route: '/?range=7d&appIds=a1' });
 
@@ -157,14 +157,34 @@ describe('AppLayout', () => {
       'href',
       '/apps?range=7d&appIds=a1',
     );
-    expect(links.getByRole('link', { name: 'Users' })).toHaveAttribute('href', '/settings/users');
+    expect(links.getByRole('link', { name: 'Users' })).toHaveAttribute(
+      'href',
+      '/settings/users?range=7d&appIds=a1',
+    );
+  });
+
+  it('leaves other address parameters out of the menu links', async () => {
+    stubBackend();
+    renderShell(readyState('admin'), { route: '/?range=7d&page=2' });
+
+    const links = within(await menu());
+
+    expect(links.getByRole('link', { name: 'Apps' })).toHaveAttribute('href', '/apps?range=7d');
   });
 
   it('offers the date range on a screen that uses it', async () => {
     stubBackend();
-    renderShell(readyState('admin'), { route: '/apps' });
+    renderShell(readyState('admin'), { route: '/' });
 
     expect(await screen.findByRole('group', { name: 'Date range' })).toBeInTheDocument();
+  });
+
+  it.each(['/apps', '/settings/users'])('offers no date range on %s', async (route) => {
+    stubBackend();
+    renderShell(readyState('admin'), { route });
+
+    expect(await screen.findByRole('navigation', { name: 'Main' })).toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: 'Date range' })).not.toBeInTheDocument();
   });
 
   it('puts the custom dates and the app chips in a strip at the top of the main area', async () => {
@@ -180,12 +200,14 @@ describe('AppLayout', () => {
     expect(main.getByText('Overview body')).toBeInTheDocument();
   });
 
-  it('leaves the date range out of a screen that does not use it', async () => {
+  it('shows no custom dates on a screen that has no date range', async () => {
     stubBackend();
-    renderShell(readyState('admin'), { route: '/settings/users' });
+    renderShell(readyState('admin'), {
+      route: '/apps?range=custom&from=2026-10-01&to=2026-10-15',
+    });
 
-    expect(await screen.findByText('Users body')).toBeInTheDocument();
-    expect(screen.queryByRole('group', { name: 'Date range' })).not.toBeInTheDocument();
+    expect(await screen.findByText('Apps body')).toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: 'Custom date range' })).not.toBeInTheDocument();
   });
 
   it('names an unknown address "Page not found" and leaves the date range out', async () => {

@@ -95,12 +95,16 @@ describe('App routing', () => {
     expect(screen.queryByRole('button', { name: 'Add app' })).not.toBeInTheDocument();
   });
 
-  it('keeps the chosen date range when moving between screens', async () => {
+  it('keeps the chosen date range through a screen that has no use for it', async () => {
     renderAt('/?range=7d', readyState('admin'));
 
     fireEvent.click(await screen.findByRole('link', { name: 'Apps' }));
-
     expect(await screen.findByRole('heading', { name: 'Apps' })).toBeInTheDocument();
+    expect(screen.queryByRole('group', { name: 'Date range' })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('link', { name: 'Overview' }));
+
+    expect(await screen.findByRole('heading', { name: 'Overview' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Last 7 days' })).toHaveAttribute(
       'aria-pressed',
       'true',
