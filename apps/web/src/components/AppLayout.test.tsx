@@ -193,7 +193,9 @@ describe('AppLayout', () => {
       route: '/?range=custom&from=2026-10-01&to=2026-10-15',
     });
 
-    const main = within(await screen.findByRole('main'));
+    // The loading card is a main area too, so wait for the page before looking inside the main one.
+    expect(await screen.findByText('Overview body')).toBeInTheDocument();
+    const main = within(screen.getByRole('main'));
 
     expect(main.getByRole('group', { name: 'Custom date range' })).toBeInTheDocument();
     expect(await main.findByRole('group', { name: 'Apps' })).toBeInTheDocument();
