@@ -68,13 +68,11 @@ export default function AppLayout() {
         </a>
         <TopBar pageName={pageName} showRange={scope !== 'none'} />
         <Sidebar items={items} />
-        <main
-          id="main"
-          tabIndex={-1}
-          className="mx-auto w-full max-w-[1600px] px-4 py-6 outline-none lg:px-8"
-        >
+        <main id="main" tabIndex={-1} className="outline-none">
           <FilterRow scope={scope} />
-          <Outlet />
+          <div className="mx-auto w-full max-w-[1600px] px-4 py-6 lg:px-8">
+            <Outlet />
+          </div>
         </main>
       </div>
     </StudioContext.Provider>

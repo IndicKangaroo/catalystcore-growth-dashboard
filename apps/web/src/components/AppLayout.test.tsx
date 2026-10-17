@@ -167,6 +167,19 @@ describe('AppLayout', () => {
     expect(await screen.findByRole('group', { name: 'Date range' })).toBeInTheDocument();
   });
 
+  it('puts the custom dates and the app chips in a strip at the top of the main area', async () => {
+    stubBackend({ apps: [makeApp({ id: 'a1', name: 'Alpha' })] });
+    renderShell(readyState('admin'), {
+      route: '/?range=custom&from=2026-10-01&to=2026-10-15',
+    });
+
+    const main = within(await screen.findByRole('main'));
+
+    expect(main.getByRole('group', { name: 'Custom date range' })).toBeInTheDocument();
+    expect(await main.findByRole('group', { name: 'Apps' })).toBeInTheDocument();
+    expect(main.getByText('Overview body')).toBeInTheDocument();
+  });
+
   it('leaves the date range out of a screen that does not use it', async () => {
     stubBackend();
     renderShell(readyState('admin'), { route: '/settings/users' });

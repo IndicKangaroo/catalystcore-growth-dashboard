@@ -88,30 +88,34 @@ function AppFilter() {
   }
 
   return (
-    <div role="group" aria-label="Apps" className="flex flex-wrap items-center gap-2">
-      <span className="text-xs font-medium text-fg-muted">Apps</span>
-      <AppChip
-        pressed={filters.appIds.length === 0}
-        onClick={() => setFilters({ ...filters, appIds: [] })}
-      >
-        All apps
-      </AppChip>
-      {list.map((app) => (
+    <div role="group" aria-labelledby="app-filter-label" className="flex flex-col gap-1.5">
+      <span id="app-filter-label" className="text-xs font-medium text-fg">
+        Apps
+      </span>
+      <div className="flex min-h-9 flex-wrap items-center gap-2">
         <AppChip
-          key={app.id}
-          pressed={filters.appIds.includes(app.id)}
-          onClick={() => toggle(app.id)}
+          pressed={filters.appIds.length === 0}
+          onClick={() => setFilters({ ...filters, appIds: [] })}
         >
-          {app.name}
+          All apps
         </AppChip>
-      ))}
+        {list.map((app) => (
+          <AppChip
+            key={app.id}
+            pressed={filters.appIds.includes(app.id)}
+            onClick={() => toggle(app.id)}
+          >
+            {app.name}
+          </AppChip>
+        ))}
+      </div>
     </div>
   );
 }
 
 /**
- * The filters that need more room than the top bar: the custom dates and the app chips. Renders
- * nothing when the screen uses neither.
+ * The filters that need more room than the top bar: the custom dates and the app chips, in a strip
+ * under the top bar. Renders nothing when the screen uses neither.
  */
 export function FilterRow({ scope }: { scope: FilterScope }) {
   const { filters, setFilters } = useFilters();
@@ -132,9 +136,11 @@ export function FilterRow({ scope }: { scope: FilterScope }) {
   if (!custom && !showApps) return null;
 
   return (
-    <div className="mb-6 flex flex-wrap items-start gap-x-8 gap-y-4">
-      {custom && <CustomRangeFields from={custom.from} to={custom.to} />}
-      {showApps && <AppFilter />}
+    <div className="border-b border-line bg-surface">
+      <div className="mx-auto flex max-w-[1600px] flex-wrap items-start gap-x-8 gap-y-3 px-4 py-3 lg:px-8">
+        {custom && <CustomRangeFields from={custom.from} to={custom.to} />}
+        {showApps && <AppFilter />}
+      </div>
     </div>
   );
 }
