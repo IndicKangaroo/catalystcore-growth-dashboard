@@ -273,7 +273,7 @@ export default function AppsPage() {
           </dl>
 
           <Card className="overflow-hidden">
-            <div className="overflow-x-auto">
+            <div className="relative overflow-x-auto">
               <table className="w-full min-w-[720px] text-left text-[13px]">
                 <caption className="sr-only">Apps</caption>
                 <thead>

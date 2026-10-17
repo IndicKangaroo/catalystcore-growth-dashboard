@@ -124,7 +124,7 @@ export default function UsersPage() {
 
       {users.data && (
         <Card className="overflow-hidden">
-          <div className="overflow-x-auto">
+          <div className="relative overflow-x-auto">
             <table className="w-full min-w-[720px] text-left text-[13px]">
               <caption className="sr-only">People with access</caption>
               <thead>
@@ -167,7 +167,7 @@ export default function UsersPage() {
                           onChange={(event) =>
                             changeUser(user.email, { role: roleSchema.parse(event.target.value) })
                           }
-                          className={COMPACT_FIELD_CLASS}
+                          className={`${COMPACT_FIELD_CLASS} min-w-36`}
                         >
                           {ROLES.map((role) => (
                             <option key={role} value={role}>

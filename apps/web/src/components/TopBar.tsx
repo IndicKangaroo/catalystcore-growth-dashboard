@@ -15,7 +15,10 @@ interface TopBarProps {
   showRange: boolean;
 }
 
-/** The 56px bar above every screen: where we are, the data source, the date range, who is here. */
+/**
+ * The 56px bar above every screen: where we are, the data source, the date range, who is here. On a
+ * phone the date range drops to a row of its own under the rest, so nothing is pushed off screen.
+ */
 export function TopBar({ pageName, showRange }: TopBarProps) {
   const { state, signOut } = useSession();
   const { settings } = useStudio();
@@ -25,9 +28,9 @@ export function TopBar({ pageName, showRange }: TopBarProps) {
   const who = state.user.name ?? state.user.email;
 
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-surface/90 backdrop-blur">
-      <div className="flex min-h-14 flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2 lg:px-8">
-        <div className="flex min-w-0 items-center gap-3">
+    <header className="border-b border-line bg-surface lg:sticky lg:top-0 lg:z-20 lg:bg-surface/90 lg:backdrop-blur">
+      <div className="flex min-h-14 flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 lg:px-8">
+        <div className="flex min-w-0 flex-1 items-center gap-3">
           <p className="flex min-w-0 items-center gap-2 text-[13px]">
             <span className="truncate font-semibold text-fg">{studioName}</span>
             <span aria-hidden="true" className="text-fg-subtle">
@@ -38,8 +41,13 @@ export function TopBar({ pageName, showRange }: TopBarProps) {
           <DataSourcePill />
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
-          {showRange && <DateRangeControl />}
+        {showRange && (
+          <div className="order-last flex w-full lg:order-none lg:w-auto">
+            <DateRangeControl />
+          </div>
+        )}
+
+        <div className="flex shrink-0 items-center gap-3">
           <div className="flex items-center gap-2" title={state.user.email}>
             <span
               aria-hidden="true"

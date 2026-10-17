@@ -17,7 +17,7 @@ function Segment({
       type="button"
       aria-pressed={selected}
       onClick={onClick}
-      className="h-8 whitespace-nowrap rounded-[8px] px-2.5 text-xs font-medium text-fg-muted transition-colors hover:text-fg aria-pressed:bg-surface aria-pressed:font-semibold aria-pressed:text-fg aria-pressed:shadow-card"
+      className="h-8 whitespace-nowrap rounded-[8px] px-1.5 text-xs font-medium text-fg-muted sm:px-2.5 transition-colors hover:text-fg aria-pressed:bg-surface aria-pressed:font-semibold aria-pressed:text-fg aria-pressed:shadow-card"
     >
       {children}
     </button>
@@ -46,7 +46,7 @@ export function DateRangeControl() {
     <div
       role="group"
       aria-label="Date range"
-      className="inline-flex max-w-full items-center overflow-x-auto rounded-control border border-line bg-muted p-0.5"
+      className="inline-flex max-w-full items-center overflow-x-auto rounded-control border border-line bg-muted p-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
     >
       {DATE_PRESETS.map((preset) => (
         <Segment key={preset} selected={selected === preset} onClick={() => pickPreset(preset)}>
