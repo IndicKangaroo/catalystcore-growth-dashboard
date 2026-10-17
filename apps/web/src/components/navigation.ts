@@ -1,4 +1,5 @@
 import type { Permission } from '@growth/shared';
+import { matchPath } from 'react-router-dom';
 import type { IconName } from './Icon';
 
 /** Which global filters a screen honours, so the top bar only offers what the screen will use. */
@@ -37,4 +38,39 @@ export function isActivePath(pathname: string, item: Pick<NavItem, 'to' | 'end'>
 /** The menu item for an address, or undefined for an address that is not a screen. */
 export function navItemFor(pathname: string): NavItem | undefined {
   return NAV_ITEMS.find((item) => isActivePath(pathname, item));
+}
+
+/**
+ * A screen that lives under a menu item but is not in the menu, such as one app's page. It has its
+ * own title and filter scope, because matching by path prefix would otherwise hand it the scope of
+ * the item above it (the Apps list shows no numbers, so its scope is 'none').
+ */
+export interface NestedScreen {
+  /** A react-router path pattern, matched against the whole address. */
+  pattern: string;
+  label: string;
+  filters: FilterScope;
+}
+
+export const NESTED_SCREENS: readonly NestedScreen[] = [
+  { pattern: '/apps/:appId', label: 'App detail', filters: 'range-and-apps' },
+];
+
+export interface Screen {
+  label: string;
+  filters: FilterScope;
+}
+
+/**
+ * What the shell needs to know about an address: its title and which filters it honours. A nested
+ * screen answers for itself; every other address answers as its menu item does.
+ */
+export function screenFor(pathname: string): Screen | undefined {
+  const nested = NESTED_SCREENS.find((screen) =>
+    matchPath({ path: screen.pattern, end: true }, pathname),
+  );
+  if (nested) return { label: nested.label, filters: nested.filters };
+
+  const item = navItemFor(pathname);
+  return item ? { label: item.label, filters: item.filters } : undefined;
 }
