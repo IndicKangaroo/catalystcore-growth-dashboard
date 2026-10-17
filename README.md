@@ -2,7 +2,15 @@
 
 An internal dashboard that connects app analytics (Firebase / GA4) with social-media campaigns, to answer one question: **which content and campaigns are contributing to real product growth?**
 
-Status: under construction. Start with these files:
+Status: under construction (phase P2 of the plan is done). What works today:
+
+- Sign in with Google, invite-only, with three roles (P1).
+- The shell from the requester's design: a menu on the left, a top bar, light and dark themes, and a date range that lives in the address, so a link shows what its sender saw (P2).
+- **Apps**: everyone can see the list; admins add, edit and delete apps (P2).
+- An **Overview** that shows the data source, how many apps there are and the current view. Charts and key numbers arrive in P3.
+- Generated **demo data**, labelled as such. Real Google Analytics 4 numbers arrive in P4.
+
+Start with these files:
 
 - `docs/PRD.md`: product requirements
 - `PLAN.md`: build plan, phases and open questions
@@ -50,7 +58,7 @@ Without any Firebase settings the app still starts. The login page then says tha
    ```
 
 2. In one terminal run `npm run emulators`. In another run `npm run dev`.
-3. Open http://localhost:5173 and choose **Sign in with Google**. The emulator opens its own pop-up instead of Google: add a new account with the same email as `ADMIN_EMAIL` and sign in. You arrive as an admin, and **Users** appears in the header.
+3. Open http://localhost:5173 and choose **Sign in with Google**. The emulator opens its own pop-up instead of Google: add a new account with the same email as `ADMIN_EMAIL` and sign in. You arrive as an admin, and **Users** appears in the menu on the left.
 
 The emulators forget everything when they stop, so the first sign-in creates the admin again each time. Their dashboard is at http://localhost:4000.
 
@@ -91,6 +99,29 @@ The page or the API log says what is wrong. The usual causes:
 | "Google sign-in is not turned on" | The Google provider is disabled | **Authentication → Sign-in method → Google → Enable** |
 
 Still stuck? The API log shows the original error (look for a `"level":"error"` line and its `errorMessage`). Nothing in it is secret, so it is safe to paste when asking for help.
+
+## Studio settings
+
+The studio's name, logo, time zone, currency and usual date range come from one Firestore document, `settings/studio` (D-019, D-035). The dashboard works without it: it then says "Growth Analytics" in place of a studio name, uses Asia/Kolkata, INR and "Last 30 days", and the Overview says that the settings have not been saved. A screen to edit them arrives in phase P10. Until then, create the document by hand in the Firestore console (with the emulators: http://localhost:4000, the Firestore tab): collection `settings`, document id `studio`, with any of these fields.
+
+| Field              | Example                        | Notes                                                              |
+| ------------------ | ------------------------------ | ------------------------------------------------------------------ |
+| `name`             | `Orbit Studio`                 | Shown in the menu, the top bar and the page title                  |
+| `logoUrl`          | `https://example.com/logo.png` | An https address. Without it the menu shows the name's first letter |
+| `timezone`         | `Asia/Kolkata`                 | A time zone name. Days are cut here                                |
+| `currency`         | `INR`                          | Three letters                                                      |
+| `defaultDateRange` | `30d`                          | `today`, `7d`, `30d` or `90d`                                      |
+| `schemaVersion`    | `1`                            | Leave it at 1                                                      |
+
+A field you leave out takes its default. A value that does not fit (a time zone that does not exist, say) makes the dashboard show "The studio settings did not load" with the field to fix.
+
+## Demo data
+
+`ANALYTICS_PROVIDER` in `.env` says where the numbers come from. `seed`, the default, generates the same made-up numbers on every run; the top bar then shows a **Demo data** label and the Overview says so too. `ga4` (real Google Analytics 4 data) arrives in phase P4. Until then the API refuses to start with that setting, because demo data shown as if it were real would be worse than no data.
+
+## Apps
+
+The **Apps** screen lists the apps this studio tracks. Admins add an app with a name and a package name (written like `com.example.myapp`), and can add its status, category, current version, launch date, GA4 property ID, Firebase project ID, Play Store address and icon address. A package name can be used once (capital letters do not count as a difference). Deleting an app asks for confirmation and cannot be undone.
 
 ## Scripts
 

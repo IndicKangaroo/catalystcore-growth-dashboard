@@ -19,7 +19,7 @@ The reference HTML loads the Tailwind CDN script and the Material Symbols icon f
 | Design screen                       | Screenshot                   | Our screen                                                                          | Phase     |
 | ----------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------- | --------- |
 | Overview                            | `screens/overview.png`       | Overview: KPI row, users chart, acquisition summary, app table                      | P3        |
-| Products                            | `screens/products.png`       | Apps: list, add, edit (admin), connection state                                     | **P2**    |
+| Products                            | `screens/products.png`       | Apps: list, add, edit (admin), connection state. Built in P2                         | **P2**    |
 | Product detail (Grind Quest)        | `screens/product-detail.png` | App detail: users, growth chart with timeline markers, retention and cohort matrix  | P3        |
 | Audience and Retention              | `screens/audience-retention.png` | Cohort matrix and retention curves, inside App detail (a portfolio view is optional) | P3        |
 | Performance Reports and Exports     | `screens/reports.png`        | Weekly report preview, stored reports, PDF and CSV                                  | P8        |
@@ -44,6 +44,8 @@ The tokens live in `apps/web/src/index.css` (names such as `bg-canvas`, `bg-surf
 | "CatalystCore Studios", "Alex Vance", "CatalystCore OS v1.0.4", the logo image | Studio name and logo from `settings/studio`; the person and role from the session; no version line | D-019: nothing is hard-coded to one studio.                                  |
 | Menu with Audience, Retention, Revenue, Quality & Stability | Menu lists only screens that exist                                               | Retention lives in App detail; Revenue and Quality are not in V1.                    |
 | "Sample studio dataset active"                 | "Demo data", in the same place and style                                                  | D-003 names the label.                                                               |
+| Pale borders on form fields, text in the teal, amber and rose colours as drawn | Darker field borders and darker "-strong" text colours | Contrast: 3:1 for a field's edge and 4.5:1 for text, in both themes (D-038).       |
+| A date range on every screen                   | Only on screens that use it (the Overview for now); the custom dates and the app chips sit in a strip under the top bar | Apps and Users have no numbers to filter (D-031, D-037).                             |
 | "Firebase & Play Console Synced 12m ago", "All sources healthy" | Shows the real state of the active data source, or nothing                  | No claim without data.                                                               |
 
 ## What we do not build

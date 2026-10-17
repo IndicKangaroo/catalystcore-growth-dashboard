@@ -87,23 +87,28 @@ Enums live in `packages/shared` and are the only definition: platforms, content 
 ## 6. Provider interface
 
 ```ts
+// As built in P2 (D-033). PeriodQuery = { period: DateRange; today: string }.
+// ProviderQuery = PeriodQuery & { apps: AppRecord[] }: the caller looks the apps up; a provider never reads the database.
 interface AnalyticsProvider {
-  getOverview(q: Query): Promise<Overview>;
-  getTimeSeries(q: Query & { metric: Metric }): Promise<Series>;
-  getAppUsers(appId: string, q: Query): Promise<AppUsers>;      // DAU, WAU, MAU(28d), new, returning, sessions, engagement
-  getRetention(appId: string, q: Query): Promise<Retention>;    // D1/D7/D14/D30 + cohort rows
-  getAcquisition(q: Query): Promise<AcquisitionRows>;           // each row has provenance
-  getCampaignUsers(utm: UtmKey, q: Query): Promise<CampaignOutcome>; // attributed → engaged → retained
+  readonly name: AnalyticsProviderName;                                  // 'seed' | 'ga4'
+  getOverview(q: ProviderQuery): Promise<Overview>;
+  getTimeSeries(q: ProviderQuery, metric: Metric): Promise<Series>;
+  getAppUsers(app: AppRecord, q: PeriodQuery): Promise<AppUsers>;       // DAU, WAU, MAU(28d), new, returning, sessions, engagement
+  getRetention(app: AppRecord, q: PeriodQuery): Promise<Retention>;     // D1/D7/D14/D30 + cohort rows
+  getAcquisition(q: ProviderQuery): Promise<Acquisition>;               // each row has provenance
+  getCampaignUsers(app: AppRecord, utm: UtmKey, q: PeriodQuery): Promise<CampaignOutcome>; // attributed → engaged → retained
 }
 ```
 
-`seed` provider: deterministic fake data, labeled. `ga4` provider: GA4 Data API reports (see DECISIONS D-004 to D-007). A future `playConsole` / `admob` provider implements `getRevenue` etc.
+Every answer carries `source`, and a number that cannot be given is a state (`not_connected`, `no_measured_attribution`, `not_enough_data`, `in_progress`), never zero. The shapes are Zod schemas in `packages/shared/src/analytics.ts`.
+
+`seed` provider: deterministic made-up data, labeled "Demo data" (D-036); it never invents installs or revenue. `ga4` provider: GA4 Data API reports (see DECISIONS D-004 to D-007); selecting it before P4 stops the API at start-up. A future `playConsole` / `admob` provider implements `getRevenue` etc.
 
 ## 7. API surface (all under `/api`, Firebase ID token required)
 
 | Area | Endpoints | Roles |
 | --- | --- | --- |
-| Apps | `GET/POST /apps`, `GET/PATCH/DELETE /apps/:id` | read: all; write: admin |
+| Apps | `GET/POST /apps`, `GET/PATCH/DELETE /apps/:id` (delete answers 204; D-034) | read: all; write: admin |
 | Metrics | `GET /metrics/overview`, `/metrics/series`, `/apps/:id/users`, `/apps/:id/retention` | all |
 | Acquisition | `GET /acquisition` | admin, growth, developer |
 | Campaigns | CRUD `/campaigns` | admin, growth |
@@ -113,6 +118,8 @@ interface AnalyticsProvider {
 | Timeline | CRUD `/events`, `GET /timeline` | read: all; write: admin, growth |
 | Reports | `POST /reports/generate`, `GET /reports`, `GET /reports/:id/(pdf\|csv)` | admin, growth |
 | Session | `GET /me` (who the caller is and their permissions) | any signed-in user |
+| Settings | `GET /settings/studio` (`{ settings, configured }`, D-035); editing arrives in P10 | all |
+| Health | `GET /health` (`{ status, provider }`, so the web app can label demo data) | public |
 | Users | `GET /users`, `POST /users` (invite), `PATCH /users/:email` (role, active) | admin |
 | Redirect | `GET /r/:code` (public, no auth) | public |
 
@@ -133,14 +140,14 @@ Global query params on every read: `from`, `to`, `appIds`, `platform`, `campaign
 11. **Reports**: weekly report preview, generate, download PDF/CSV.
 12. **Settings**: users and roles (admin), theme, connections status.
 
-Global: filter bar (date range, app, platform, campaign, content type) synced to the URL; light/dark toggle.
+Global: filter bar (date range, app, platform, campaign, content type) synced to the URL (D-031); light/dark toggle. Built in P2: the date range and the app chips; platform, campaign and content type arrive with the screens that use them.
 
 ## 9. UI direction
 
 **Source of truth: the requester's design export in `docs/design` (D-030).** It decides the look and the shell; the PRD decides what is in V1. The notes below are the earlier defaults and still hold where the design is silent.
 
 - **Look:** calm, dense-but-readable analytics UI. Neutral slate surfaces, one accent (indigo), generous whitespace, thin borders, no glow or gradient decoration.
-- **Themes:** light and dark via CSS variables on `:root` / `[data-theme]`; toggle in the header; respects `prefers-color-scheme`; saved in localStorage.
+- **Themes:** light and dark via CSS variables on `:root` / `[data-theme]`; toggle at the foot of the left rail (D-038); respects `prefers-color-scheme`; saved in localStorage.
 - **Type:** Inter for UI, JetBrains Mono (or tabular-nums Inter) for numbers.
 - **Provenance is never color alone.** Measured: solid filled badge with a check icon. Inferred: outlined badge with a dashed border and "~" icon, and hatched chart fill. Manual: neutral badge with a pencil icon.
 - **Charts:** Recharts, shared theme tokens, colorblind-safe series palette, event markers on the timeline as vertical rules.
@@ -152,15 +159,15 @@ Each phase ends with something runnable and a `DECISIONS.md` update if a choice 
 
 - [x] **P0. Foundations**: monorepo, TS configs, lint/format, shared package, env handling, CI (typecheck, lint, test). Merged to `main` with `package-lock.json`; CI green; the requester confirmed the app runs locally and the web page reaches the API.
 - [x] **P1. Auth and roles**: Google sign-in through Firebase Auth, invite-only users stored in Firestore (role and active flag checked on every request, D-021), permission matrix shared by API and web (D-025), API auth and permission middleware, user admin screen, deny-all Firestore rules (D-022), emulator setup for local development (D-023). Branch `p1-auth` (PR #3). Sign-in is tested against the real emulators in CI (D-026), setup mistakes answer with what to change (D-027), and the Users screen tolerates documents it did not write and the README requires a Firebase project of its own (D-028). The requester signed in with Google against a real project on 2026-10-13 and the lockfile is committed. Merged on 2026-10-14 (PR #3, both CI jobs green) after the requester tested the app locally. Splitting the Firebase project is deferred to production (D-029, section 13).
-- [~] **P2. Apps and shell**: app CRUD, layout, theme toggle, filter bar with URL sync, provider interface + seed provider.
-- [ ] **P3. Overview and App detail on seed data**: KPIs, charts, retention, cohort heatmap, provenance components.
+- [x] **P2. Apps and shell**: app CRUD (D-034), the shell from the requester's design with a light, dark or system theme (D-037, D-038), the date range and app filters synced to the URL (D-031, D-032), the studio's settings read from `settings/studio` (D-035), the analytics provider interface with the labelled seed provider (D-033, D-036), and an Overview that shows the data source, the number of apps and the current view (charts come in P3). Branch `p2-apps-shell` (PR #4); typecheck, ESLint, Prettier, tests, build and the emulator tests are green in CI. Left out on purpose: the design's revenue, quality and benchmark panels, and the controls that need a later feature (`docs/design/README.md`). Waiting for the requester to try it locally and merge.
+- [ ] **P3. Overview and App detail on seed data**: KPIs, charts, retention, cohort heatmap, provenance components. Also: the "compare to previous period" control (D-031 leaves its rule open), a "Demo data" label on every screen with numbers taken from the answer's `source`, and a menu button and drawer for phones if the menu now has more than four or five screens (D-037).
 - [ ] **P4. GA4 provider**: service-account auth, users/sessions/engagement, retention, acquisition by source, caching in `metricSnapshots`, connection test. Verified by the user against real properties.
-- [ ] **P5. Campaigns, links and posts**: UTM builder, campaign/post CRUD, CSV import, content categories.
+- [ ] **P5. Campaigns, links and posts**: UTM builder, campaign/post CRUD, CSV import, content categories. Also: refuse to delete an app that campaigns, links or posts refer to, or replace deleting with an "archived" status (D-034).
 - [ ] **P6. Attribution views**: clicks → attributed → engaged → retained per campaign; acquisition screen with provenance; social ↔ app comparison.
 - [ ] **P7. Timeline, comparison and notes**: event overlay, 2-5 app comparison.
 - [ ] **P8. Reports**: weekly report, PDF and CSV export.
 - [ ] **P9. Hardening**: role tests, error states, accessibility pass, performance (caching, pagination), deployment docs.
-- [ ] **P10. Template packaging** (after V1 works for CatalystCore): `docs/SETUP.md` (create Firebase project, enable Auth and Firestore, GA4 service account and Viewer access, deploy), a one-command `npm run setup` (checks env, deploys Firestore rules and indexes, creates the first admin), a "Demo mode" that runs on the seed provider so a studio can try it before connecting GA4, a studio settings screen (name, logo, accent, timezone, currency), a generic README with no CatalystCore references, a Firestore `schemaVersion` plus migration script for upgrades, a license and a versioned changelog (Q8).
+- [ ] **P10. Template packaging** (after V1 works for CatalystCore): `docs/SETUP.md` (create Firebase project, enable Auth and Firestore, GA4 service account and Viewer access, deploy), a one-command `npm run setup` (checks env, deploys Firestore rules and indexes, creates the first admin), a "Demo mode" that runs on the seed provider so a studio can try it before connecting GA4, a studio settings screen (name, logo, accent, timezone, currency, usual date range; until then the `settings/studio` document is made by hand, D-035), a generic README with no CatalystCore references, a Firestore `schemaVersion` plus migration script for upgrades, a license and a versioned changelog (Q8).
 
 V1 Definition of Done is PRD section 25; P0-P9 together must satisfy every item there.
 
