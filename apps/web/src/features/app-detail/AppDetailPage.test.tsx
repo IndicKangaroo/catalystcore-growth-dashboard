@@ -120,6 +120,7 @@ describe('AppDetailPage', () => {
     });
     renderDetail('/apps/quest?range=7d');
 
+    await screen.findByRole('heading', { name: 'DAU' });
     expect(await card('DAU').findByText('+17.1%')).toBeInTheDocument();
     expect(card('DAU').getByText('vs previous period')).toBeInTheDocument();
   });
@@ -142,6 +143,7 @@ describe('AppDetailPage', () => {
       renderDetail();
       await screen.findByRole('heading', { name: 'Retention' });
 
+      await screen.findByRole('heading', { name: 'Day 1' });
       expect(await card('Day 1').findByText('40.0%')).toBeInTheDocument();
       expect(card('Day 7').getByText('20.0%')).toBeInTheDocument();
       expect(card('Day 14').getByText('In progress')).toBeInTheDocument();

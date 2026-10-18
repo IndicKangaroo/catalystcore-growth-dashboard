@@ -7,10 +7,12 @@ import { formatSignedPercent } from '../../lib/format';
 import { metricText } from './metricText';
 
 /** How the comparison with the previous period stands: still loading, failed, or ready. */
-export type Comparison =
-  | { status: 'loading' }
-  | { status: 'failed' }
-  | { status: 'ready'; previous: MetricValue };
+// Three short names instead of one long union: the formatter lays out a union that does not fit on
+// a line differently from one version to the next, and a one-line union has no such choice.
+type ComparisonLoading = { status: 'loading' };
+type ComparisonFailed = { status: 'failed' };
+type ComparisonReady = { status: 'ready'; previous: MetricValue };
+export type Comparison = ComparisonLoading | ComparisonFailed | ComparisonReady;
 
 /** The comparison for one number, or undefined while the screen is not comparing. */
 export function comparisonFrom<T>(

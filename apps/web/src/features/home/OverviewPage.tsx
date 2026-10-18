@@ -98,7 +98,8 @@ export default function OverviewPage() {
   const { compare } = useCompare();
   const apps = useApps();
   const queries = useViewQueries();
-  const hasApps = apps.data === undefined || apps.data.length > 0;
+  // Nothing is asked of the analytics provider until the list says there is an app to ask about.
+  const hasApps = (apps.data?.length ?? 0) > 0;
   const overview = useOverview(queries.current, hasApps);
   const before = useOverview(queries.before, hasApps && compare);
   const who = state.status === 'ready' ? (state.user.name ?? state.user.email) : '';
@@ -128,7 +129,13 @@ export default function OverviewPage() {
         </Notice>
       )}
 
-      {apps.data?.length === 0 ? (
+      {apps.isPending ? (
+        <p role="status" className="text-fg-muted">
+          Loading the apps…
+        </p>
+      ) : apps.isError ? (
+        <Notice tone="danger">{apps.error.message}</Notice>
+      ) : apps.data.length === 0 ? (
         <NoApps />
       ) : (
         <>
@@ -193,7 +200,7 @@ export default function OverviewPage() {
           )}
 
           <GrowthCard title="Growth" />
-          {apps.data && <AppsInView apps={apps.data} chosen={filters.appIds} />}
+          <AppsInView apps={apps.data} chosen={filters.appIds} />
         </>
       )}
     </div>

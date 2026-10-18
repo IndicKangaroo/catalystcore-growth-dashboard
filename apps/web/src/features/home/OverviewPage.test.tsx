@@ -167,6 +167,7 @@ describe('OverviewPage', () => {
       });
       renderOverview();
 
+      await screen.findByRole('heading', { name: 'Active users' });
       expect(await card('Active users').findByText('+29.0%')).toBeInTheDocument();
       expect(card('Active users').getByText('vs previous period')).toBeInTheDocument();
       const asked = requests.map((request) => request.path);
@@ -181,6 +182,7 @@ describe('OverviewPage', () => {
       });
       renderOverview();
 
+      await screen.findByRole('heading', { name: 'Sessions' });
       expect(await card('Sessions').findByText('-10.0%')).toBeInTheDocument();
     });
 
@@ -190,6 +192,7 @@ describe('OverviewPage', () => {
       });
       renderOverview();
 
+      await screen.findByRole('heading', { name: 'Active users' });
       expect(
         await card('Active users').findByText('No data for the previous period'),
       ).toBeInTheDocument();
@@ -200,6 +203,7 @@ describe('OverviewPage', () => {
       stubBackend({ before: makeOverview({ newUsers: metricOk(0) }) });
       renderOverview();
 
+      await screen.findByRole('heading', { name: 'New users' });
       expect(await card('New users').findByText('None in the previous period')).toBeInTheDocument();
     });
 

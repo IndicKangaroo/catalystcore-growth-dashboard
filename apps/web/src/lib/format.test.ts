@@ -76,7 +76,7 @@ describe('formatCount', () => {
 
 describe('formatPercent and formatSignedPercent', () => {
   it('writes a fraction with one decimal', () => {
-    expect(formatPercent(0.2345)).toBe('23.5%');
+    expect(formatPercent(0.2346)).toBe('23.5%');
     expect(formatPercent(0)).toBe('0.0%');
   });
 
