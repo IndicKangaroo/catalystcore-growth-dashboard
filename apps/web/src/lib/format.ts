@@ -27,3 +27,42 @@ export function initialsOf(text: string): string {
   const last = words.length > 1 ? (words[words.length - 1]?.[0] ?? '') : '';
   return `${first}${last}`.toUpperCase();
 }
+
+const trimOne = (value: number) => String(Math.round(value * 10) / 10);
+
+/** A count for a card: 1,284 stays whole, 12,900 becomes 12.9K, 4,200,000 becomes 4.2M. */
+export function formatCount(value: number): string {
+  const size = Math.abs(value);
+  if (size >= 999_950) return `${trimOne(value / 1_000_000)}M`;
+  if (size >= 10_000) return `${trimOne(value / 1_000)}K`;
+  return Math.round(value).toLocaleString('en-US');
+}
+
+/** A fraction as a percentage with one decimal: 0.2345 is "23.5%". */
+export function formatPercent(fraction: number): string {
+  return `${(fraction * 100).toFixed(1)}%`;
+}
+
+/** A change as a signed percentage. A change that rounds to nothing has no sign: "0.0%". */
+export function formatSignedPercent(fraction: number): string {
+  const text = formatPercent(Math.abs(fraction));
+  if (Math.round(fraction * 1000) === 0) return text;
+  return fraction > 0 ? `+${text}` : `-${text}`;
+}
+
+/** A length of time in seconds as "45s", "2m 05s" or "1h 02m". */
+export function formatDuration(totalSeconds: number): string {
+  const seconds = Math.round(totalSeconds);
+  if (seconds < 60) return `${seconds}s`;
+  const minutes = Math.floor(seconds / 60);
+  const pad = (value: number) => String(value).padStart(2, '0');
+  if (minutes < 60) return `${minutes}m ${pad(seconds % 60)}s`;
+  return `${Math.floor(minutes / 60)}h ${pad(minutes % 60)}m`;
+}
+
+/** "2026-10-15" as "15 Oct", for a chart axis where the year is clear from the range. */
+export function formatShortDay(day: string): string {
+  if (!isCalendarDate(day)) return day;
+  const [, month, date] = day.split('-');
+  return `${Number(date)} ${MONTHS[Number(month) - 1]}`;
+}
