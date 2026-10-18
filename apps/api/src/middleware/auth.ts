@@ -3,7 +3,11 @@ import type { Permission, UserRecord } from '@growth/shared';
 import type { RequestHandler, Response } from 'express';
 import type { TokenVerifier, VerifiedToken } from '../auth/types';
 import { logger, errorFields } from '../lib/logger';
-import { classifyTokenError } from '../lib/tokenErrors';
+import {
+  classifyTokenError,
+  projectMismatchMessage,
+  readProjectMismatch,
+} from '../lib/tokenErrors';
 import type { UserService } from '../users/service';
 import { AppError } from './errors';
 
@@ -41,13 +45,7 @@ async function verifyOrReject(verifier: TokenVerifier, idToken: string): Promise
 
     if (problem === 'wrong_project') {
       logger.error('ID token belongs to a different Firebase project than the API', detail);
-      throw new AppError(
-        503,
-        'project_mismatch',
-        'Server setup problem: you signed in to a different Firebase project than the one the API ' +
-          'uses. Set VITE_FIREBASE_PROJECT_ID and FIREBASE_PROJECT_ID in .env to the same project ' +
-          'id, then restart "npm run dev".',
-      );
+      throw new AppError(503, 'project_mismatch', projectMismatchMessage(readProjectMismatch(err)));
     }
 
     logger.warn('ID token rejected', detail);

@@ -135,16 +135,41 @@ describe('when the token belongs to another Firebase project', () => {
   );
   const verifier: TokenVerifier = { verify: () => Promise.reject(wrongAudience) };
 
-  it('answers 503 and says to use the same project id in both places', async () => {
+  it('answers 503 and names the project signed in to and the one the API uses', async () => {
     captureErrorLog();
     const app = appWith(verifier, createMemoryUserRepository());
+
+    const res = await request(app)
+      .get('/api/me')
+      .set('Authorization', bearer('secret-token-value'));
+
+    expect(res.status).toBe(503);
+    expect(res.body.error.code).toBe('project_mismatch');
+    const message: string = res.body.error.message;
+    expect(message).toContain('signed in to the Firebase project "demo-growth"');
+    expect(message).toContain('the API is set up for "my-studio"');
+    expect(message).toContain('VITE_FIREBASE_API_KEY');
+    expect(message).toContain('FIREBASE_PROJECT_ID');
+    expect(JSON.stringify(res.body)).not.toContain('secret-token-value');
+  });
+
+  it('still answers when the SDK does not name the projects', async () => {
+    captureErrorLog();
+    const vague: TokenVerifier = {
+      verify: () =>
+        Promise.reject(
+          Object.assign(new Error('Firebase ID token has incorrect "aud" (audience) claim.'), {
+            code: 'auth/argument-error',
+          }),
+        ),
+    };
+    const app = appWith(vague, createMemoryUserRepository());
 
     const res = await request(app).get('/api/me').set('Authorization', bearer('some-token'));
 
     expect(res.status).toBe(503);
     expect(res.body.error.code).toBe('project_mismatch');
-    expect(res.body.error.message).toContain('VITE_FIREBASE_PROJECT_ID');
-    expect(res.body.error.message).toContain('FIREBASE_PROJECT_ID');
+    expect(res.body.error.message).toContain('a different Firebase project than the one the API');
   });
 
   it('logs both project ids, and never the token', async () => {
