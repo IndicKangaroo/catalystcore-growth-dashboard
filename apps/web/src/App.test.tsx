@@ -5,6 +5,7 @@ import App from './App';
 import type { SessionState } from './features/auth/session';
 import { stubApi } from './test/api';
 import { makeApp, makeStudio, makeUserRecord, readyState, renderWithSession } from './test/helpers';
+import { makeAppUsers, makeOverview, makeRetention, makeSeries } from './test/metrics';
 
 // The screens reach the API through apiFetch, which asks Firebase for a token.
 vi.mock('./lib/firebase', () => ({ getIdToken: vi.fn().mockResolvedValue(null) }));
@@ -13,7 +14,11 @@ function stubBackend() {
   stubApi({
     '/api/health': { body: { status: 'ok', provider: 'seed' } },
     '/api/settings/studio': { body: makeStudio({ name: 'Orbit Studio' }) },
-    '/api/apps': { body: { apps: [makeApp({ name: 'Alpha' })] } },
+    '/api/apps': { body: { apps: [makeApp({ id: 'alpha', name: 'Alpha' })] } },
+    '/api/metrics/overview*': { body: makeOverview() },
+    '/api/metrics/series*': { body: makeSeries() },
+    '/api/apps/alpha/users*': { body: makeAppUsers({ appId: 'alpha' }) },
+    '/api/apps/alpha/retention*': { body: makeRetention({ appId: 'alpha' }) },
     '/api/users': {
       body: { users: [makeUserRecord({ email: 'admin@example.com', role: 'admin' })] },
     },
@@ -109,6 +114,22 @@ describe('App routing', () => {
       'aria-pressed',
       'true',
     );
+  });
+
+  it('opens one app from the Apps list, with the date range and its numbers', async () => {
+    renderAt('/apps?range=7d', readyState('growth'));
+
+    fireEvent.click(await screen.findByRole('link', { name: 'Alpha' }));
+
+    // The Apps list has no use for the date range, but one app's page does (screenFor).
+    expect(await screen.findByRole('heading', { name: 'Alpha' })).toBeInTheDocument();
+    expect(screen.getByRole('group', { name: 'Date range' })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Last 7 days' })).toHaveAttribute(
+      'aria-pressed',
+      'true',
+    );
+    expect(await screen.findByRole('heading', { name: 'DAU' })).toBeInTheDocument();
+    expect(within(screen.getByRole('banner')).getByText('App detail')).toBeInTheDocument();
   });
 
   it('shows a not-found page for unknown addresses inside the app', async () => {
