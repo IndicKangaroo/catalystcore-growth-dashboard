@@ -33,7 +33,7 @@ This repo is the CatalystCore Growth Analytics dashboard. Read this file first, 
 
 ## Commands (update here if they change)
 
-Commands marked (P4) or (P9) do not exist until that phase. If your sandbox cannot reach the npm registry, do not work around the network policy: finish the code, push a branch and rely on CI for the install-dependent checks (typecheck, lint, test, build), and say plainly that they have not been run locally. If you add or change a dependency without being able to run `npm install`, say so: the lockfile must be regenerated and committed on the branch by someone with registry access (CI's "Lockfile in sync" step stays red until then).
+Commands marked (P9) do not exist until that phase. If your sandbox cannot reach the npm registry, do not work around the network policy: finish the code, push a branch and rely on CI for the install-dependent checks (typecheck, lint, test, build), and say plainly that they have not been run locally. If you add or change a dependency without being able to run `npm install`, say so: the lockfile must be regenerated and committed on the branch by someone with registry access (CI's "Lockfile in sync" step stays red until then).
 
 ```
 npm install                 # install all workspaces
@@ -45,7 +45,7 @@ npm run test                # vitest
 npm run test:emulator       # sign-in against the real Auth + Firestore emulators (needs Java)
 npm run test:e2e            # (P9) playwright (needs emulators)
 npm run emulators           # firebase auth + firestore emulators (needs Java; see README)
-npm run ga4:check -- <propertyId>   # (P4) verify service account access to a GA4 property
+npm run ga4:check -- <propertyId>   # verify service account access to a GA4 property
 npm run build               # build all
 ```
 

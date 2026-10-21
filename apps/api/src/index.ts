@@ -24,11 +24,13 @@ function startFirebase(projectId: string): FirebaseDeps {
 
 try {
   const config = loadConfig();
-  // Chosen before anything connects, so a provider that is not available stops the start.
-  const provider = createProvider(config.ANALYTICS_PROVIDER);
   const firebase = config.FIREBASE_PROJECT_ID
     ? startFirebase(config.FIREBASE_PROJECT_ID)
     : undefined;
+  const provider = createProvider(config.ANALYTICS_PROVIDER, {
+    config,
+    snapshots: firebase?.snapshots,
+  });
   if (!firebase) {
     logger.warn(
       'FIREBASE_PROJECT_ID is not set: sign-in is disabled and protected routes return 503',

@@ -1,6 +1,7 @@
 import type { ErrorRequestHandler, RequestHandler } from 'express';
 import { classifyDatabaseError, describeDatabaseProblem } from '../lib/databaseErrors';
 import { errorFields, logger } from '../lib/logger';
+import { Ga4Error } from '../providers/ga4/client';
 
 /** Error with an HTTP status and a stable machine-readable code. */
 export class AppError extends Error {
@@ -32,6 +33,11 @@ export const notFoundHandler: RequestHandler = (req, _res, next) => {
 export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof AppError) {
     res.status(err.status).json(errorBody(err.code, err.message));
+    return;
+  }
+  // GA4 refused or failed: the message already says what to fix, and never holds key material.
+  if (err instanceof Ga4Error) {
+    res.status(502).json(errorBody('ga4_error', err.message));
     return;
   }
   // Malformed JSON bodies are a client error, not a server error.

@@ -14,6 +14,8 @@ const envSchema = z.object({
   ANALYTICS_PROVIDER: analyticsProviderSchema.default('seed'),
   FIREBASE_PROJECT_ID: optionalString,
   GOOGLE_APPLICATION_CREDENTIALS: optionalString,
+  /** Key file of the service account that reads GA4 (D-004). Falls back to GOOGLE_APPLICATION_CREDENTIALS. */
+  GA4_SERVICE_ACCOUNT_KEY_FILE: optionalString,
   ADMIN_EMAIL: optionalString,
 });
 

@@ -1,5 +1,6 @@
 import type { AppRepository } from './apps/types';
 import type { TokenVerifier } from './auth/types';
+import type { SnapshotStore } from './providers/ga4/types';
 import type { AnalyticsProvider } from './providers/types';
 import type { SettingsRepository } from './settings/types';
 import type { UserRepository } from './users/types';
@@ -17,4 +18,7 @@ export interface AppDeps {
  * What Firebase supplies. The analytics provider is chosen by configuration (ANALYTICS_PROVIDER),
  * not by the database, so it is added separately.
  */
-export type FirebaseDeps = Omit<AppDeps, 'provider'>;
+export type FirebaseDeps = Omit<AppDeps, 'provider'> & {
+  /** Where finished GA4 days are kept (`metricSnapshots`). */
+  snapshots: SnapshotStore;
+};

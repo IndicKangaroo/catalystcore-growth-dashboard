@@ -5,6 +5,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { createFirestoreAppRepository } from '../apps/firestoreRepository';
 import type { TokenVerifier } from '../auth/types';
 import type { FirebaseDeps } from '../deps';
+import { createFirestoreSnapshotStore } from '../providers/ga4/firestoreSnapshots';
 import { createFirestoreSettingsRepository } from '../settings/firestoreRepository';
 import { createFirestoreUserRepository } from '../users/firestoreRepository';
 
@@ -37,5 +38,6 @@ export function createFirebaseDeps(projectId: string): FirebaseDeps {
     users: createFirestoreUserRepository(db),
     apps: createFirestoreAppRepository(db),
     settings: createFirestoreSettingsRepository(db),
+    snapshots: createFirestoreSnapshotStore(db),
   };
 }

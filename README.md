@@ -8,7 +8,7 @@ Status: under construction (phase P2 of the plan is done). What works today:
 - The shell from the requester's design: a menu on the left, a top bar, light and dark themes, and a date range that lives in the address, so a link shows what its sender saw (P2).
 - **Apps**: everyone can see the list; admins add, edit and delete apps (P2).
 - An **Overview** that shows the data source, how many apps there are and the current view. Charts and key numbers arrive in P3.
-- Generated **demo data**, labelled as such. Real Google Analytics 4 numbers arrive in P4.
+- Generated **demo data**, labelled as such. Real Google Analytics 4 numbers, when `ANALYTICS_PROVIDER=ga4`.
 
 Start with these files:
 
@@ -122,7 +122,17 @@ A field you leave out takes its default. A value that does not fit (a time zone 
 
 ## Demo data
 
-`ANALYTICS_PROVIDER` in `.env` says where the numbers come from. `seed`, the default, generates the same made-up numbers on every run; the top bar then shows a **Demo data** label and the Overview says so too. `ga4` (real Google Analytics 4 data) arrives in phase P4. Until then the API refuses to start with that setting, because demo data shown as if it were real would be worse than no data.
+`ANALYTICS_PROVIDER` in `.env` says where the numbers come from. `seed`, the default, generates the same made-up numbers on every run; the top bar then shows a **Demo data** label and the Overview says so too. `ga4` reads real Google Analytics 4 data (see "Real GA4 data" below).
+
+### Real GA4 data
+
+1. In Google Cloud, make a service account and a key file for it, and enable the **Google Analytics Data API** in that project. Keep the key file out of the repository.
+2. In GA4, for every property: Admin, Property access management, add the service account's email as a **Viewer**. Also set the property's reporting time zone to the studio's (D-046).
+3. In `.env`: `ANALYTICS_PROVIDER=ga4` and `GA4_SERVICE_ACCOUNT_KEY_FILE=` the full path of the key file. Put each app's GA4 property ID (digits) on its Apps screen.
+4. Check a property before trusting the screens: `npm run ga4:check -- <propertyId>`. It prints OK or FAIL for the connection, retention, acquisition and daily numbers, with counts only. A FAIL line says what to fix.
+5. Restart `npm run dev`. The top bar no longer shows "Demo data".
+
+"MAU" is GA4's 28-day active users. Retention for recent weeks reads "In progress" until the window has ended. Revenue and installs stay "Not connected".
 
 ## Apps
 
