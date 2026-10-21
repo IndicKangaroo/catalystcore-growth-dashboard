@@ -8,6 +8,7 @@ import type { SessionState } from '../features/auth/session';
 import OverviewPage from '../features/home/OverviewPage';
 import { apiError, stubApi } from '../test/api';
 import { makeApp, makeStudio, readyState, renderWithSession } from '../test/helpers';
+import { makeOverview, makeSeries } from '../test/metrics';
 import AppLayout from './AppLayout';
 
 // Every request goes through the real apiFetch; only the sign-in token is faked.
@@ -28,6 +29,9 @@ function stubBackend({
     '/api/settings/studio': { body: studio },
     '/api/health': { body: { status: 'ok', provider } },
     '/api/apps': { body: { apps } },
+    // The Overview, when a test puts it inside the frame, reads its numbers from the same source.
+    '/api/metrics/overview*': { body: makeOverview({ source: provider }) },
+    '/api/metrics/series*': { body: makeSeries() },
   });
 }
 
@@ -245,7 +249,7 @@ describe('AppLayout', () => {
   });
 
   it('puts no label in the top bar for real analytics', async () => {
-    stubBackend({ provider: 'ga4' });
+    stubBackend({ provider: 'ga4', apps: [makeApp({ id: 'alpha', name: 'Alpha' })] });
     renderShell(readyState(), { page: <OverviewPage /> });
 
     // The overview names the source once the API has answered; the top bar read the same answer.

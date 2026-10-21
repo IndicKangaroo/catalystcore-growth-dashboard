@@ -8,7 +8,7 @@ import { Button } from './Button';
 import { CenteredCard } from './CenteredCard';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
-import { NAV_ITEMS, navItemFor } from './navigation';
+import { NAV_ITEMS, screenFor } from './navigation';
 
 /**
  * The frame around every screen after sign-in: left rail, top bar, filters, and the page itself.
@@ -20,9 +20,9 @@ export default function AppLayout() {
   const studio = useStudioQuery(state.status === 'ready');
   const { pathname } = useLocation();
 
-  const item = navItemFor(pathname);
-  const pageName = item?.label ?? 'Page not found';
-  const scope = item?.filters ?? 'none';
+  const screen = screenFor(pathname);
+  const pageName = screen?.label ?? 'Page not found';
+  const scope = screen?.filters ?? 'none';
   const studioName = studio.data?.settings.name ?? PRODUCT_NAME;
 
   useEffect(() => {

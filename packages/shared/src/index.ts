@@ -1,5 +1,6 @@
 export * from './analytics';
 export * from './apps';
+export * from './compare';
 export * from './dateRange';
 export * from './dates';
 export * from './enums';

@@ -4,10 +4,12 @@ import type { Config } from '../lib/config';
 import { createAppService } from '../apps/service';
 import { createAuthMiddleware } from '../middleware/auth';
 import { AppError } from '../middleware/errors';
+import { createMetricsService } from '../metrics/service';
 import { createStudioSettingsService } from '../settings/service';
 import { createUserService } from '../users/service';
 import { createAppsRouter } from './apps';
 import { createMeRouter } from './me';
+import { createMetricsRouter } from './metrics';
 import { createSettingsRouter } from './settings';
 import { createUsersRouter } from './users';
 
@@ -22,6 +24,11 @@ export function createProtectedRouter(config: Config, deps: AppDeps): Router {
   router.use('/users', createUsersRouter(users));
   router.use('/apps', createAppsRouter(apps));
   router.use('/settings', createSettingsRouter(studio));
+  // After /apps: it adds /apps/:id/users and /apps/:id/retention, which the apps router passes on.
+  router.use(
+    '/',
+    createMetricsRouter(createMetricsService({ apps, studio, provider: deps.provider })),
+  );
   return router;
 }
 

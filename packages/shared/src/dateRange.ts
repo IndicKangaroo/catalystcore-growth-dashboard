@@ -43,6 +43,16 @@ export function resolveDateRange(spec: RangeSpec, now: Date, timeZone: string): 
   return { from: addDays(to, 1 - PRESET_DAYS[spec.preset]), to };
 }
 
+/**
+ * The days a range is compared with (proposed in D-039): the same number of days directly before
+ * it, so "Last 7 days" is compared with the 7 days before those. Nothing is adjusted for today
+ * being only partly over, or for weekdays; the comparison is plain and says what it is.
+ */
+export function previousRange(range: DateRange): DateRange {
+  const length = daysInRange(range);
+  return { from: addDays(range.from, -length), to: addDays(range.from, -1) };
+}
+
 export const dateRangeSchema = z
   .object({ from: calendarDateSchema, to: calendarDateSchema })
   .superRefine((range, context) => {

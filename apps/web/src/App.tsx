@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 import AppLayout from './components/AppLayout';
+import AppDetailPage from './features/app-detail/AppDetailPage';
 import AppsPage from './features/apps/AppsPage';
 import LoginPage from './features/auth/LoginPage';
 import { RequirePermission, RequireSignedIn, SessionGate } from './features/auth/guards';
@@ -20,6 +21,14 @@ export default function App() {
               element={
                 <RequirePermission permission="apps:read">
                   <AppsPage />
+                </RequirePermission>
+              }
+            />
+            <Route
+              path="apps/:appId"
+              element={
+                <RequirePermission permission="metrics:read">
+                  <AppDetailPage />
                 </RequirePermission>
               }
             />

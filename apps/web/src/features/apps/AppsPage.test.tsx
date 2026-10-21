@@ -118,7 +118,7 @@ describe('AppsPage for an admin', () => {
     expect(beta.getByText('Development')).toBeInTheDocument();
     expect(beta.getByText('Not connected')).toBeInTheDocument();
     expect(beta.getByText('Not set')).toBeInTheDocument();
-    expect(beta.queryByRole('link')).not.toBeInTheDocument();
+    expect(beta.queryByRole('link', { name: /Google Play/ })).not.toBeInTheDocument();
   });
 
   it('summarises the list above the table', async () => {

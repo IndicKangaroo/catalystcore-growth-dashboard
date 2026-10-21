@@ -2,6 +2,7 @@ import { APP_STATUS_LABELS } from '@growth/shared';
 import type { AppRecord, AppStatus } from '@growth/shared';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Button } from '../../components/Button';
 import { Card } from '../../components/Card';
 import { Chip } from '../../components/Chip';
@@ -13,6 +14,7 @@ import { PageHeader } from '../../components/PageHeader';
 import { apiFetch } from '../../lib/api';
 import { formatDay } from '../../lib/format';
 import { useSession } from '../auth/session';
+import { filterSearch } from '../filters/filters';
 import { AppForm } from './AppForm';
 import { APPS_KEY, useApps } from './queries';
 
@@ -83,6 +85,8 @@ function AppRow({
   onCancelDelete,
   onConfirmDelete,
 }: AppRowProps) {
+  const [params] = useSearchParams();
+
   return (
     <tr className={isBeingEdited ? 'bg-accent/5' : undefined}>
       <td className="px-4 py-2.5">
@@ -90,7 +94,12 @@ function AppRow({
           <LogoTile name={app.name} imageUrl={app.iconUrl} soft />
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="font-semibold text-fg">{app.name}</span>
+              <Link
+                to={{ pathname: `/apps/${app.id}`, search: filterSearch(params) }}
+                className="font-semibold text-fg hover:text-accent hover:underline"
+              >
+                {app.name}
+              </Link>
               {app.currentVersion && <Chip mono>{app.currentVersion}</Chip>}
               {app.category && <Chip>{app.category}</Chip>}
               {app.playStoreUrl && (

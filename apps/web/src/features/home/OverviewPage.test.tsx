@@ -1,26 +1,45 @@
-import type {
-  AnalyticsProviderName,
-  AppRecord,
-  Role,
-  StudioSettingsResponse,
-} from '@growth/shared';
-import { screen, within } from '@testing-library/react';
+import type { Overview, Role, StudioSettingsResponse } from '@growth/shared';
+import { metricMissing, metricOk } from '@growth/shared';
+import { fireEvent, screen, within } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { apiError, stubApi } from '../../test/api';
-import type { ApiReply } from '../../test/api';
+import type { ApiReply, RecordedRequest } from '../../test/api';
 import { makeApp, makeStudio, readyState, renderWithSession } from '../../test/helpers';
+import {
+  WEEK_BEFORE,
+  makeOverview,
+  makePoints,
+  makeSeries,
+  setClockToMiddayInKolkata,
+} from '../../test/metrics';
 import OverviewPage from './OverviewPage';
 
-// The cards read through the real apiFetch; only the sign-in token is faked.
+// The screen reads through the real apiFetch; only the sign-in token is faked.
 vi.mock('../../lib/firebase', () => ({ getIdToken: vi.fn().mockResolvedValue(null) }));
 
-const healthOf = (provider: AnalyticsProviderName): ApiReply => ({
-  body: { status: 'ok', provider },
-});
-const appsOf = (apps: AppRecord[]): ApiReply => ({ body: { apps } });
+const QUEST = makeApp({ id: 'quest', name: 'Grind Quest', packageName: 'com.example.quest' });
+const TOOLKIT = makeApp({ id: 'toolkit', name: 'PDF Toolkit', status: 'testing' });
 
-function stubBackend(health: ApiReply = healthOf('seed'), apps: ApiReply = appsOf([])) {
-  stubApi({ '/api/health': health, '/api/apps': apps });
+interface Backend {
+  apps?: ReturnType<typeof makeApp>[];
+  overview?: Overview;
+  /** What the previous period answers, when it differs from the current one. */
+  before?: Overview;
+  overviewReply?: ApiReply;
+}
+
+function stubBackend({ apps = [QUEST, TOOLKIT], overview, before, overviewReply }: Backend = {}) {
+  const current = overview ?? makeOverview();
+  return stubApi({
+    '/api/apps': { body: { apps } },
+    '/api/metrics/overview*': (request: RecordedRequest) =>
+      overviewReply ?? {
+        body: request.path.includes(`from=${WEEK_BEFORE.from}`) ? (before ?? current) : current,
+      },
+    '/api/metrics/series*': {
+      body: makeSeries('active_users', makePoints({ from: '2026-10-09', to: '2026-10-15' })),
+    },
+  });
 }
 
 interface Options {
@@ -30,7 +49,13 @@ interface Options {
   studio?: StudioSettingsResponse;
 }
 
-function renderOverview({ role = 'admin', name = 'Ada Admin', route = '/', studio }: Options = {}) {
+function renderOverview({
+  role = 'admin',
+  name = 'Ada Admin',
+  route = '/?range=7d',
+  studio,
+}: Options = {}) {
+  setClockToMiddayInKolkata();
   return renderWithSession(<OverviewPage />, {
     state: readyState(role, 'ada@example.com', name),
     route,
@@ -38,28 +63,27 @@ function renderOverview({ role = 'admin', name = 'Ada Admin', route = '/', studi
   });
 }
 
-/** The card under a heading such as "Data source": the heading's parent holds the whole card. */
-function card(label: string) {
+/** The card under a key-number heading such as "Active users". */
+function card(label: string): ReturnType<typeof within> {
   const heading = screen.getByRole('heading', { name: label });
-  const element = heading.parentElement;
-  if (!element) throw new Error(`No card around the "${label}" heading`);
+  const element = heading.closest('.rounded-card');
+  if (!(element instanceof HTMLElement)) throw new Error(`No card around the "${label}" heading`);
   return within(element);
 }
 
-/** A moment that is midday on 15 October 2026 where the studio is (Asia/Kolkata). */
-function setClockToMiddayInKolkata() {
-  vi.useFakeTimers({ toFake: ['Date'] });
-  vi.setSystemTime(new Date('2026-10-15T06:30:00Z'));
-}
-
 describe('OverviewPage', () => {
-  it('welcomes the person by name', async () => {
+  it('welcomes the person by name and shows the key numbers', async () => {
     stubBackend();
     renderOverview({ name: 'Ada Admin' });
 
     expect(screen.getByRole('heading', { name: 'Overview' })).toBeInTheDocument();
     expect(screen.getByText(/Welcome, Ada Admin\./)).toBeInTheDocument();
-    await card('Data source').findByText('Demo data');
+
+    expect(await screen.findByRole('heading', { name: 'Active users' })).toBeInTheDocument();
+    expect(card('Active users').getByText('12.9K')).toBeInTheDocument();
+    expect(card('New users').getByText('3,400')).toBeInTheDocument();
+    expect(card('Sessions').getByText('48.2K')).toBeInTheDocument();
+    expect(card('Day-7 retention').getByText('23.4%')).toBeInTheDocument();
   });
 
   it('welcomes a person who has no name on their account by their email address', async () => {
@@ -67,7 +91,205 @@ describe('OverviewPage', () => {
     renderOverview({ role: 'growth', name: null });
 
     expect(screen.getByText(/Welcome, ada@example\.com\./)).toBeInTheDocument();
-    await card('Data source').findByText('Demo data');
+    await screen.findByRole('heading', { name: 'Active users' });
+  });
+
+  it('labels demo data on the screen, from what the answer says its source is', async () => {
+    stubBackend({ overview: makeOverview({ source: 'seed' }) });
+    renderOverview();
+
+    expect(await screen.findByText('Demo data')).toBeInTheDocument();
+  });
+
+  it('names Google Analytics 4 and no demo label for real analytics', async () => {
+    stubBackend({ overview: makeOverview({ source: 'ga4' }) });
+    renderOverview();
+
+    expect(await screen.findByText('Google Analytics 4')).toBeInTheDocument();
+    expect(screen.queryByText('Demo data')).not.toBeInTheDocument();
+  });
+
+  describe('numbers that are missing', () => {
+    it('says why in words and never shows them as 0', async () => {
+      stubBackend({
+        overview: makeOverview({
+          installs: metricMissing('not_connected'),
+          averageRetention: metricMissing('in_progress'),
+          newUsers: metricMissing('not_enough_data'),
+          attributedUsers: metricMissing('no_measured_attribution'),
+        }),
+      });
+      renderOverview();
+      await screen.findByRole('heading', { name: 'Active users' });
+
+      expect(card('Installs').getByText('Not connected')).toBeInTheDocument();
+      expect(card('Day-7 retention').getByText('In progress')).toBeInTheDocument();
+      expect(card('New users').getByText('Not enough data')).toBeInTheDocument();
+      expect(
+        card('Attributed users').getByText('No measured attribution available'),
+      ).toBeInTheDocument();
+      for (const label of ['Installs', 'Day-7 retention', 'New users', 'Attributed users']) {
+        expect(card(label).queryByText(/^0/)).not.toBeInTheDocument();
+      }
+    });
+
+    it('still shows a real zero as 0', async () => {
+      stubBackend({ overview: makeOverview({ newUsers: metricOk(0) }) });
+      renderOverview({ route: '/?range=7d&compare=off' });
+      await screen.findByRole('heading', { name: 'Active users' });
+
+      expect(card('New users').getByText('0')).toBeInTheDocument();
+    });
+  });
+
+  it('badges attributed users as measured, because only measured attribution is a headline', async () => {
+    stubBackend({ overview: makeOverview({ attributedUsers: metricOk(120) }) });
+    renderOverview();
+    await screen.findByRole('heading', { name: 'Attributed users' });
+
+    expect(card('Attributed users').getByText('Measured')).toBeInTheDocument();
+    expect(card('Attributed users').getByText('120')).toBeInTheDocument();
+  });
+
+  it('says which apps are not in the numbers', async () => {
+    stubBackend({ overview: makeOverview({ appsNotConnected: ['PDF Toolkit'] }) });
+    renderOverview();
+
+    expect(await screen.findByText('Some apps are not in these numbers.')).toBeInTheDocument();
+    expect(screen.getByText('Not connected: PDF Toolkit.')).toBeInTheDocument();
+  });
+
+  describe('compare to previous period', () => {
+    it('compares with the same number of days directly before, by default', async () => {
+      const requests = stubBackend({
+        overview: makeOverview({ activeUsers: metricOk(12_900) }),
+        before: makeOverview({ activeUsers: metricOk(10_000) }),
+      });
+      renderOverview();
+
+      await screen.findByRole('heading', { name: 'Active users' });
+      expect(await card('Active users').findByText('+29.0%')).toBeInTheDocument();
+      expect(card('Active users').getByText('vs previous period')).toBeInTheDocument();
+      const asked = requests.map((request) => request.path);
+      expect(asked.some((path) => path.includes('from=2026-10-09&to=2026-10-15'))).toBe(true);
+      expect(asked.some((path) => path.includes('from=2026-10-02&to=2026-10-08'))).toBe(true);
+    });
+
+    it('shows a fall as a fall', async () => {
+      stubBackend({
+        overview: makeOverview({ sessions: metricOk(900) }),
+        before: makeOverview({ sessions: metricOk(1_000) }),
+      });
+      renderOverview();
+
+      await screen.findByRole('heading', { name: 'Sessions' });
+      expect(await card('Sessions').findByText('-10.0%')).toBeInTheDocument();
+    });
+
+    it('says so in words when the previous period has no data, and gives no percentage', async () => {
+      stubBackend({
+        before: makeOverview({ activeUsers: metricMissing('not_enough_data') }),
+      });
+      renderOverview();
+
+      await screen.findByRole('heading', { name: 'Active users' });
+      expect(
+        await card('Active users').findByText('No data for the previous period'),
+      ).toBeInTheDocument();
+      expect(card('Active users').queryByText(/%/)).not.toBeInTheDocument();
+    });
+
+    it('does not divide by a previous period of zero', async () => {
+      stubBackend({ before: makeOverview({ newUsers: metricOk(0) }) });
+      renderOverview();
+
+      await screen.findByRole('heading', { name: 'New users' });
+      expect(await card('New users').findByText('None in the previous period')).toBeInTheDocument();
+    });
+
+    it('can be switched off, and then does not ask for the previous period at all', async () => {
+      const requests = stubBackend();
+      renderOverview({ route: '/?range=7d&compare=off' });
+      await screen.findByRole('heading', { name: 'Active users' });
+
+      expect(screen.queryByText('vs previous period')).not.toBeInTheDocument();
+      expect(requests.some((request) => request.path.includes(`from=${WEEK_BEFORE.from}`))).toBe(
+        false,
+      );
+      expect(
+        screen.getByRole('checkbox', { name: 'Compare to previous period' }),
+      ).not.toBeChecked();
+    });
+
+    it('is switched on and off with the checkbox', async () => {
+      stubBackend();
+      renderOverview();
+      await screen.findByRole('heading', { name: 'Active users' });
+      const box = screen.getByRole('checkbox', { name: 'Compare to previous period' });
+      expect(box).toBeChecked();
+      expect(screen.getByText('2 Oct 2026 – 8 Oct 2026')).toBeInTheDocument();
+
+      fireEvent.click(box);
+
+      expect(box).not.toBeChecked();
+      expect(screen.queryByText('2 Oct 2026 – 8 Oct 2026')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('the apps in this view', () => {
+    it('lists every app, each linking to its own page and keeping the filters', async () => {
+      stubBackend();
+      renderOverview({ route: '/?range=7d' });
+
+      const link = await screen.findByRole('link', { name: 'Grind Quest' });
+      expect(link).toHaveAttribute('href', '/apps/quest?range=7d');
+      expect(screen.getByRole('link', { name: 'PDF Toolkit' })).toHaveAttribute(
+        'href',
+        '/apps/toolkit?range=7d',
+      );
+    });
+
+    it('lists only the apps that were chosen', async () => {
+      stubBackend();
+      renderOverview({ route: '/?range=7d&appIds=toolkit' });
+
+      expect(await screen.findByRole('link', { name: 'PDF Toolkit' })).toBeInTheDocument();
+      expect(screen.queryByRole('link', { name: 'Grind Quest' })).not.toBeInTheDocument();
+    });
+  });
+
+  describe('when there is nothing to show', () => {
+    it('invites an admin to add the first apps, and asks the API for no numbers', async () => {
+      const requests = stubBackend({ apps: [] });
+      renderOverview({ role: 'admin' });
+
+      expect(await screen.findByText('No apps yet')).toBeInTheDocument();
+      expect(screen.getByText('Add the apps this studio tracks to start.')).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: 'Go to Apps' })).toHaveAttribute(
+        'href',
+        '/apps?range=7d',
+      );
+      expect(requests.some((request) => request.path.startsWith('/api/metrics'))).toBe(false);
+    });
+
+    it('tells everyone else that an admin has to add them', async () => {
+      stubBackend({ apps: [] });
+      renderOverview({ role: 'growth' });
+
+      expect(
+        await screen.findByText('An admin has to add the apps this studio tracks.'),
+      ).toBeInTheDocument();
+    });
+
+    it('says what went wrong when the numbers cannot be read', async () => {
+      stubBackend({
+        overviewReply: apiError(500, 'internal_error', 'The numbers are unavailable.'),
+      });
+      renderOverview();
+
+      expect(await screen.findByRole('alert')).toHaveTextContent('The numbers are unavailable.');
+      expect(screen.queryByRole('heading', { name: 'Active users' })).not.toBeInTheDocument();
+    });
   });
 
   describe('studio settings notice', () => {
@@ -81,193 +303,27 @@ describe('OverviewPage', () => {
           /time zone Asia\/Kolkata, currency INR, and Last 30 days as the first view/,
         ),
       ).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
+      await screen.findByRole('heading', { name: 'Active users' });
     });
 
     it('says nothing once they are saved', async () => {
       stubBackend();
       renderOverview({ studio: makeStudio({ name: 'Orbit Studio' }, true) });
 
-      await card('Data source').findByText('Demo data');
+      await screen.findByRole('heading', { name: 'Active users' });
       expect(
         screen.queryByText('The studio settings have not been saved yet.'),
       ).not.toBeInTheDocument();
     });
   });
 
-  describe('data source card', () => {
-    it('calls the demo provider demo data, and says the numbers are generated', async () => {
-      stubBackend(healthOf('seed'));
-      renderOverview();
-      const source = card('Data source');
-      expect(source.getByText('Checking…')).toBeInTheDocument();
+  it("asks for the days in the studio's time zone, not the browser's", async () => {
+    const requests = stubBackend();
+    renderOverview({ route: '/?range=today' });
+    await screen.findByRole('heading', { name: 'Active users' });
 
-      expect(await source.findByText('Demo data')).toBeInTheDocument();
-      expect(
-        source.getByText(
-          'Generated sample numbers. Real analytics arrive with the GA4 connection.',
-        ),
-      ).toBeInTheDocument();
-    });
-
-    it('names Google Analytics 4 when that is the source', async () => {
-      stubBackend(healthOf('ga4'));
-      renderOverview();
-      const source = card('Data source');
-
-      expect(await source.findByText('Google Analytics 4')).toBeInTheDocument();
-      expect(source.getByText('Numbers are read from Google Analytics 4.')).toBeInTheDocument();
-      expect(source.queryByText('Demo data')).not.toBeInTheDocument();
-    });
-
-    it('says the API is not reachable, with the reason, instead of guessing a source', async () => {
-      stubBackend(apiError(500, 'internal_error', 'The API did not answer.'));
-      renderOverview();
-      const source = card('Data source');
-
-      expect(await source.findByText('API not reachable')).toBeInTheDocument();
-      expect(source.getByText('The API did not answer.')).toBeInTheDocument();
-      expect(source.queryByText('Demo data')).not.toBeInTheDocument();
-    });
-  });
-
-  describe('apps card', () => {
-    it('counts the apps and how many have a GA4 property set', async () => {
-      stubBackend(
-        healthOf('seed'),
-        appsOf([makeApp({ ga4PropertyId: '123456789' }), makeApp(), makeApp()]),
-      );
-      renderOverview();
-      const apps = card('Apps');
-      expect(apps.getByText('Loading…')).toBeInTheDocument();
-
-      expect(await apps.findByText('3 apps')).toBeInTheDocument();
-      expect(apps.getByText('1 of 3 with a GA4 property set')).toBeInTheDocument();
-      expect(apps.getByRole('link', { name: 'Manage apps' })).toHaveAttribute('href', '/apps');
-    });
-
-    it('says "1 app" for a single app', async () => {
-      stubBackend(healthOf('seed'), appsOf([makeApp()]));
-      renderOverview();
-
-      expect(await card('Apps').findByText('1 app')).toBeInTheDocument();
-      expect(card('Apps').getByText('0 of 1 with a GA4 property set')).toBeInTheDocument();
-    });
-
-    it('keeps the filters in the link to the Apps screen', async () => {
-      stubBackend(healthOf('seed'), appsOf([makeApp()]));
-      renderOverview({ route: '/?range=7d' });
-
-      expect(await card('Apps').findByRole('link', { name: 'Manage apps' })).toHaveAttribute(
-        'href',
-        '/apps?range=7d',
-      );
-    });
-
-    it('invites an admin to add the first apps', async () => {
-      stubBackend(healthOf('seed'), appsOf([]));
-      renderOverview({ role: 'admin' });
-      const apps = card('Apps');
-
-      expect(await apps.findByText('No apps yet')).toBeInTheDocument();
-      expect(apps.getByText('Add the apps this studio tracks to start.')).toBeInTheDocument();
-      expect(apps.getByRole('link', { name: 'Go to Apps' })).toHaveAttribute('href', '/apps');
-    });
-
-    it('tells everyone else that an admin has to add them', async () => {
-      stubBackend(healthOf('seed'), appsOf([]));
-      renderOverview({ role: 'growth' });
-      const apps = card('Apps');
-
-      expect(await apps.findByText('No apps yet')).toBeInTheDocument();
-      expect(
-        apps.getByText('An admin has to add the apps this studio tracks.'),
-      ).toBeInTheDocument();
-    });
-
-    it('says when the list is not available, with the reason', async () => {
-      stubBackend(healthOf('seed'), apiError(500, 'internal_error', 'Could not load the apps.'));
-      renderOverview();
-      const apps = card('Apps');
-
-      expect(await apps.findByText('Not available')).toBeInTheDocument();
-      expect(apps.getByText('Could not load the apps.')).toBeInTheDocument();
-    });
-  });
-
-  describe('current view card', () => {
-    it("shows the studio's usual range as days in the studio's time zone", async () => {
-      setClockToMiddayInKolkata();
-      stubBackend();
-      renderOverview();
-      const view = card('Current view');
-
-      expect(view.getByText('Last 30 days')).toBeInTheDocument();
-      expect(view.getByText('16 Sep 2026 – 15 Oct 2026 (Asia/Kolkata)')).toBeInTheDocument();
-      expect(view.getByText('All apps')).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
-    });
-
-    it("uses the studio's own default range when the address names none", async () => {
-      setClockToMiddayInKolkata();
-      stubBackend();
-      renderOverview({ studio: makeStudio({ defaultDateRange: '7d' }) });
-      const view = card('Current view');
-
-      expect(view.getByText('Last 7 days')).toBeInTheDocument();
-      expect(view.getByText('9 Oct 2026 – 15 Oct 2026 (Asia/Kolkata)')).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
-    });
-
-    it('follows the range and the apps in the address', async () => {
-      setClockToMiddayInKolkata();
-      stubBackend();
-      renderOverview({ route: '/?range=today&appIds=a1' });
-      const view = card('Current view');
-
-      expect(view.getByText('Today')).toBeInTheDocument();
-      expect(view.getByText('15 Oct 2026 (Asia/Kolkata)')).toBeInTheDocument();
-      expect(view.getByText('1 app chosen')).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
-    });
-
-    it('counts several chosen apps', async () => {
-      stubBackend();
-      renderOverview({ route: '/?appIds=a1%2Cb2' });
-
-      expect(card('Current view').getByText('2 apps chosen')).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
-    });
-
-    it('shows a custom range exactly as chosen', async () => {
-      stubBackend();
-      renderOverview({ route: '/?range=custom&from=2026-10-01&to=2026-10-10' });
-      const view = card('Current view');
-
-      expect(view.getByText('Custom range')).toBeInTheDocument();
-      expect(view.getByText('1 Oct 2026 – 10 Oct 2026 (Asia/Kolkata)')).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
-    });
-
-    it('cuts the day where the studio is, not where the browser is', async () => {
-      vi.useFakeTimers({ toFake: ['Date'] });
-      // 20:00 UTC on the 15th is already the 16th in India and still the 15th in Los Angeles.
-      vi.setSystemTime(new Date('2026-10-15T20:00:00Z'));
-      stubBackend();
-
-      const india = renderOverview({ route: '/?range=today' });
-      expect(card('Current view').getByText('16 Oct 2026 (Asia/Kolkata)')).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
-      india.unmount();
-
-      renderOverview({
-        route: '/?range=today',
-        studio: makeStudio({ timezone: 'America/Los_Angeles' }),
-      });
-      expect(
-        card('Current view').getByText('15 Oct 2026 (America/Los_Angeles)'),
-      ).toBeInTheDocument();
-      await card('Data source').findByText('Demo data');
-    });
+    expect(requests.some((request) => request.path.includes('from=2026-10-15&to=2026-10-15'))).toBe(
+      true,
+    );
   });
 });
