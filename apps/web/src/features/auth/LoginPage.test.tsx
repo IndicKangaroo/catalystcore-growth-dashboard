@@ -108,3 +108,23 @@ describe('LoginPage', () => {
     expect(screen.getByText('Home page')).toBeInTheDocument();
   });
 });
+
+describe('LoginPage and the Firebase emulator', () => {
+  it('says that sign-in goes to the emulator on this computer, not to Google', () => {
+    vi.stubEnv('VITE_FIREBASE_AUTH_EMULATOR_URL', 'http://127.0.0.1:9099');
+
+    renderLogin({ status: 'signed_out' });
+
+    expect(screen.getByText('Local emulator.')).toBeInTheDocument();
+    expect(screen.getByText('VITE_FIREBASE_AUTH_EMULATOR_URL')).toBeInTheDocument();
+    expect(signInButton()).toBeEnabled();
+  });
+
+  it('says nothing about an emulator when sign-in goes to Google', () => {
+    vi.stubEnv('VITE_FIREBASE_AUTH_EMULATOR_URL', '');
+
+    renderLogin({ status: 'signed_out' });
+
+    expect(screen.queryByText('Local emulator.')).not.toBeInTheDocument();
+  });
+});

@@ -1,4 +1,5 @@
 import { readErrorCode } from './databaseErrors';
+import { isEmulatorProject } from './emulatorProject';
 
 /** One line for the startup log. */
 export interface SetupNote {
@@ -35,6 +36,32 @@ export function describeFirebaseSetup(
       message:
         'Only one of FIREBASE_AUTH_EMULATOR_HOST and FIRESTORE_EMULATOR_HOST is set. Set both to ' +
         'use the emulators, or neither to use a real Firebase project.',
+    });
+  }
+
+  // Sign-ins made in the Auth emulator belong to the emulator's own project (a "demo-" id, D-023),
+  // so the API's project id has to agree with it. A leftover emulator line, or an emulator project
+  // id with the emulator lines removed, makes every sign-in fail with a project mismatch.
+  const projectId = env.FIREBASE_PROJECT_ID?.trim();
+  if (projectId && authEmulator && !isEmulatorProject(projectId)) {
+    notes.push({
+      level: 'warn',
+      message:
+        'FIREBASE_AUTH_EMULATOR_HOST is set, so people sign in through the local Firebase emulator, ' +
+        'whose sign-ins belong to an emulator project ("npm run emulators" runs demo-growth), but ' +
+        `FIREBASE_PROJECT_ID is ${projectId}. Signing in will fail with a "different Firebase ` +
+        'project" error. To use the emulators, set FIREBASE_PROJECT_ID and VITE_FIREBASE_PROJECT_ID ' +
+        'to demo-growth. To use the real project, remove FIREBASE_AUTH_EMULATOR_HOST, ' +
+        'FIRESTORE_EMULATOR_HOST and VITE_FIREBASE_AUTH_EMULATOR_URL from .env.',
+    });
+  } else if (projectId && !authEmulator && isEmulatorProject(projectId)) {
+    notes.push({
+      level: 'warn',
+      message:
+        `FIREBASE_PROJECT_ID is ${projectId}, a name that only the local emulators use, but ` +
+        'FIREBASE_AUTH_EMULATOR_HOST is not set, so the API will ask the real Firebase, which has ' +
+        'no such project, and nobody can sign in. Add the emulator lines from the README (Option A), ' +
+        'or set the id of your real Firebase project.',
     });
   }
 

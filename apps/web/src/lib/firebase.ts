@@ -8,6 +8,7 @@ import {
   signOut,
 } from 'firebase/auth';
 import type { Auth } from 'firebase/auth';
+import { authEmulatorUrl } from './emulator';
 
 /** True when the VITE_FIREBASE_* settings are present. Without them the app shows setup help. */
 export function isFirebaseConfigured(): boolean {
@@ -34,11 +35,9 @@ export function getFirebaseAuth(): Auth | null {
       });
     cachedAuth = getAuth(app);
 
-    if (env.VITE_FIREBASE_AUTH_EMULATOR_URL) {
-      connectAuthEmulator(cachedAuth, env.VITE_FIREBASE_AUTH_EMULATOR_URL, {
-        disableWarnings: true,
-      });
-    }
+    // The SDK's own warning banner is switched off; the top bar and the login page say it instead.
+    const emulatorUrl = authEmulatorUrl();
+    if (emulatorUrl) connectAuthEmulator(cachedAuth, emulatorUrl, { disableWarnings: true });
   }
   return cachedAuth;
 }

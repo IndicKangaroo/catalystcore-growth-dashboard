@@ -1,6 +1,7 @@
 import { ROLE_LABELS } from '@growth/shared';
 import { DateRangeControl } from '../features/filters/DateRangeControl';
 import { DataSourcePill } from '../features/health/DataSourcePill';
+import { EmulatorPill } from '../features/health/EmulatorPill';
 import { useSession } from '../features/auth/session';
 import { useStudio } from '../features/studio/studio';
 import { initialsOf } from '../lib/format';
@@ -30,7 +31,7 @@ export function TopBar({ pageName, showRange }: TopBarProps) {
   return (
     <header className="border-b border-line bg-surface lg:sticky lg:top-0 lg:z-20 lg:bg-surface/90 lg:backdrop-blur">
       <div className="flex min-h-14 flex-wrap items-center gap-x-4 gap-y-2 px-4 py-2 lg:px-8">
-        <div className="flex min-w-0 flex-1 items-center gap-3">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-x-3 gap-y-1.5">
           <p className="flex min-w-0 items-center gap-2 text-[13px]">
             <span className="truncate font-semibold text-fg">{studioName}</span>
             <span aria-hidden="true" className="text-fg-subtle">
@@ -39,6 +40,7 @@ export function TopBar({ pageName, showRange }: TopBarProps) {
             <span className="whitespace-nowrap font-medium text-accent">{pageName}</span>
           </p>
           <DataSourcePill />
+          <EmulatorPill />
         </div>
 
         {showRange && (

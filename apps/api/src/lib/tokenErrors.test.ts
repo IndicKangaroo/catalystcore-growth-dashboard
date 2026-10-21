@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { classifyTokenError } from './tokenErrors';
+import { classifyTokenError, projectMismatchMessage, readProjectMismatch } from './tokenErrors';
 
 function sdkError(code: string, message: string): Error {
   return Object.assign(new Error(message), { code });
@@ -43,5 +43,127 @@ describe('classifyTokenError', () => {
   it('treats a thrown non-error as an invalid token', () => {
     expect(classifyTokenError('boom')).toBe('invalid');
     expect(classifyTokenError(undefined)).toBe('invalid');
+  });
+});
+
+describe('readProjectMismatch', () => {
+  it('reads the expected and the actual project from an audience error', () => {
+    const err = sdkError(
+      'auth/argument-error',
+      'Firebase ID token has incorrect "aud" (audience) claim. Expected "my-studio" but got "demo-growth". Make sure the ID token comes from the same Firebase project as the service account used to authenticate this SDK.',
+    );
+    expect(readProjectMismatch(err)).toEqual({ expected: 'my-studio', actual: 'demo-growth' });
+  });
+
+  it('reads them from an issuer error without the issuer address', () => {
+    const err = sdkError(
+      'auth/argument-error',
+      'Firebase ID token has incorrect "iss" (issuer) claim. Expected "https://securetoken.google.com/my-studio" but got "https://securetoken.google.com/demo-growth".',
+    );
+    expect(readProjectMismatch(err)).toEqual({ expected: 'my-studio', actual: 'demo-growth' });
+  });
+
+  it('leaves out a name that is not a plain project id', () => {
+    const tooLong = 'x'.repeat(65);
+    const odd = (got: string) =>
+      sdkError(
+        'auth/argument-error',
+        `incorrect "aud" claim. Expected "my-studio" but got "${got}".`,
+      );
+
+    expect(readProjectMismatch(odd('<script>alert(1)</script>'))).toEqual({
+      expected: 'my-studio',
+      actual: undefined,
+    });
+    expect(readProjectMismatch(odd('undefined')).actual).toBeUndefined();
+    expect(readProjectMismatch(odd(''))).toEqual({ expected: 'my-studio', actual: undefined });
+    expect(readProjectMismatch(odd(tooLong)).actual).toBeUndefined();
+  });
+
+  it('finds nothing when the error does not name the projects', () => {
+    const none = { expected: undefined, actual: undefined };
+    expect(readProjectMismatch(sdkError('auth/argument-error', 'incorrect "aud" claim.'))).toEqual(
+      none,
+    );
+    expect(readProjectMismatch('boom')).toEqual(none);
+    expect(readProjectMismatch(undefined)).toEqual(none);
+  });
+});
+
+describe('projectMismatchMessage', () => {
+  it('names the project the person signed in to and the one the API uses', () => {
+    const message = projectMismatchMessage({ expected: 'my-studio', actual: 'other-studio' });
+
+    expect(message.startsWith('Server setup problem:')).toBe(true);
+    expect(message).toContain('signed in to the Firebase project "other-studio"');
+    expect(message).toContain('the API is set up for "my-studio"');
+  });
+
+  it('points at the web API key as well as the two project id settings', () => {
+    const message = projectMismatchMessage({ expected: 'my-studio', actual: 'other-studio' });
+
+    expect(message).toContain('VITE_FIREBASE_API_KEY');
+    expect(message).toContain('VITE_FIREBASE_PROJECT_ID');
+    expect(message).toContain('FIREBASE_PROJECT_ID');
+    expect(message).toContain('restart "npm run dev"');
+    expect(message).toContain('Sign out');
+    expect(message).not.toContain('emulator');
+  });
+
+  it('gives the general message when either project is unknown', () => {
+    for (const projects of [
+      { expected: undefined, actual: undefined },
+      { expected: 'my-studio', actual: undefined },
+      { expected: undefined, actual: 'other-studio' },
+    ]) {
+      const message = projectMismatchMessage(projects);
+      expect(message).toContain('a different Firebase project than the one the API uses');
+      expect(message).not.toContain('"my-studio"');
+      expect(message).not.toContain('"other-studio"');
+    }
+  });
+
+  describe('when the sign-in came from an emulator project', () => {
+    const message = projectMismatchMessage({ expected: 'my-studio', actual: 'demo-growth' });
+
+    it('says it was the local emulator, and names both projects', () => {
+      expect(message.startsWith('Server setup problem:')).toBe(true);
+      expect(message).toContain('through the local Firebase emulator (project "demo-growth")');
+      expect(message).toContain('the API is set up for the real project "my-studio"');
+    });
+
+    it('names the three emulator lines to remove and the way to use the emulators instead', () => {
+      expect(message).toContain('FIREBASE_AUTH_EMULATOR_HOST');
+      expect(message).toContain('FIRESTORE_EMULATOR_HOST');
+      expect(message).toContain('VITE_FIREBASE_AUTH_EMULATOR_URL');
+      expect(message).toContain(
+        'set FIREBASE_PROJECT_ID and VITE_FIREBASE_PROJECT_ID to "demo-growth"',
+      );
+      expect(message).toContain('restart "npm run dev"');
+      expect(message).toContain('Sign out');
+    });
+  });
+
+  describe('when the API is set up for an emulator project', () => {
+    const message = projectMismatchMessage({ expected: 'demo-growth', actual: 'my-studio' });
+
+    it('says the person signed in to a real project, and names both', () => {
+      expect(message).toContain('signed in to the real Firebase project "my-studio"');
+      expect(message).toContain('the API is set up for the emulator project "demo-growth"');
+    });
+
+    it('says to use the real project id, or to point the web app at the emulator', () => {
+      expect(message).toContain('set FIREBASE_PROJECT_ID to "my-studio"');
+      expect(message).toContain('remove FIREBASE_AUTH_EMULATOR_HOST and FIRESTORE_EMULATOR_HOST');
+      expect(message).toContain('VITE_FIREBASE_AUTH_EMULATOR_URL');
+      expect(message).toContain('restart "npm run dev"');
+    });
+  });
+
+  it('does not call two emulator projects an emulator mix-up', () => {
+    const message = projectMismatchMessage({ expected: 'demo-one', actual: 'demo-two' });
+
+    expect(message).toContain('signed in to the Firebase project "demo-two"');
+    expect(message).not.toContain('real Firebase project');
   });
 });
