@@ -5,6 +5,7 @@ import { Card } from '../../components/Card';
 import { CenteredCard } from '../../components/CenteredCard';
 import { LogoTile } from '../../components/LogoTile';
 import { Notice } from '../../components/Notice';
+import { authEmulatorUrl } from '../../lib/emulator';
 import { PRODUCT_NAME } from '../../lib/product';
 import { useSession } from './session';
 
@@ -91,6 +92,16 @@ export default function LoginPage() {
           <h1 className="text-xl font-semibold tracking-tight text-fg">{PRODUCT_NAME}</h1>
         </div>
         <p className="mt-4 text-sm text-fg-muted">Sign in with your Google account to continue.</p>
+        {authEmulatorUrl() && (
+          <Notice tone="warn" className="mt-4">
+            <p>
+              <strong className="font-semibold">Local emulator.</strong> Sign-in goes to the
+              Firebase emulator on this computer, not to Google. To use your real Firebase project,
+              remove <code className="font-mono text-[13px]">VITE_FIREBASE_AUTH_EMULATOR_URL</code>{' '}
+              from <code className="font-mono text-[13px]">.env</code> and restart the dev server.
+            </p>
+          </Notice>
+        )}
         <div className="mt-5">
           <Button onClick={() => void handleSignIn()} disabled={busy}>
             {busy ? 'Opening Google…' : 'Sign in with Google'}
