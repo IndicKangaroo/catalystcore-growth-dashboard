@@ -126,14 +126,19 @@ describe('when the sign-in service cannot be reached', () => {
   );
 });
 
-describe('when the token belongs to another Firebase project', () => {
-  const wrongAudience = Object.assign(
+/** What the Admin SDK says when a token's audience is not the API's project. */
+function audienceError(expected: string, got: string): TokenVerifier {
+  const error = Object.assign(
     new Error(
-      'Firebase ID token has incorrect "aud" (audience) claim. Expected "my-studio" but got "demo-growth".',
+      `Firebase ID token has incorrect "aud" (audience) claim. Expected "${expected}" but got "${got}".`,
     ),
     { code: 'auth/argument-error' },
   );
-  const verifier: TokenVerifier = { verify: () => Promise.reject(wrongAudience) };
+  return { verify: () => Promise.reject(error) };
+}
+
+describe('when the token belongs to another Firebase project', () => {
+  const verifier = audienceError('my-studio', 'other-studio');
 
   it('answers 503 and names the project signed in to and the one the API uses', async () => {
     captureErrorLog();
@@ -146,7 +151,7 @@ describe('when the token belongs to another Firebase project', () => {
     expect(res.status).toBe(503);
     expect(res.body.error.code).toBe('project_mismatch');
     const message: string = res.body.error.message;
-    expect(message).toContain('signed in to the Firebase project "demo-growth"');
+    expect(message).toContain('signed in to the Firebase project "other-studio"');
     expect(message).toContain('the API is set up for "my-studio"');
     expect(message).toContain('VITE_FIREBASE_API_KEY');
     expect(message).toContain('FIREBASE_PROJECT_ID');
@@ -183,8 +188,46 @@ describe('when the token belongs to another Firebase project', () => {
       .find(
         (line) => line.message === 'ID token belongs to a different Firebase project than the API',
       );
-    expect(String(entry?.errorMessage)).toContain('Expected "my-studio" but got "demo-growth"');
+    expect(String(entry?.errorMessage)).toContain('Expected "my-studio" but got "other-studio"');
     expect(JSON.stringify(log.lines())).not.toContain('secret-token-value');
+  });
+});
+
+describe('when the sign-in came from a local emulator but the API uses a real project', () => {
+  // The emulators run the project demo-growth, whatever project id the web app is set to.
+  const verifier = audienceError('my-studio', 'demo-growth');
+
+  it('says so, and names the emulator lines to remove', async () => {
+    captureErrorLog();
+    const app = appWith(verifier, createMemoryUserRepository());
+
+    const res = await request(app).get('/api/me').set('Authorization', bearer('some-token'));
+
+    expect(res.status).toBe(503);
+    expect(res.body.error.code).toBe('project_mismatch');
+    const message: string = res.body.error.message;
+    expect(message).toContain('through the local Firebase emulator (project "demo-growth")');
+    expect(message).toContain('the real project "my-studio"');
+    expect(message).toContain('VITE_FIREBASE_AUTH_EMULATOR_URL');
+    expect(message).toContain('FIREBASE_AUTH_EMULATOR_HOST');
+  });
+});
+
+describe('when the API is set up for an emulator project but the sign-in is a real one', () => {
+  const verifier = audienceError('demo-growth', 'my-studio');
+
+  it('says so, and names the real project to use', async () => {
+    captureErrorLog();
+    const app = appWith(verifier, createMemoryUserRepository());
+
+    const res = await request(app).get('/api/me').set('Authorization', bearer('some-token'));
+
+    expect(res.status).toBe(503);
+    expect(res.body.error.code).toBe('project_mismatch');
+    const message: string = res.body.error.message;
+    expect(message).toContain('signed in to the real Firebase project "my-studio"');
+    expect(message).toContain('the emulator project "demo-growth"');
+    expect(message).toContain('set FIREBASE_PROJECT_ID to "my-studio"');
   });
 });
 

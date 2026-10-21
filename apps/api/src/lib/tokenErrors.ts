@@ -1,4 +1,5 @@
 import { readErrorCode } from './databaseErrors';
+import { isEmulatorProject } from './emulatorProject';
 
 /**
  * Why checking a Firebase ID token failed. Usually the token is bad or has expired and the person
@@ -54,13 +55,37 @@ export function readProjectMismatch(err: unknown): ProjectMismatch {
   return { expected: plainProjectName(match?.[1]), actual: plainProjectName(match?.[2]) };
 }
 
+const RESTART_AND_SIGN_IN = 'restart "npm run dev", then press Sign out and sign in again.';
+
 /**
  * What to tell a person whose sign-in went to another Firebase project than the API's. It names
- * both projects when it can. Two matching project id settings do not prevent this: the project a
- * web sign-in goes to is the one the web API key belongs to, and a browser can still hold a
- * sign-in from an earlier setup.
+ * both projects when it can, and says so when one of them is an emulator project, which is the
+ * usual cause: emulator lines left in .env after trying the emulators, or the reverse. Otherwise
+ * two matching project id settings do not prevent this: the project a web sign-in goes to is the
+ * one the web API key belongs to, and a browser can still hold a sign-in from an earlier setup.
  */
 export function projectMismatchMessage({ expected, actual }: ProjectMismatch): string {
+  if (expected !== undefined && actual !== undefined) {
+    if (isEmulatorProject(actual) && !isEmulatorProject(expected)) {
+      return (
+        `Server setup problem: you signed in through the local Firebase emulator (project "${actual}"), ` +
+        `but the API is set up for the real project "${expected}". To use the real project, remove ` +
+        'FIREBASE_AUTH_EMULATOR_HOST, FIRESTORE_EMULATOR_HOST and VITE_FIREBASE_AUTH_EMULATOR_URL ' +
+        `from .env, ${RESTART_AND_SIGN_IN} To use the emulators instead, set FIREBASE_PROJECT_ID ` +
+        `and VITE_FIREBASE_PROJECT_ID to "${actual}".`
+      );
+    }
+    if (isEmulatorProject(expected) && !isEmulatorProject(actual)) {
+      return (
+        `Server setup problem: you signed in to the real Firebase project "${actual}", but the API ` +
+        `is set up for the emulator project "${expected}". To use the real project, set ` +
+        `FIREBASE_PROJECT_ID to "${actual}" and remove FIREBASE_AUTH_EMULATOR_HOST and ` +
+        'FIRESTORE_EMULATOR_HOST from .env. To use the emulators instead, set ' +
+        `VITE_FIREBASE_AUTH_EMULATOR_URL (README, Option A). Either way, ${RESTART_AND_SIGN_IN}`
+      );
+    }
+  }
+
   const found =
     expected !== undefined && actual !== undefined
       ? `you signed in to the Firebase project "${actual}", but the API is set up for "${expected}".`
@@ -69,6 +94,6 @@ export function projectMismatchMessage({ expected, actual }: ProjectMismatch): s
     `Server setup problem: ${found} The project you sign in to is the one that ` +
     'VITE_FIREBASE_API_KEY belongs to, and the API uses FIREBASE_PROJECT_ID. In .env, make ' +
     'VITE_FIREBASE_API_KEY, VITE_FIREBASE_PROJECT_ID and FIREBASE_PROJECT_ID come from the same ' +
-    'Firebase project, restart "npm run dev", then press Sign out and sign in again.'
+    `Firebase project, ${RESTART_AND_SIGN_IN}`
   );
 }
