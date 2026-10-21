@@ -34,6 +34,48 @@ describe('describeFirebaseSetup', () => {
     expect(warning?.message).toContain('Only one of FIREBASE_AUTH_EMULATOR_HOST');
   });
 
+  it('warns when the Auth emulator is on but the project id is a real one', () => {
+    const notes = describeFirebaseSetup(
+      {
+        FIREBASE_PROJECT_ID: 'my-studio',
+        FIREBASE_AUTH_EMULATOR_HOST: '127.0.0.1:9099',
+        FIRESTORE_EMULATOR_HOST: '127.0.0.1:8080',
+      },
+      missing,
+    );
+
+    const warning = notes.find((note) => note.level === 'warn');
+    expect(warning?.message).toContain('FIREBASE_AUTH_EMULATOR_HOST is set');
+    expect(warning?.message).toContain('FIREBASE_PROJECT_ID is my-studio');
+    expect(warning?.message).toContain('set FIREBASE_PROJECT_ID and VITE_FIREBASE_PROJECT_ID');
+    expect(warning?.message).toContain('VITE_FIREBASE_AUTH_EMULATOR_URL');
+  });
+
+  it('warns when the project id is an emulator project but the Auth emulator is not set', () => {
+    const notes = describeFirebaseSetup({ FIREBASE_PROJECT_ID: 'demo-growth' }, missing);
+
+    const warning = notes.find((note) => note.level === 'warn');
+    expect(warning?.message).toContain('FIREBASE_PROJECT_ID is demo-growth');
+    expect(warning?.message).toContain('FIREBASE_AUTH_EMULATOR_HOST is not set');
+  });
+
+  it.each<[string, NodeJS.ProcessEnv]>([
+    ['a real project without emulators', { FIREBASE_PROJECT_ID: 'my-studio' }],
+    [
+      'the emulators with an emulator project',
+      {
+        FIREBASE_PROJECT_ID: 'demo-growth',
+        FIREBASE_AUTH_EMULATOR_HOST: '127.0.0.1:9099',
+        FIRESTORE_EMULATOR_HOST: '127.0.0.1:8080',
+      },
+    ],
+    ['no project id at all', {}],
+  ])('does not warn about the project id for %s', (_name, env) => {
+    const notes = describeFirebaseSetup(env, missing);
+
+    expect(messages(notes)).not.toContain('FIREBASE_PROJECT_ID is');
+  });
+
   it('explains what happens when no key file is set for a real project', () => {
     const notes = describeFirebaseSetup({ FIREBASE_PROJECT_ID: 'my-studio' }, missing);
 
