@@ -9,9 +9,11 @@
     "start": "node dist/index.js",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
+    "ga4:check": "tsx --env-file-if-exists=../../.env src/scripts/ga4Check.ts",
     "test:emulator": "vitest run --config vitest.emulator.config.ts"
   },
   "dependencies": {
+    "@google-analytics/data": "^5.0.0",
     "@growth/shared": "*",
     "cors": "^2.8.5",
     "express": "^5.1.0",

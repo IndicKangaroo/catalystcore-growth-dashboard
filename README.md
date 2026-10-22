@@ -8,7 +8,7 @@ Status: under construction (phase P2 of the plan is done). What works today:
 - The shell from the requester's design: a menu on the left, a top bar, light and dark themes, and a date range that lives in the address, so a link shows what its sender saw (P2).
 - **Apps**: everyone can see the list; admins add, edit and delete apps (P2).
 - An **Overview** that shows the data source, how many apps there are and the current view. Charts and key numbers arrive in P3.
-- Generated **demo data**, labelled as such. Real Google Analytics 4 numbers arrive in P4.
+- Generated **demo data**, labelled as such. Real Google Analytics 4 numbers, when `ANALYTICS_PROVIDER=ga4`.
 
 Start with these files:
 
@@ -96,7 +96,8 @@ The page or the API log says what is wrong. The usual causes:
 | "you signed in through the local Firebase emulator (project "demo-growth"), but the API is set up for the real project ...", or a start-up warning "FIREBASE_AUTH_EMULATOR_HOST is set ... but FIREBASE_PROJECT_ID is ..."; the top bar says **Local emulator** | Emulator lines from Option A are still active in `.env` (or `.env.local`) while the project ids are a real project's. The emulator's sign-ins always belong to its own project, `demo-growth`, whatever the ids say | To use the real project, delete the three emulator lines (or put `#` in front), restart `npm run dev`, press **Sign out** and sign in again. To use the emulators, set both project ids to `demo-growth`, keep all seven lines of Option A and run `npm run emulators` |
 | "you signed in to the real Firebase project ..., but the API is set up for the emulator project ...", or a start-up warning "FIREBASE_PROJECT_ID is demo-growth, a name that only the local emulators use" | The API has the emulator project id, but the web app signs in to a real project, or the emulator lines are missing | Set `FIREBASE_PROJECT_ID` to the real project's id and delete the emulator lines, or add all seven lines of Option A to use the emulators |
 | "you signed in to the Firebase project ..., but the API is set up for ..." (or "a different Firebase project than the one the API uses") | The sign-in and the API are on different real projects. The project you sign in to is the one `VITE_FIREBASE_API_KEY` belongs to, and the API uses `FIREBASE_PROJECT_ID`. Typing the same value into `VITE_FIREBASE_PROJECT_ID` does **not** move the sign-in, and a browser can still hold a sign-in from an earlier setup | Copy `apiKey` and `projectId` from the **same** Web app (Project settings → Your apps), set `FIREBASE_PROJECT_ID` to that `projectId`, restart `npm run dev`, then press **Sign out** and sign in again |
-| You changed `.env` and nothing changes | Another value of the same name wins: one set in the terminal (for example an exported `FIREBASE_PROJECT_ID`), or, for the web app, a `.env.local` or `.env.development` file next to `.env` | Delete the extra file or unset the variable (a new terminal also works), then restart `npm run dev` |
+| You changed `.env` and nothing changes, or a start-up warning "... in the environment this API was started from ... wins over ... in .env" | Another value of the same name wins: one set in the terminal (for example an exported `FIREBASE_PROJECT_ID`) or in Windows' environment variables, or, for the web app, a `.env.local` or `.env.development` file next to `.env`. The API names the setting at start-up when it differs from `.env` | Delete the extra file or unset the variable (PowerShell: `Remove-Item Env:FIREBASE_PROJECT_ID`; a new terminal also works), then restart `npm run dev` |
+| The API log says "Cannot start: port 8787 is already in use", or settings keep their old values after a restart | An earlier `npm run dev` is still running. It keeps the settings it started with and answers every request | Close that terminal, or on Windows run `netstat -ano \| findstr :8787` and then `taskkill /PID <number> /F`; start again |
 | The Users page says "Something went wrong" and the API log shows a `ZodError` | The Firebase project is shared with an app whose own `users` collection holds other documents | The dashboard now skips documents it did not write and logs a warning. Move it to a project of its own, as described above |
 | "Could not reach the API" | The API is not running, or it stopped at startup | Read the output of `npm run dev`; a "Cannot start" line says why |
 | "...has not been given access" (it names the email you used) | You signed in with an account that is not invited, or `ADMIN_EMAIL` is not exactly that email | Check the email shown; set `ADMIN_EMAIL` to it for the first admin, or ask an admin to invite it |
@@ -122,7 +123,17 @@ A field you leave out takes its default. A value that does not fit (a time zone 
 
 ## Demo data
 
-`ANALYTICS_PROVIDER` in `.env` says where the numbers come from. `seed`, the default, generates the same made-up numbers on every run; the top bar then shows a **Demo data** label and the Overview says so too. `ga4` (real Google Analytics 4 data) arrives in phase P4. Until then the API refuses to start with that setting, because demo data shown as if it were real would be worse than no data.
+`ANALYTICS_PROVIDER` in `.env` says where the numbers come from. `seed`, the default, generates the same made-up numbers on every run; the top bar then shows a **Demo data** label and the Overview says so too. `ga4` reads real Google Analytics 4 data (see "Real GA4 data" below).
+
+### Real GA4 data
+
+1. In Google Cloud, make a service account and a key file for it, and enable the **Google Analytics Data API** in that project. Keep the key file out of the repository.
+2. In GA4, for every property: Admin, Property access management, add the service account's email as a **Viewer**. Also set the property's reporting time zone to the studio's (D-046).
+3. In `.env`: `ANALYTICS_PROVIDER=ga4` and `GA4_SERVICE_ACCOUNT_KEY_FILE=` the full path of the key file. Put each app's GA4 property ID (digits) on its Apps screen.
+4. Check a property before trusting the screens: `npm run ga4:check -- <propertyId>`. It prints OK or FAIL for the connection, retention, acquisition and daily numbers, with counts only. A FAIL line says what to fix.
+5. Restart `npm run dev`. The top bar no longer shows "Demo data".
+
+"MAU" is GA4's 28-day active users. Retention for recent weeks reads "In progress" until the window has ended. Revenue and installs stay "Not connected".
 
 ## Apps
 
